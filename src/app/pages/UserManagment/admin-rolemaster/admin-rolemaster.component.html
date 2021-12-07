@@ -1,0 +1,308 @@
+<section class="main-wrapper prod-list-page pb-0">
+    <!-- <div class="l-container l-page-nav">
+        <ul class="l-page-nav__list">
+            <li class="l-page-nav__list-item"><a href="#" class="active">TML Users </a></li>
+            <li class="l-page-nav__list-item"><a href="#">Distributors</a></li>
+            <li class="l-page-nav__list-item"><a href="#">Roles & Permissions</a></li>
+        </ul>
+    </div> -->
+
+    <app-submenu-list [ActiveMenu]='1'></app-submenu-list>
+    <div class="l-container">
+              <div class="search-order-id">
+          
+            <button class="button float-left btn-add-new" (click)="open(content)">
+                <span class="material-icons mr-2">
+                    control_point
+                </span> ADD ROLES
+            </button>
+        </div>
+        <div class="l-content w-100 pl-0">
+
+            <ng-template #content let-modal>
+
+                <div class="popup-add-roll">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title1">Add Roles</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span> </button>
+                    </div>
+
+                    <div class="modal-body">
+
+
+                        <form [formGroup]="exampleForm">
+                            <div class="form-group">
+
+                                <div class="row">
+
+                                    <div class="form-group col-6">
+                                        <label>Role</label>
+                                        <input maxlength="50" class="form-control" formControlName="position_name"
+                                            type="text" class="textfield" placeholder="Enter Role" required>
+
+
+                                    </div>
+
+                                    <div class="form-group col-6">
+                                        <label>Type</label>
+                                        <select *ngIf="Roletypedisable" class="form-control" formControlName="role_id"
+                                            class="textfield">
+                                            <!-- <option value="none">
+                                                Select Type
+                                            </option> -->
+                                            <option *ngFor="let type of RoleType" [value]="type.role_id">
+                                                {{type.role_name}}
+                                            </option>
+                                        </select>
+
+
+
+                                        <select *ngIf="!Roletypedisable" disabled class="form-control"
+                                            formControlName="role_id" class="textfield">
+                                            <option value="none" selected disabled hidden>
+                                                Select Type
+                                            </option>
+                                            <option *ngFor="let type of RoleType" [value]="type.role_id">
+                                                {{type.role_name}}
+                                            </option>
+                                        </select>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="button button--btn-brdr clr-light-blue"
+                            (click)="modal.close('Save click')">Cancel</button>
+                        <button type="button" *ngIf="btnSave" class="button btn-outline-dark"
+                            (click)="save()">Save</button>
+                        <button type="button" *ngIf="btnupdate" class="button btn-outline-dark"
+                            (click)="Update()">Update</button>
+                    </div>
+
+                </div>
+            </ng-template>
+
+
+
+
+
+            <ng-template #content1 let-modal>
+                <div class="popup-add-roll">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">Add Permission</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span> </button>
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="exampleForm">
+                            <div class="form-group">
+
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label>Type</label>
+                                        <select disabled class="form-control" formControlName="role_id"
+                                            class="textfield">
+                                            <option value="none" selected disabled hidden>
+                                                Select Type
+                                            </option>
+                                            <option *ngFor="let type of RoleType" [value]="type.role_id">
+                                                {{type.role_name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Role</label>
+                                        <input disabled class="form-control" formControlName="position_name" type="text"
+                                            class="textfield" placeholder="Enter Role" required
+                                            (keypress)="omitSpecialChar($event)" />
+
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </form>
+
+                        <div class="row">
+
+
+                            <div class="form-group col-12">
+                                <label>Permission Status</label>
+                                <div class="roll-accordion">
+                                    <div class="roll-accordion-row">
+                                        <div class="roll-accordion-row__aside">
+                                            <div class="roll-accordion-row__clmn"></div>
+                                            <div class="roll-accordion-row__clmn">View</div>
+
+                                        </div>
+                                    </div>
+                                    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                                        <ngb-panel *ngFor="let Data of FinalData">
+                                            <ng-template ngbPanelTitle>
+                                                <div class="chkbox">
+                                                    <label for="a1">{{Data?.Header?.page_master_name}}</label>
+                                                </div>
+                                                <span class="material-icons float-right"> keyboard_arrow_down </span>
+                                            </ng-template>
+                                            <ng-template ngbPanelContent>
+                                                <div *ngFor="let  Detail  of Data.Detail" class="roll-accordion-row">
+                                                    <div class="roll-accordion-row__aside">
+                                                        <div class="roll-accordion-row__clmn font-weight-normal">
+                                                            {{Detail.page_detail_name}}
+                                                        </div>
+                                                        <div class="roll-accordion-row__clmn">
+                                                            <form [formGroup]="UpdateDetails">
+                                                                <div class="chkbox no-txt">
+                                                                    <input (change)="eventCheck($event,Detail)"
+                                                                        [formControl]="UpdateDetails.controls[Detail.page_master_detail_id]"
+                                                                        type="checkbox"
+                                                                        id={{Detail.page_master_detail_id}}>
+                                                                    <label for={{Detail.page_master_detail_id}}>
+                                                                    </label>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+                                            </ng-template>
+                                        </ngb-panel>
+
+                                    </ngb-accordion>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button button--btn-brdr clr-light-blue"
+                            (click)="modal.close('Save click')">Cancel</button>
+                        <button type="button" class="button btn-outline-dark" (click)="Savepermission()">Save</button>
+                    </div>
+                </div>
+            </ng-template>
+            <!-- ===================================================
+                # eDukaan_Admin_Users_4
+            =================================================== -->
+            <div class="tbl-reports card-shadow bg-white h-100">
+                <div class="l-tbl-accordion overflow-auto">
+                    <div class="w-100 border-0 p-3">
+                        <div class="table-responsive">
+                            <table class="l-tbl">
+                                <colgroup>
+                                    <col width="50px" />
+                                </colgroup>
+                                <tr class="main-tr">
+
+
+
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Role</span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Type</span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Status</span>
+                                        </div>
+                                    </td>
+
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Action</span>
+                                        </div>
+                                    </td>
+
+
+
+
+
+
+                                </tr>
+
+
+                                <tr *ngFor="let row of items" class="click-tr">
+
+
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> {{ row?.position_name }}</div>
+                                    </td>
+
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">{{ row?.role_name }}</div>
+                                    </td>
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> {{row?.is_active ? 'Active' :
+                                            'Inactive'}}</div>
+                                    </td>
+
+
+
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+
+
+                                            <button class="button float-right btn-add-new"
+                                                (click)="Editpopup(content,row)">
+                                                Edit
+                                            </button>
+
+                                            &nbsp;
+                                            <button class="button float-right btn-add-new"
+                                                (click)="Addpermissionpopup(content1,row)">
+                                                Add Permission
+                                            </button>
+
+                                        </div>
+                                    </td>
+
+
+
+                                </tr>
+
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="paging" style="margin-bottom: 40px;margin-top: 20px;">
+                    <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
+                        [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)"
+                        [showrecords]="showRecords"></app-pagination>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</section>

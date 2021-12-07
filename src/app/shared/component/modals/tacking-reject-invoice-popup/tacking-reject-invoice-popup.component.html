@@ -1,0 +1,52 @@
+<!-- <div class="modal-dialog modal-xl modal-dialog-centered"> -->
+<div class="modal-content" style="width: 100%;">
+    <div class="modal-header modal-title">
+        Tracking Reject Invoice
+        <div (click)="closeModal()" type="button"><i class="fa fa-times"></i></div>
+        <button (click)="closeModal()" type="button" class="close" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="l-content w-100 pl-0">
+            <h3 style="color: red;">{{Message}}</h3>
+            <div class="tbl-reports card-shadow bg-white h-100">
+                <div class="l-tbl-accordion overflow-auto">
+                    <div class="w-100 border-0 p-3">
+                        <div class="table-responsive" *ngIf="reject.length > 0">
+                            <table class="l-tbl">
+                                <tr class="main-tr">
+                                    <th>Invoice No</th>
+                                    <th>{{Title}}</th>
+                                    <th>Selected Date</th>
+                                </tr>
+
+                                <tr *ngFor="let item of reject">
+                                    <td>
+                                        <div class="td-wrapp">
+                                            {{ item?.invoice_no }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp">
+                                            {{ item?.TrackingDate | date :'dd-MM-yyyy hh:mm:ss a' }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp">
+                                            {{ row?.selectedDate | date :'dd-MM-yyyy hh:mm:ss a' }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div *ngIf="reject.length == 0">
+                            <h1>No Data Found</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

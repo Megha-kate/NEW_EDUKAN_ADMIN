@@ -1,0 +1,2622 @@
+<app-submenu-list [ActiveMenu] = '1' ></app-submenu-list>
+<section class="main-wrapper prod-list-page pb-0">
+    <!-- <div class="l-container l-page-nav">
+        <ul class="l-page-nav__list">
+            <li class="l-page-nav__list-item"><a href="#" class="active">Orders</a></li>
+            <li class="l-page-nav__list-item"><a href="#">Invoices</a></li>
+            <li class="l-page-nav__list-item"><a href="#">Customers</a></li>
+            <li class="l-page-nav__list-item"><a href="#">Distributors</a></li>
+            <li class="l-page-nav__list-item"><a href="#">Parts Performance</a></li>
+            <li class="l-page-nav__list-item"><a href="#">Transaction Summary</a></li>
+            <li class="l-page-nav__list-item"><a href="#">Scheme Performance</a></li>
+        </ul>
+
+        <div class="l-page-nav__dd">
+            <label>Download</label>
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Excel</option>
+                <option value="1">Pdf</option>
+                <option value="2">Dock</option>
+            </select>
+        </div>
+    </div> -->
+
+
+    <!-- <app-submenu-list [ActiveMenu] = '1'></app-submenu-list> -->
+
+    <div *ngIf="currDiv === 'All'">
+        <div class="tags d-flex justify-content-end mb-4">
+            <ul class="tags__list" style="margin-right: 20px;">
+                <li *ngFor="let Filterrow of Filterarray"><a style="cursor:default">{{Filterrow.Value}} <img  (click)="onRemoveFilter(Filterrow)"
+                    [hidden]="Filterrow.Key == 'from_date'"  src="./assets/images/tag-close.svg" /></a></li>
+            </ul>
+            <!-- <ul class="tags__list" fxFlex="30" style="margin-right: 50px;">
+                <select class="form-select" aria-label="Default select example" (change)="ReportDownlod($event)">
+                    <option selected value="" disabled>Select</option>
+                    <option value="Excel">Excel</option> -->
+                    <!-- <option value="1">Pdf</option>
+                    <option value="2">Dock</option> -->
+                <!-- </select> -->
+              <!-- <a  (click)="EOrderExport()"                                
+                    class="material-icons ml-2">
+                    file_download </a> -->
+            <!-- </ul> -->
+            <ul class="tags__list" fxFlex="30" style="color: darkolivegreen; width: 100px; margin-right: 50px;" matTooltip="Export to Excel"
+            (click)="ReportDownlod();">
+            <span class='fa-stack fa-lg'>
+                <i class='fas fa-file-excel fa-pull-right fa-2x'></i>
+
+            </span>
+        </ul>
+        </div>
+        <!-- <div class="tags d-flex justify-content-end mb-4">
+            <a style="font-weight: normal !important;" [innerHtml]="FilterString"></a>
+        </div> -->
+
+        <div class="l-container">
+            <div class="l-container-withsidebar">
+                <div class="l-sidebar" style= "overflow-x:hidden; height:700px;">
+                    <div class="l-sidebar__aside" >
+                        <!-- <form [formGroup]="itemForm"> -->
+                        <ul class="sidebar-cards">
+                            <li class="sidebar-cards__item">
+                                <div class="sidebar-cards__ttl d-flex justify-content-between align-items-center">
+                                  <h2><b>FILTERS</b></h2>
+                                </div>
+                                 </li>
+                            <!-- <li class="sidebar-cards__chk-list-item chkbox"><input
+                                        (change)="changedatefilter('Today')" [formControl]="itemForm.controls['Today']"
+                                        name="A" checked type="radio" id="aa"><label for="aa">Today</label></li>
+                                      
+                                <li class="sidebar-cards__chk-list-item chkbox"><input
+                                        (change)="changedatefilter('Sevenday')"
+                                        [formControl]="itemForm.controls['Sevenday']" type="radio" id="7Day"><label
+                                        for="7Day"><input type="radio" id="a">Last 7 days</label></li>
+                                <li class="sidebar-cards__chk-list-item chkbox"><input
+                                        (change)="changedatefilter('thirtyDays')"
+                                        [formControl]="itemForm.controls['thirtyDays']" type="radio"
+                                        id="30day"><label for="30day">Last 30 days</label></li>
+                                <li class="sidebar-cards__chk-list-item chkbox"><input
+                                        (change)="changedatefilter('Custom')"
+                                        [formControl]="itemForm.controls['Custom']" type="radio" id="Custom"><label
+                                        for="Custom">Custom</label></li> -->
+
+                            <li class="sidebar-cards__item">
+                                <div class="sidebar-cards__ttl d-flex justify-content-between align-items-center">
+                                    <label>DURATION</label>
+                                </div>
+                                <ul class="sidebar-cards__chk-list">
+                                    <li class="sidebar-cards__chk-list-item chkbox">
+                                        <input (change)="changedatefilter('Today')" name="A" type="radio" id="aa">
+                                        <label for="aa"> Today</label>
+                                    </li><br>
+                                    <li class="sidebar-cards__chk-list-item chkbox">
+                                        <input name="A" type="radio" id="bb" (change)="changedatefilter('Sevenday')">
+                                        <label for="bb"> Last 7 days</label>
+                                    </li><br>
+                                    <li class="sidebar-cards__chk-list-item chkbox">
+                                        <input name="A" type="radio" id="cc" (change)="changedatefilter('thirtyDays')"
+                                        [checked]="isThirtyDays">
+                                        <label for="cc">Last 30 days</label>
+
+                                    </li><br>
+                                    <li class="sidebar-cards__chk-list-item chkbox">
+                                        <input (change)="changedatefilter('Custom')" name="A" type="radio" id="dd"
+                                            [value]="ShowCustom">
+                                        <label for="dd">Custom</label>
+                                    </li>
+
+                                    <li class="sidebar-cards__chk-list-item" [hidden]="!ShowCustom">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group m-0 calendar">
+                                                    <div class="input-group">
+                                                        <input class="form-control"
+                                                            [formControl]="itemForm.controls['from_date']"
+                                                            placeholder="yyyy-mm-dd"  [readonly]="true" name="dp" ngbDatepicker
+                                                            #d="ngbDatepicker">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline-secondary calendar"
+                                                                (click)="d.toggle()" type="button"><span
+                                                                    class="material-icons">
+                                                                    calendar_today
+                                                                </span></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group m-0">
+                                                    <div class="input-group calendar">
+                                                        <input class="form-control"
+                                                            [formControl]="itemForm.controls['to_date']"
+                                                            placeholder="yyyy-mm-dd"  [readonly]="true" name="dp" ngbDatepicker
+                                                            #d1="ngbDatepicker">
+                                                        <div class="input-group-append1">
+                                                            <button class="btn btn-outline-secondary calendar"
+                                                                (click)="d1.toggle()" type="button"><span
+                                                                    class="material-icons">
+                                                                    calendar_today
+                                                                </span></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- <ul class="form-chk-list">
+                                <li class="form-chk-list-item chkbox">
+                                    <input  [formControl]="itemForm.controls['Today']" name="A" checked type="radio" id="aa">
+                                    <label for="aa"> Today</label>
+                                </li>
+                                <li class="form-chk-list-item chkbox">
+                                    <input name="A" type="radio" id="bb">
+                                    <label for="bb"> Tracking Date</label>
+
+
+                                </li>
+                                <li class="form-chk-list-item chkbox">
+                                    <input name="A" type="radio" id="cc">
+                                    <label for="cc"> Invoice Date</label>
+
+
+                                </li>
+                            </ul> -->
+                            <li class="sidebar-cards__item">
+                                <div class="sidebar-cards__ttl d-flex justify-content-between align-items-center">
+                                    <label>OTC Number</label> 
+                                </div>
+                                <div class="srch-box">
+                                    <input type="text" [formControl]="itemForm.controls['otc_number']"
+                                        placeholder="OTC Number" class="textfield">
+                                    <span class="material-icons"> search </span>
+                                </div>
+                            </li>
+                            <li class="sidebar-cards__item" *ngIf="isDistDrpDownVisible">
+                                <div class="sidebar-cards__ttl d-flex justify-content-between align-items-center">
+                                    <label>Distributor</label>
+                                </div>
+                                <div class="srch-box">
+                                    <input autocomplete="off" (keyup)="Distributortype()"
+                                        [formControl]="itemForm.controls['org_name']"
+                                        style="width: max-content !important;" placeholder="Search Distributor"
+                                        class="textfield" type="text" matInput>
+                                    <span class="material-icons"> search </span>
+                                </div>
+                                <ul class="sidebar-cards__chk-list">
+                                    <form [formGroup]="DistributorList">
+                                        <li *ngFor="let DistLit of DistributorData ; let i=index;"
+                                            class="form-chk-list-item chkbox">
+                                            <input [formControl]="DistributorList.controls[DistLit.distributor_id]"
+                                                (change)="dstfilteradd(DistLit,$event,i)" name="B" type="checkbox" id="Dist_{{i}}">
+                                            <label for="Dist_{{i}}" title="{{DistLit.distributor_name}}">{{DistLit.distributor_name.substr(0,23)}}</label>
+                                        </li>
+                                    </form>
+                                </ul>
+                            </li>
+                            <li class="sidebar-cards__item" *ngIf="isDivisionVisible == true">
+                                <div class="sidebar-cards__ttl d-flex justify-content-between align-items-center">
+                                    <label>Division</label> 
+                                </div>
+                                <ul class="sidebar-cards__chk-list">
+                                    <form [formGroup]="DivisionList">
+                                        <li *ngFor="let Div of Division; let j=index;"
+                                            class="form-chk-list-item chkbox">
+                                            <input type="checkbox" [formControl]="DivisionList.controls[Div.div_id]"
+                                            id="div_{{j}}" (change)="divisionfilteradd(Div,$event)">
+                                            <label for="div_{{j}}" title="{{Div.div_name}}">{{Div.div_name.substr(0,23)}}</label>
+                                        </li>
+                                    </form>
+                                </ul>
+                            </li>
+                            <!-- <ul class="sidebar-cards__chk-list">
+                                    <form [formGroup]="DivisionList">
+                                        <span *ngFor="let DivisionData of Division; let i=index;"
+                                            class="form-chk-list-item chkbox ">
+                                            <input (onSelectionChange)="filterMyOptions1(DivisionData.div_id,DivisionData.div_name)"
+                                                type="checkbox" [value]="DivisionData.division_name"  [formControl]="DistributorList.controls[DistLit.distributor_id]">
+                                              <label for={{i}}>{{DivisionData.div_name}}</label> 
+                                        </span>
+                                    </form>
+                                </ul> -->
+                            <!-- <h4>Customer</h4>
+                            <div class="srch-box">
+                                <input autocomplete="off" style="width: max-content !important;"
+                                    placeholder="Search Custoe\" class="textfield" type="text" matInput>
+                                <span class="material-icons"> search </span>
+                            </div> -->
+                            <!-- <ul class="sidebar-cards__chk-list">
+                                <li class="form-chk-list-item checkbox">
+                                    <input type="checkbox" />
+                                </li>
+                            </ul> -->
+
+                            <!-- <div class="srch-box">
+
+                                <input type="text" placeholder="Timelines" [formControl]="itemForm.controls['days']"
+                                placeholder="Timelines..." class="textfield" disableRipple>
+                                <span class="material-icons"> search </span>
+                                <ul class="sidebar-cards__chk-list">
+                                <li *ngFor="let Time of Timelinesdata">
+                                    <li class="sidebar-cards__chk-list chkbox"><input type="checkbox" id="h"><label
+                                            for="h">0-24 hours</label></li>
+                                    <li class="sidebar-cards__chk-list-item chkbox"><input type="checkbox" id="i"><label
+                                            for="i">24-48 hours.</label></li>
+                                    <li class="sidebar-cards__chk-list-item chkbox"><input type="checkbox" id="j"><label
+                                            for="j">48-72 hours</label></li>
+
+                                    <li class="sidebar-cards__chk-list-item space__p-l--25"><a href="#"
+                                            class="btn-link">+
+                                            More than 72 hours</a></li>
+                                  
+                                </ul>
+                                </div>                              -->
+
+
+                            <!-- <div class="srch-box">
+                                <input autocomplete="off" (keyup)="custtype()"
+                                    [formControl]="itemForm.controls['account_name']"
+                                    style="width: max-content !important;" placeholder="Search Customer...."
+                                    class="textfield" type="text" matInput>
+                                <span class="material-icons"> search </span>
+                            </div>
+
+                            <ul class="sidebar-cards__chk-list">
+                                    <li *ngFor="let CustDate of Accountnamedata" 
+                                    class="form-chk-list-item ">
+                                        <input (change)="filterMyOptionsCustname(CustDate,$event)" type="checkbox">
+                                        <label>{{CustDate.account_name}}</label>
+                                    </li>
+                            </ul> -->
+
+
+                            <!-- <input [formControl]="CustomerList.controls['CustDate.account_id']"  
+                                            type="checkbox" (Change)="filterMyOptionsCustname(CustDate.account_id,CustDate.account_name,$event)" [value]="CustDate.account_name">
+                                        <label for={{i}}>{{CustDate.account_name}}</label>
+                                            
+                                             <ul class="sidebar-cards__chk-list"> 
+
+                                             <form   [formGroup]="CustomerList">  
+                                               <li *ngFor="let CustDate of Accountnamedata?.slice(0,5); let i=index;"
+                                                   class="form-chk-list-item chkbox" >
+                                                   <input 
+                                                    (change)="filterMyOptionsCustname(CustDate.account_id,CustDate.account_name,$event)" name="A"
+                                                     type="checkbox" id={{i}}>
+                                                   <label for={{i}}>{{CustDate.account_name}}</label>
+           
+                                                    </li>
+                                                </form>  
+                                                
+                                              </ul> -->
+                            <li class="sidebar-cards__item">
+                                <div class="sidebar-cards__ttl d-flex justify-content-between align-items-center">
+                                    <label>Customer Name</label>
+                                </div>
+                                <div class="srch-box">
+                                    <input autocomplete="off" (keyup)="custtype()"
+                                        [formControl]="itemForm.controls['account_name']"
+                                        style="width: max-content !important;" placeholder="Search Customer...."
+                                        class="textfield" type="text" matInput>
+                                    <span class="material-icons">search</span>
+                                </div>
+                                <ul class="sidebar-cards__chk-list">
+                                    <form [formGroup]="CustomerList">
+                                        <li *ngFor="let CustData of Accountnamedata;let k=index;"
+                                            class="form-chk-list-item chkbox">
+                                            <input [formControl]="CustomerList.controls[CustData.account_id]"
+                                                (change)="filterMyOptionsCustname(CustData,$event)" name="A"
+                                                type="checkbox" id="cust_{{k}}">
+                                            <label for="cust_{{k}}" title="{{CustData.account_name}}">{{CustData.account_name.substr(0,23)}}</label>
+
+                                        </li>
+                                    </form>
+                                </ul>
+                            </li>
+
+
+                            <!-- <h4>Timelines</h4> -->
+                            <!-- <div class="srch-box">
+                                    <input type="text" placeholder="Timelines"
+                                    [formControl]="itemForm.controls['days']"
+                                        placeholder="Timelines..." class="textfield" disableRipple>
+                                    <span class="material-icons"> search </span>
+                                </div>
+                                <ul class="sidebar-cards__chk-list">
+                                    <from >
+                                        <li *ngFor="let Time of timelinearray let i=index">
+                                        <li class="sidebar-cards__chk-list chkbox"><input type="radio" (change)="tlfilteradd('today')" name="A" for="h"><label
+                                                for="h">0-24 hours</label></li>
+                                        <li class="sidebar-cards__chk-list-item chkbox"><input type="radio" (change)="tlfilteradd('two_days')" name="A"
+                                                id="i"><label for="i">24-48 hours</label></li>
+                                        <li class="sidebar-cards__chk-list-item chkbox"><input type="radio" (change)="tlfilteradd('three_days')"
+                                                id="j"><label for="j">48-72 hours</label></li>
+                                        <li class="sidebar-cards__chk-list-item space__p-l--25"><a 
+                                                class="btn-link" (click)="tlfilteradd('long_time')">+
+                                                More than 72 hours</a>
+                                        </li>
+                                    </from>
+                                </ul> -->
+                            <li class="sidebar-cards__item">
+                                <div class="sidebar-cards__ttl d-flex justify-content-between align-items-center">
+                                    <label>Timelines</label>
+                                </div>
+                                <div class="srch-box">
+                                    <select [formControl]="itemForm.controls['days']" disableRipple class="textfield">
+                                        <option value="today">0-24 hours</option>
+                                        <option value="two_days">24-48 hours</option>
+                                        <option value="three_days">48-72 hours</option>
+                                        <option value="long_time">More than 72 hours</option>
+                                    </select>
+                                </div>
+                            </li>
+
+                            <li class="sidebar-cards__item">
+                                <div class="sidebar-cards__ttl d-flex justify-content-between align-items-center">
+                                    <label>From Percentage</label>
+                                </div>
+                                <div class="srch-box">
+                                    <input  (keypress)="numberOnly($event)" maxlength="2"
+                                        [formControl]="itemForm.controls['from_percentage']"
+                                        placeholder="Search percentage ..." class="textfield">
+                                    <span class="material-icons"> search </span>
+
+                                </div>
+                            </li>
+
+
+                            <li class="sidebar-cards__item">
+                                <div class="sidebar-cards__ttl d-flex justify-content-between align-items-center">
+                                    <label>To Percentage</label> 
+                                </div>
+                                <div class="srch-box">
+                                    <input  (keypress)="numberOnly($event)"
+                                        [formControl]="itemForm.controls['to_percentage']" maxlength="3"
+                                        placeholder="Search Topercentage ..." class="textfield">
+                                    <span class="material-icons"> search </span>
+                                </div>
+                            </li>
+                        </ul>
+                  
+                    </div>
+
+
+                    <div>
+                        <button  class="btn btn-outline-primary" style="margin-top: -24px;" (click)="Search()">Search</button>&nbsp;&nbsp;
+                         <button class="btn btn-outline-primary"  style="margin-top: -24px;" (click)="reset()">Reset</button>
+                         </div>
+                </div>
+
+
+                <!-- ===================================================
+                        # eDukaan_Admin_Reports_Orders Copy
+                =================================================== -->
+
+                <!-- <div class="l-content">
+                    <div class="l-tbl-accordion overflow-auto">
+                        <div class="w-100 border-0 p-3">
+                            <div class="table-responsive">
+                                <table class="l-tbl"> 
+                                    <tr class="main-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Order#</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Cost(₹)</span> <i
+                                                    class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Distributor</span> <i
+                                                    class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Payment Mode</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Delivery</span> <i
+                                                    class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Status</span> <i
+                                                    class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Reason</span> <i
+                                                    class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Refund Status(₹)
+                                                </span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Geoge Oakes limited
+                                                <br>Pune
+                                                <br>Code : 2081240
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Change of part: The part
+                                                order
+                                                placed was incorrect and has been duly corrected. </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 Credited </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr"> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Geoge Oakes limited
+                                                <br>Pune
+                                                <br>Code : 2081240
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Change of part: The part
+                                                order
+                                                placed was incorrect and has been duly corrected. </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 Credited </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr"> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Geoge Oakes limited
+                                                <br>Pune
+                                                <br>Code : 2081240
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Change of part: The part
+                                                order
+                                                placed was incorrect and has been duly corrected. </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 Credited </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr"> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Geoge Oakes limited
+                                                <br>Pune
+                                                <br>Code : 2081240
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Change of part: The part
+                                                order
+                                                placed was incorrect and has been duly corrected. </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 Credited </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr"> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Geoge Oakes limited
+                                                <br>Pune
+                                                <br>Code : 2081240
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Change of part: The part
+                                                order
+                                                placed was incorrect and has been duly corrected. </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 Credited </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr"> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Geoge Oakes limited
+                                                <br>Pune
+                                                <br>Code : 2081240
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Change of part: The part
+                                                order
+                                                placed was incorrect and has been duly corrected. </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 Credited </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr"> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Geoge Oakes limited
+                                                <br>Pune
+                                                <br>Code : 2081240
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Change of part: The part
+                                                order
+                                                placed was incorrect and has been duly corrected. </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 Credited </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr"> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Geoge Oakes limited
+                                                <br>Pune
+                                                <br>Code : 2081240
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 13 Aug, Mon
+                                                Asset Motors, Bandra 1
+                                                Suresh Jagtap </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Change of part: The part
+                                                order
+                                                placed was incorrect and has been duly corrected. </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 Credited </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Credit </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>  -->
+
+                <!-- ===================================================
+                    # eDukaan__Admin_Reports_Transaction summary
+                =================================================== -->
+                <!--  <div class="tbl-reports card-shadow bg-white h-100">
+                    <div class="l-tbl-accordion overflow-auto">
+                        <div class="w-100 border-0 p-3">
+                            <div class="table-responsive">
+                                <table class="l-tbl">
+
+                                    <tr class="main-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Order#</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Order value
+                                                    (₹)</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Customer name</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Payment method</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Payment status</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Details</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Sahani motors Pvt. Ltd.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Online</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center clr-orange"> Failed</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Failed at gateway</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Sahani motors Pvt. Ltd.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Online</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> Successful</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Failed at gateway</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Sahani motors Pvt. Ltd.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Online</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> In progress</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Failed at gateway</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Sahani motors Pvt. Ltd.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Online</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center clr-orange"> Failed</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Failed at gateway</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Sahani motors Pvt. Ltd.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Online</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> In progress</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Failed at gateway</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Sahani motors Pvt. Ltd.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Online</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center clr-orange"> Failed</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Failed at gateway</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Sahani motors Pvt. Ltd.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Online</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center clr-orange"> Failed</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Failed at gateway</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Sahani motors Pvt. Ltd.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Online</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center clr-orange"> Failed</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Failed at gateway</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Sahani motors Pvt. Ltd.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Online</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center clr-orange"> Failed</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Failed at gateway</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Sahani motors Pvt. Ltd.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Online</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center clr-orange"> Failed</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Failed at gateway</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Sahani motors Pvt. Ltd.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Online</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center clr-orange"> Failed</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Failed at gateway</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 41d5-4f6-c04f9355f004
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 20,000 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Sahani motors Pvt. Ltd.
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Online</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center clr-orange"> Failed</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Failed at gateway</div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- ===================================================
+                    # eDukaan__Admin_Reports_FastMoving 
+                =================================================== -->
+                <!--  <div class="tbl-reports card-shadow bg-white h-100">
+                    <div class="l-tbl-accordion overflow-auto">
+                        <div class="w-100 border-0 p-3">
+                            <div class="table-responsive">
+                                <table class="l-tbl"> 
+                                    <tr class="main-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Part</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Part Group</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Product Line</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Qty Ordered</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Qty Returned</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Revenue Generated(₹) </span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Growth Comparison </span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  <strong class="float-left w-100">#286309130191</strong> <span class="float-left w-100 clr-black">Air Filter BS3</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Part group 1 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Product line 1</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 9,45,450.00</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 5%</div>
+                                        </td>
+                                    </tr> 
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  <strong class="float-left w-100">#286309130191</strong> <span class="float-left w-100 clr-black">Air Filter BS3</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Part group 1 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Product line 1</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 9,45,450.00</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 5%</div>
+                                        </td>
+                                    </tr> 
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  <strong class="float-left w-100">#286309130191</strong> <span class="float-left w-100 clr-black">Air Filter BS3</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Part group 1 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Product line 1</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 9,45,450.00</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 5%</div>
+                                        </td>
+                                    </tr> 
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  <strong class="float-left w-100">#286309130191</strong> <span class="float-left w-100 clr-black">Air Filter BS3</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Part group 1 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Product line 1</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 9,45,450.00</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 5%</div>
+                                        </td>
+                                    </tr> 
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  <strong class="float-left w-100">#286309130191</strong> <span class="float-left w-100 clr-black">Air Filter BS3</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Part group 1 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Product line 1</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 9,45,450.00</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 5%</div>
+                                        </td>
+                                    </tr> 
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> <strong class="float-left w-100">#286309130191</strong> <span class="float-left w-100 clr-black">Air Filter BS3</span> <small class="border"> 10 Day replacement</small></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Part group 1 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Product line 1</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 9,45,450.00</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 5%</div>
+                                        </td>
+                                    </tr> 
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> <strong class="float-left w-100">#286309130191</strong> <span class="float-left w-100 clr-black">Air Filter BS3</span> <small class="border"> 10 Day replacement</small></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> Part group 1 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Product line 1</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 37</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 9,45,450.00</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 5%</div>
+                                        </td>
+                                    </tr> 
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- ===================================================
+                    # eDukaan__Admin_Reports_Scheme Performance
+                =================================================== -->
+                <!-- <div class="tbl-reports card-shadow bg-white h-100">
+                    <div class="l-tbl-accordion overflow-auto">
+                        <div class="w-100 border-0 p-3">
+                            <div class="table-responsive">
+                                <table class="l-tbl"> 
+                                    <tr class="main-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Scheme code</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Scheme name</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>% Discount</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Increase in orders</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Revenue growth</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Conversion rate </span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td> 
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  DPARPVT-1420-60f1ec973c8f </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Monsoon Mega </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  25</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 500</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 40%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">18%</div>
+                                        </td> 
+                                    </tr>  
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  DPARPVT-1420-60f1ec973c8f </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Monsoon Mega </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  25</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 500</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 40%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">18%</div>
+                                        </td> 
+                                    </tr>  
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  DPARPVT-1420-60f1ec973c8f </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Monsoon Mega </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  25</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 500</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 40%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">18%</div>
+                                        </td> 
+                                    </tr>  
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  DPARPVT-1420-60f1ec973c8f </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Monsoon Mega </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  25</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 500</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 40%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">18%</div>
+                                        </td> 
+                                    </tr>  
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  DPARPVT-1420-60f1ec973c8f </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Monsoon Mega </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  25</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 500</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 40%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">18%</div>
+                                        </td> 
+                                    </tr>  
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  DPARPVT-1420-60f1ec973c8f </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Monsoon Mega </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  25</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 500</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 40%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">18%</div>
+                                        </td> 
+                                    </tr>  
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  DPARPVT-1420-60f1ec973c8f </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Monsoon Mega </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  25</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 500</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 40%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">18%</div>
+                                        </td> 
+                                    </tr>  
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  DPARPVT-1420-60f1ec973c8f </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Monsoon Mega </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  25</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 500</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 40%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">18%</div>
+                                        </td> 
+                                    </tr>  
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  DPARPVT-1420-60f1ec973c8f </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Monsoon Mega </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  25</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 500</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 40%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">18%</div>
+                                        </td> 
+                                    </tr>  
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  DPARPVT-1420-60f1ec973c8f </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Monsoon Mega </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  25</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 500</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 40%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">18%</div>
+                                        </td> 
+                                    </tr>  
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp">  DPARPVT-1420-60f1ec973c8f </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Monsoon Mega </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  25</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 500</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 40%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">18%</div>
+                                        </td> 
+                                    </tr>  
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- ===================================================
+                    # eDukaan_Admin_reports_Invoices
+                =================================================== -->
+                <!-- <div class="tbl-reports card-shadow bg-white h-100">
+                    <div class="l-tbl-accordion overflow-auto">
+                        <div class="w-100 border-0 p-3">
+                            <div class="table-responsive">
+                                <table class="l-tbl"> 
+                                    <tr class="main-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Order #</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Order Value(₹)  </span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Order  Status</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Invoice #</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Invoice Date</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Invoice Date </span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Invoice Age </span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td>  
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Status</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                        alt=""></i>
+                                            </div>
+                                        </td> 
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> 41d5-4f6-c04f9355f004</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">20,000.00 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Delivered</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp "> #ISuSS2021000832 <br> <small>2 Products , 50 pieces</small></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 21 Aug, 4 PM</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">22 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Credit</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Cleared</div>
+                                        </td> 
+                                    </tr>   
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> 41d5-4f6-c04f9355f004</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">20,000.00 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Delivered</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp "> #ISuSS2021000832 <br> <small>2 Products , 50 pieces</small></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 21 Aug, 4 PM</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">22 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Credit</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Cleared</div>
+                                        </td> 
+                                    </tr>   
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> 41d5-4f6-c04f9355f004</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">20,000.00 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Delivered</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp "> #ISuSS2021000832 <br> <small>2 Products , 50 pieces</small></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 21 Aug, 4 PM</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">22 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Credit</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Cleared</div>
+                                        </td> 
+                                    </tr>   
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> 41d5-4f6-c04f9355f004</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">20,000.00 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Delivered</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp "> #ISuSS2021000832 <br> <small>2 Products , 50 pieces</small></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 21 Aug, 4 PM</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">22 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Credit</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Cleared</div>
+                                        </td> 
+                                    </tr>   
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> 41d5-4f6-c04f9355f004</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">20,000.00 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Delivered</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp "> #ISuSS2021000832 <br> <small>2 Products , 50 pieces</small></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 21 Aug, 4 PM</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">22 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Credit</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Cleared</div>
+                                        </td> 
+                                    </tr>   
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> 41d5-4f6-c04f9355f004</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">20,000.00 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Delivered</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp "> #ISuSS2021000832 <br> <small>2 Products , 50 pieces</small></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 21 Aug, 4 PM</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">22 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Credit</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Cleared</div>
+                                        </td> 
+                                    </tr>   
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> 41d5-4f6-c04f9355f004</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">20,000.00 </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  Delivered</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp "> #ISuSS2021000832 <br> <small>2 Products , 50 pieces</small></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center "> 21 Aug, 4 PM</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">22 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Credit</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">Cleared</div>
+                                        </td> 
+                                    </tr>   
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- ===================================================
+                    # eDukaan_Admin_reports_Customers Copy
+                =================================================== -->
+                <!-- <div class="tbl-reports card-shadow bg-white h-100">
+                    <div class="l-tbl-accordion overflow-auto">
+                        <div class="w-100 border-0 p-3">
+                            <div class="table-responsive">
+                                <table class="l-tbl"> 
+                                    <tr class="main-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Customer Name</span>   </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Customer ID  </span>  </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Contact Details</span>  </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>GST Number</span>  </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Edukaan Orders</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end"> <span>Credit Limit(₹)</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i>
+                                            </div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end"> <span>Credit Balance(₹) </span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i>
+                                            </div>
+                                        </td>  
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end"> <span>Credit Days</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i>
+                                            </div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end"> <span>Order Frequency</span>
+                                                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i>
+                                            </div>
+                                        </td> 
+                                    </tr>
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> Sahani motors Pvt. Ltd.</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">1-4AO5XMN</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  +91-9793629837 <br> Ajay Singh</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 22AAAAA0000A1Z5</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center ">25%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">4,00,000.00</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-end justify-content-end clr-orange flex-column text-right">- 76,541.00 <br> <small>overdue</small></div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">10 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">10 times</div>
+                                        </td> 
+                                    </tr>   
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> Sahani motors Pvt. Ltd.</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">1-4AO5XMN</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  +91-9793629837 <br> Ajay Singh</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 22AAAAA0000A1Z5</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center ">25%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">4,00,000.00</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-end justify-content-end clr-orange flex-column text-right">- 76,541.00 <br> <small>overdue</small></div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">10 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">10 times</div>
+                                        </td> 
+                                    </tr>   
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> Sahani motors Pvt. Ltd.</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">1-4AO5XMN</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  +91-9793629837 <br> Ajay Singh</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 22AAAAA0000A1Z5</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center ">25%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">4,00,000.00</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-end justify-content-end clr-orange flex-column text-right">- 76,541.00 <br> <small>overdue</small></div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">10 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">10 times</div>
+                                        </td> 
+                                    </tr>   
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> Sahani motors Pvt. Ltd.</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">1-4AO5XMN</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  +91-9793629837 <br> Ajay Singh</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 22AAAAA0000A1Z5</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center ">25%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">4,00,000.00</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-end justify-content-end clr-orange flex-column text-right">- 76,541.00 <br> <small>overdue</small></div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">10 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">10 times</div>
+                                        </td> 
+                                    </tr>   
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> Sahani motors Pvt. Ltd.</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">1-4AO5XMN</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  +91-9793629837 <br> Ajay Singh</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 22AAAAA0000A1Z5</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center ">25%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">4,00,000.00</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-end justify-content-end  flex-column text-right">2,30,000.00</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">10 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">10 times</div>
+                                        </td> 
+                                    </tr>   
+                                    <tr class="click-tr">
+                                        <td>
+                                            <div class="td-wrapp"> Sahani motors Pvt. Ltd.</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">1-4AO5XMN</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">  +91-9793629837 <br> Ajay Singh</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> 22AAAAA0000A1Z5</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center ">25%</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">4,00,000.00</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-end justify-content-end  flex-column text-right">2,30,000.00</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">10 days</div>
+                                        </td> 
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center justify-content-end">10 times</div>
+                                        </td> 
+                                    </tr>   
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- ===================================================
+                    # eDukaan_Admin_reports_Distributor
+                =================================================== -->
+                <div class="l-content">
+                <div class="tbl-reports card-shadow bg-white h-100">
+                    <div class="l-tbl-accordion overflow-auto">
+                        <div class="w-100 border-0 p-3">
+                            <div class="table-responsive">
+                                <table class="l-tbl">
+                                    <tr class="main-tr">
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>OTC Number</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Order Date</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Order Amount</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Order Month
+                                                    Year</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Account Id</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Customer Name</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Distributor
+                                                    Name</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span> Latest Invoice Timeline(Hrs)
+
+                                            </span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Amt.of order value
+                                                    Invoiced</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Amt. of value
+                                                    Invoiced upto 24 hrs</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Amt. of value
+                                                    Invoiced in 24-48 hrs</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Amt. of value
+                                                    Iinvoiced upto 48 hrs</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Amt. of value
+                                                    Invoiced in 48-72 hrs</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Amt.of value Invoiced
+                                                    more than 72 hrs</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Amt.of value Invoiced but not delivered</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>% of order value Invoiced</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>% of value Invoiced
+                                                    upto 24 hrs</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>% of value Invoiced
+                                                    in 24-48 hrs</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>% of value Invoiced
+                                                    upto 48 hrs</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>% of value Invoiced
+                                                    in 48-72 hrs</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>% of value Invoiced
+                                                    more than 72 hrs</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>%Amt.of value Invoiced but not delivered</span></div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Cancelled Invoice
+                                                    count</span></div>
+                                        </td>
+
+
+
+                                    </tr>
+                                    <ng-container *ngIf="items?.length >0">
+
+                                    <tr *ngFor="let row of items" class="click-tr">
+                                        <td (click)="details(row);" class="text-nowrap">
+                                            <div style="color: blue;cursor: pointer;" class="td-wrapp"> {{ row?.otc_order_number }}</div>
+                                        </td>
+                                        <td class="text-nowrap"> 
+                                            <div class="td-wrapp"> {{ row?.order_date | date :'dd-MM-yyyy hh:mm:ss a' }}
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.order_total_amount | number }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.order_month_year }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.account_id }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.account_data.name }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.org_name }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.latest_invoicing_timeline_in_hrs }}
+                                                {{row.latest_invoicing_timeline_in_hrs==="" ? '-' : 'Hr' }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.order_value_invoiced | number }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.day_ago_invoice_amt | number }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.two_days_ago_invoice_amt | number }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.three_days_ago_invoice_amt | number }}</div>
+                                        </td>
+
+                                        <td>
+                                            <div class="td-wrapp"> {{total(row.two_days_ago_invoice_amt ,
+                                                row.day_ago_invoice_amt ) | number}}</div>
+                                        </td>
+                                        
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.long_time_ago_invoice_amt | number }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.order_value_invoiced | number }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.order_value_invoiced_perc
+                                                }}{{row.order_value_invoiced_perc==="" ? '' : '%' }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.day_ago_invoice_amt_perc }}
+                                                {{row.day_ago_invoice_amt_perc==="" ? '' : '%' }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.two_days_ago_invoice_amt_perc }}
+                                                {{row.two_days_ago_invoice_amt_perc==="" ? '' : '%' }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ AddPercentage
+                                                (row.two_days_ago_invoice_amt_perc,row.day_ago_invoice_amt_perc) }}
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.three_days_ago_invoice_amt_perc }}
+                                                {{row.three_days_ago_invoice_amt_perc==="" ? '' : '%' }} </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.long_time_ago_invoice_amt
+                                            }}{{row.long_time_ago_invoice_amt==="" ? '' : '%' }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.order_value_invoiced
+                                            }}{{row.order_value_invoiced==="" ? '' : '%' }}</div>
+                                        </td>
+
+                                        <td>
+                                            <div class="td-wrapp"> {{ row?.total_cancelled | number }} </div>
+                                        </td>
+                                    </tr>
+                                    </ng-container>
+                                    <ng-container *ngIf="items.length == 0">
+                                        <tr>
+                                            No Data Found
+                                        </tr>
+                                    </ng-container>
+                                </table>
+                            </div>
+                            <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord"
+                                *ngIf="totalrecord>10" [recordsPerPage]="noofrecordsperpage"
+                                (onPageChange)="pageChange($event)" [showrecords]="showRecords"></app-pagination>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+<!-- ========Backup Table =========== -->
+<!-- <table class="l-tbl">
+    <tr class="main-tr"> 
+        <td>
+            <div class="td-wrapp d-flex align-items-center"> <span>Order#</span> 
+                <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i>
+            </div>
+        </td>
+        <td>
+            <div class="td-wrapp d-flex align-items-center"> <span>Cost(₹)</span> <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i></div>
+        </td>
+        <td>
+            <div class="td-wrapp d-flex align-items-center"> <span>Distributor</span> <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i></div>
+        </td>
+        <td>
+            <div class="td-wrapp d-flex align-items-center"> <span>Payment Mode</span> <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i></div>
+        </td>
+        <td>
+            <div class="td-wrapp d-flex align-items-center"> <span>Delivery</span> <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i></div>
+        </td>
+        <td>
+            <div class="td-wrapp d-flex align-items-center"> <span>Status</span> <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i></div>
+        </td>
+        <td>
+            <div class="td-wrapp d-flex align-items-center"> <span>Reason</span> <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i></div>
+        </td>
+        <td>
+            <div class="td-wrapp d-flex align-items-center"> <span>Refund Status(₹) </span> <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i></div>
+        </td>
+    </tr>
+    <tr class="click-tr">
+        <td>
+            <div class="td-wrapp d-flex align-items-center">
+                <button class="tbl-btn"><i class="material-icons">expand_more</i> </button>
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            </div>
+        </td>
+        <td colspan="6">
+            <div class="td-wrapp d-flex align-items-center"> <span>Uttar Pradesh</span> </div>
+        </td>
+        <td><button class="tbl-btn btn-tbl-arw pull-right"><i
+                    class="material-icons">expand_more</i><i
+                    class="material-icons curr">expand_less</i> </button></td>
+    </tr>
+    <tr class="tr-show-hide">
+        <td colspan="8" class="p-0">
+            <table width="100%" cellspacing="0" border="0" cellpadding="0" class="tbl-lvl-2">
+                <tr>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <input class="form-check-input ml-40" type="checkbox" value=""
+                                id="flexCheckDefault">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span
+                                class="text-success">Uttar Pradesh</span> </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <span>Entertainment</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>Facebook</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>1,668,014</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>2.06%</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <input class="form-check-input ml-40" type="checkbox" value=""
+                                id="flexCheckDefault">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span
+                                class="text-success">Uttar Pradesh</span> </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <span>Entertainment</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>Facebook</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>1,668,014</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>2.06%</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <input class="form-check-input ml-40" type="checkbox" value=""
+                                id="flexCheckDefault">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span
+                                class="text-success">Uttar Pradesh</span> </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <span>Entertainment</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>Facebook</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>1,668,014</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>2.06%</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <input class="form-check-input ml-40" type="checkbox" value=""
+                                id="flexCheckDefault">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span
+                                class="text-success">Uttar Pradesh</span> </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <span>Entertainment</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>Facebook</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>1,668,014</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>2.06%</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr class="click-tr">
+        <td>
+            <div class="td-wrapp d-flex align-items-center">
+                <button class="tbl-btn"><i class="material-icons">expand_more</i> </button>
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            </div>
+        </td>
+        <td colspan="6">
+            <div class="td-wrapp d-flex align-items-center"> <span>Maharashtra</span> </div>
+        </td>
+        <td><button class="tbl-btn btn-tbl-arw pull-right"><i
+                    class="material-icons">expand_more</i> <i
+                    class="material-icons curr">expand_less</i></button></td>
+    </tr>
+    <tr class="tr-show-hide">
+        <td colspan="8" class="p-0">
+            <table width="100%" cellspacing="0" border="0" cellpadding="0" class="tbl-lvl-2">
+                <colgroup>
+                    <col width:"120">
+                    <col width:"250">
+                    <col width:"250">
+                    <col width:"250">
+                    <col width:"250">
+                    <col width:"250">
+                    <col width:"250">
+                    <col width:"250">
+                </colgroup>
+                <tr>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <input class="form-check-input ml-40" type="checkbox" value=""
+                                id="flexCheckDefault">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span
+                                class="text-success">Uttar Pradesh</span> </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <span>Entertainment</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>Facebook</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>1,668,014</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>2.06%</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <input class="form-check-input ml-40" type="checkbox" value=""
+                                id="flexCheckDefault">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span
+                                class="text-success">Uttar Pradesh</span> </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <span>Entertainment</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>Facebook</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>1,668,014</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>2.06%</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <input class="form-check-input ml-40" type="checkbox" value=""
+                                id="flexCheckDefault">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span
+                                class="text-success">Uttar Pradesh</span> </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <span>Entertainment</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>Facebook</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>1,668,014</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>2.06%</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <input class="form-check-input ml-40" type="checkbox" value=""
+                                id="flexCheckDefault">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span
+                                class="text-success">Uttar Pradesh</span> </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center">
+                            <span>Entertainment</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>Facebook</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>1,668,014</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>34,291</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp d-flex align-items-center"> <span>2.06%</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table> -->
+<ng-template #orderDetails let-d="dismiss">
+    <order-details [order]="orderInformations"></order-details>
+</ng-template>
+<ng-template #ExcelDownload let-d="dismiss">
+    <app-report-download-popup [data]="EDownload" [count]="count" [pageName]="pageName"></app-report-download-popup>
+</ng-template>

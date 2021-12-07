@@ -1,0 +1,338 @@
+<!-- <div class="modal-dialog modal-xl modal-dialog-centered"> -->
+
+
+
+<div class="modal-content" style="width: 120%; margin-left: -177px;">
+    <div class="modal-header modal-title">
+        Order Details
+        <!-- <div (click)="closeModal()" type="button"><i class="fa fa-times"></i></div> -->
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <ul class="feedback-order-series">
+                        <li>
+                            <div class="o-title">Order Number</div>
+                            <div class="o-desc">{{ item?.order_number }}</div>
+                        </li>
+                        <li>
+                            <div class="o-title">Order Date</div>
+                            <div class="o-desc">{{ item?.order_date }}</div>
+                        </li>
+                        <li>
+                            <div class="o-title">Payment Method </div>
+                            <div class="o-desc">{{ item?.payment_method =='COD' ? 'On Credit': item?.payment_method
+                                =='COD_LOYALTY' ? 'On Credit & Loyalty':item?.payment_method =='WIRE_TRANSFER' ? 'Online
+                                Transfer' : item?.payment_method =='WIRE_TRANSFER_LOYALTY' ? 'Online Transfer &
+                                Loyalty': item?.payment_method}}</div>
+                        </li>
+                        <li>
+                            <div class="o-title">Organization ID</div>
+                            <div class="o-desc">{{ item?.otc_primary_org_id}}</div>
+                        </li>
+                        <li>
+                            <div class="o-title">Organization Name </div>
+                            <div class="o-desc">{{ item?.otc_related_org}}</div>
+                        </li>
+                        <li>
+                            <div class="o-title">Division ID </div>
+                            <div class="o-desc">{{ item?.otc_return_to_account_id}}</div>
+                        </li>
+                    </ul>
+
+                    <ul class="feedback-order-series">
+                        <li>
+                           <div [hidden]="iserror =='Yes'"  [innerHtml]="Errormessage"  style="color: red;"></div>
+                        </li>
+                    </ul>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <h3 class="feedback-tbl-header">
+                    Parts in this order
+                </h3>
+                <div class="table-responsive ">
+                    <table class="table table-md">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Parts</th>
+                                <th>Unit price</th>
+                                <th>Qty</th>
+                                <th>Amount(₹)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="item?.order_lines?.length && !isReturn && !isOrderInProcessSelected">
+                                <tr *ngFor="let item of item?.order_lines; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>
+                                        <div class="d-inline-flex">
+                                            <img alt="" [src]="item?.images"
+                                                style="width: 44px; height: 30px;">
+                                        </div>
+                                        <div class="d-inline-flex ps-2"
+                                            style="vertical-align: top; flex-direction: column;">
+                                            <div class="tbl-c-title"
+                                                [routerLink]="['/shop/product-details/',item.part_number]">{{
+                                                item?.part_number }}</div>
+                                            <div *ngIf="!isReturn" class="tbl-c-desc" style="cursor: pointer;"
+                                                title="{{ (item?.part_desc == '' || item?.part_desc == null) ? '-' : item?.part_desc}}">
+                                                {{ (item?.part_desc == " " || item?.part_desc == null) ? "-" :
+                                                item?.part_desc?.substr(0,20)}}
+                                            </div>
+                                            <div *ngIf="isReturn" class="tbl-c-desc" style="cursor: pointer;"
+                                                title="{{ (item?.part_desc == '' || item?.part_desc == null) ? '-' : item?.part_desc}}">
+                                                {{ (item?.part_desc == " " || item?.part_desc == null) ? "-" :
+                                                item?.part_desc?.substr(0,15)}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{item?.total_amount | currencyFormat:'INR'}}
+                                        <div class="td-actual-mrp"> <span>MRP {{item?.siebel_umrp | currencyFormat:'INR'}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>{{ item?.total_quantity }}</td>
+                                    <td class="text-end">{{ item?.total_amount | currencyFormat:'INR' }}</td>
+                                </tr>
+                            </ng-container>
+                            <!-- <ng-container *ngIf="returnOrderList?.length && isReturn && !isOrderInProcessSelected">
+                                <tr *ngFor="let item of returnOrderList; let i = index">
+                                    <td>
+                                        <div class="form-check form-check-inline mb-0" style="min-height: 16px;">
+                                            <input class="form-check-input" value="{{item}}"
+                                                [checked]="item?.cr_request_status === 'In-Process' || item?.cr_request_status === 'Cancelled'"
+                                                [disabled]="item?.cr_request_status === 'In-Process' || item?.cr_request_status === 'Cancelled'"
+                                                (change)="selectItem($event,item)" type="checkbox" />
+                                        </div>
+                                        {{i+1}}
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex">
+                                            <img alt="" [src]="item?.images" style="width: 44px; height: 30px;">
+                                        </div>
+                                        <div class="d-inline-flex ps-2"
+                                            style="vertical-align: top; flex-direction: column;">
+                                            <div class="tbl-c-title"
+                                                [routerLink]="['/shop/product-details/',item?.part_number]">{{
+                                                item?.part_number }}</div>
+                                            <div *ngIf="isReturn" class="tbl-c-desc" style="cursor: pointer;"
+                                                title="{{ (item?.part_desc == '' || item?.part_desc == null) ? '-' : item?.part_desc}}">
+                                                {{ (item?.part_desc == " " || item?.part_desc == null) ? "-" :
+                                                item?.part_desc?.substr(0,13)}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{item?.rate | currencyFormat:'INR'}}
+                                        <div class="td-actual-mrp"> <span *ngIf="item?.rate < item?.umrp">MRP
+                                                {{item?.umrp | currencyFormat:'INR'}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>{{ item?.total_quantity }}</td>
+                                    <td class="text-end">{{ item?.taxable_amount | currencyFormat:'INR' }}</td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="isOrderInProcessSelected">
+                                <tr *ngFor="let item of order?.order_lines; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>
+                                        <div class="d-inline-flex">
+                                            <img alt="" [src]="item?.images" style="width: 44px; height: 30px;">
+                                        </div>
+                                        <div class="d-inline-flex ps-2"
+                                            style="vertical-align: top; flex-direction: column;">
+                                            <div class="tbl-c-title"
+                                                [routerLink]="['/shop/product-details/',item.part_number]">{{
+                                                item?.part_number }}</div>
+                                            <div class="tbl-c-desc" style="cursor: pointer;"
+                                                title="{{ (item?.part_desc == '' || item?.part_desc == null) ? '-' : item?.part_desc}}">
+                                                {{ (item?.part_desc == " " || item?.part_desc == null) ? "-" :
+                                                item?.part_desc?.substr(0,20)}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{item?.rate | currencyFormat:'INR'}}
+                                        <div class="td-actual-mrp"> <span>MRP {{item?.umrp | currencyFormat:'INR'}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>{{ item?.total_quantity }}</td>
+                                    <td class="text-end">{{ getTotal(item) | currencyFormat:'INR' }}</td>
+                                </tr>
+                            </ng-container> -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="5" class="text-end" *ngIf="isReturn">Total : {{
+                                    returnOrderSumAmount?.toFixed(0) |
+                                    currencyFormat:'INR' || 0}}</th>
+                                <th colspan="5" class="text-end" *ngIf="isOrderInProcessSelected">Total : {{
+                                    order?.total_amount?.toFixed(0) | currencyFormat:'INR' || 0 }}</th>
+                                <th colspan="5" class="text-end" *ngIf="isOTCSelected || isFeedBackSelected">Total : {{
+                                    otcOrderSubmit?.toFixed(0) | currencyFormat:'INR' || 0}}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <ng-container>
+                    <div class="table-responsive ">
+                        <table class="table mat-price-table">
+                            <thead>
+                                <tr>
+                                    <th>Total</th>
+                                    <th class="text-end">{{ item?.umrp_total |currencyFormat:'INR' }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Base Discount</td>
+                                    <td class="text-end"><span class="me-3">(-)</span>{{currency}}{{ item?.total_base_discount }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Scheme Discount <span></span></td>
+                                    <td class="text-end"><span class="me-3">(-)</span>{{currency}}{{item?.total_scheme_discount || 0 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>TATA motors Discount <span></span></td>
+                                    <td class="text-end"><span class="me-3">(-)</span>{{currency}}{{ item?.total_tml_rule_discount || 0 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Distributor Discount</td>
+                                    <td class="text-end"><span class="me-3">(-)</span>{{currency}}{{ item?.total_dealer_rule_discount || 0}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>GST <span></span></td>
+                                    <td class="text-end"><span class="me-3">(+)</span>{{currency}}{{ item?.total_tax}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex mat-grand-total border-top border-bottom">
+                            <div class="col" class="feedback-tbl-header"> Grand Total </div>
+                            <div class="col text-end feedback-tbl-header">{{ item?.total_amount?.toFixed(0) | currencyFormat:'INR' }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-between align-items-center mb-2 ">
+                        <h4 class="feedback-tbl-header">Billing Address:</h4>
+                    </div>
+                    <p class="mat-location-name">{{ billingaddress?.street_address1 }}</p>
+                    <p class="mat-deliver-address">{{ billingaddress?.street_address2}}{{
+                        billingaddress?.taluka?(billingaddress?.taluka+','):'' }}
+                        {{ billingaddress?.city?(billingaddress?.city+','):'' }}
+                        {{ shippingaddress?.district?(shippingaddress?.district+','):'' }}
+                        {{ billingaddress?.postal_code ?( ' - '+billingaddress?.postal_code +', '):'' }}
+                        {{  billingaddress?.state  ? ( billingaddress?.state +'.'):'' }}<br>
+                        {{ billingaddress?.country  }}
+                    </p>
+
+                    <div class=" justify-content-between align-items-center mb-2 ">
+                        <h4 class="feedback-tbl-header">Shipping Address:</h4>
+                    </div>
+                    <p class="mat-location-name">{{ shippingaddress?.street_address1 }}</p>
+                    <p class="mat-deliver-address">{{shippingaddress?.street_address2 }}
+                        {{  shippingaddress?.taluka?( shippingaddress?.taluka+','):'' }}
+                        {{ shippingaddress?.city ?(shippingaddress?.city +','):'' }}
+                        {{ shippingaddress?.district ?(shippingaddress?.district +','):'' }}
+                        {{ shippingaddress?.postal_code?( ' - '+shippingaddress?.postal_code+', '):'' }}
+                        {{ shippingaddress?.state ? (shippingaddress?.state  +'.'):'' }}<br>
+                        {{ shippingaddress?.country }}
+                    </p>
+
+                    
+                    
+                    <!-- <br><br><br><br><br><br> -->
+
+                </ng-container>
+            </div>
+
+            <div class="modal-header modal-title" style="width: 100%;">
+                Payment Details
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" >
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-4">
+                    <li>
+                        <div class="o-title">Amount</div>
+                        <div class="o-desc">{{currency}}{{PaymentinfoData[0]?.amount}} </div>
+                    </li>
+                </div>
+                <div class="col-4">
+                    <li>
+                        <div class="o-title">Portal Order Id</div>
+                        <div class="o-desc">{{PaymentinfoData[0]?.portal_order_id}}</div>
+                    </li>
+                </div>
+                <div class="col-4">
+                    <li>
+                        <div class="o-title">Payment Status</div>
+                        <div class="o-desc">{{PaymentinfoData[0]?.payment_status}}</div>
+                    </li>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-4">
+                    <li *ngIf="upi">
+                        <div class="o-title">Bank</div>
+                        <div class="o-desc">{{PaymentinfoData[0]?.bank}}</div>
+                    </li>
+                    <li >
+                        <div class="o-title">Method</div>
+                        <div class="o-desc">{{PaymentinfoData[0]?.method}}</div>
+                    </li>
+                </div>
+                <div class="col-4">
+                    <li>
+                        <div class="o-title">Razor Pay Order Id</div>
+                        <div class="o-desc">{{PaymentinfoData[0]?.razorpay_order_id}} </div>
+                    </li>
+                </div>
+                <div class="col-4">
+                    <li *ngIf="wallet">
+                        <div class="o-title">Wallet</div>
+                        <div class="o-desc"> {{PaymentinfoData[0]?.wallet}}</div>
+                    </li>
+                    <li >
+                        <div class="o-title">Tax</div>
+                        <div class="o-desc">{{PaymentinfoData[0]?.tax}}</div>
+                    </li>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-4">
+                    <li>
+                        <div class="o-title">FEE</div>
+                        <div class="o-desc">{{currency}}{{PaymentinfoData[0]?.fee}}</div>
+                    </li>
+                </div>
+                <div class="col-4">
+                    <li>
+                        <div class="o-title">Razor Payment Id</div>
+                        <div class="o-desc">{{PaymentinfoData[0]?.razorpay_payment_id}}</div>
+                    </li>
+                </div>
+                <div class="col-4">
+                    <li>
+                        <div class="o-title">Contact</div>
+                        <div class="o-desc">{{PaymentinfoData[0]?.contact}}</div>
+                    </li>
+                </div>
+              </div>
+        </div>
+        </div>
+    </div>
+    <!-- </div> -->
+
+    <ng-template #cancelOrder let-d="dismiss">
+        <app-logout [orderCancel]="orderCancel" (userLogout)="orderCancelled($event)"></app-logout>
+    </ng-template>
+
+    <ng-container *ngIf="showLoader">
+        <div class="loader">
+            <div class="ng-spinner ng-spinner-icon"></div>
+        </div>
+    </ng-container>

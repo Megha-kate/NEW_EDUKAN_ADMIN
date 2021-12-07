@@ -1,0 +1,619 @@
+<!-- <div class="l-container l-page-nav">
+        <ul class="l-page-nav__list">
+            <li class="l-page-nav__list-item"><a href="#" class="active">TML Users </a></li>
+            <li class="l-page-nav__list-item"><a href="#">Distributors</a></li>
+            <li class="l-page-nav__list-item"><a href="#">Roles & Permissions</a></li>
+        </ul>
+    </div> -->
+
+<app-submenu-list [ActiveMenu]='0'></app-submenu-list>
+<section class="main-wrapper prod-list-page pb-0">
+
+    <div class="l-container">
+        <div class="search-order-id float-right"> 
+            <span class="material-icons">search </span>
+            <input type="text" class="textfield" placeholder="Search by contact number"
+                (keydown)="SearchByContact($event)" (focusout)="showByContact($event)" [formControl]="AllFilters.controls['contact_no']">
+
+            <div class="btn-filter" ngbDropdown #myDrop="ngbDropdown">
+                <button class="btn-filter" id="filterPopup" ngbDropdownToggle><img src="../../assets/images/filter.svg"
+                        alt="" /></button>
+                <div ngbDropdownMenu aria-labelledby="filterPopup" class="filter-popup" style="width: max-content;">
+                    <!-- <ul class="tags__list" fxFlex="70" style="margin-right: 20px;">
+                        <li *ngFor="let Filterrow of Filterarray"><a>{{Filterrow.Value}} <img
+                                    [hidden]="Filterrow.Key == 'from_date'" (click)="onRemoveFilter(Filterrow)"
+                                    src="../../assets/images/tag-close.svg" /></a></li>
+    
+                    </ul> -->
+                    <div class="arrow"></div>
+
+
+                    
+                    <form [formGroup]="AllFilters">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-6 border-right">
+                                    <label>Search By Type </label>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Type</label><br />
+                                            <div class="srch-box">
+                                               <select class="textfield" [(ngModel)]="typeData"
+                                                    (ngModelChange)="this.GetPosition(typeData)"
+                                                    [formControl]="AllFilters.controls['role_id']">
+                                                    <option *ngFor="let type of RoleType" [value]="type.role_id">
+                                                        {{type.role_name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Role</label><br />
+                                            <div class="srch-box">
+                                                <select class="textfield"
+                                                    (selectionChange)="OnselectedPosition($event.value)"
+                                                    [formControl]="AllFilters.controls['position_id']">
+                                                    <option *ngFor="let position of PositionType"
+                                                        [value]="position.position_id">
+                                                        {{position.position_name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Status </label><br />
+                                            <select disableRipple class="textfield"
+                                                [formControl]="AllFilters.controls['status']">
+                                                <option value="isactive">Active</option>
+                                                <option value="Inactive">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Distributor Code </label>
+                                            <div class="srch-box">
+                                                <input [formControl]="AllFilters.controls['distributor_code']"
+                                                    type="text" class="textfield " id="inputPassword" (keypress)="omitSpecialChar($event)"/>
+                                            </div>
+                                        </div>
+                                    </li>
+
+
+                                </div>
+                                <div class="col-6 border-right">
+                                    <label>Search By Details </label>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">First Name</label>
+                                            <div class="srch-box">
+                                                <input [formControl]="AllFilters.controls['first_name']" type="text"
+                                                    class="textfield " id="inputPassword" (keypress)="omitSpecialChar($event)"/>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Last Name </label>
+                                            <div class="srch-box">
+                                                <input [formControl]="AllFilters.controls['last_name']" type="text"
+                                                    class="textfield " id="inputPassword" (keypress)="omitSpecialChar($event)"/>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">User Name</label>
+                                            <div class="srch-box">
+                                                <input [formControl]="AllFilters.controls['user_name']" type="text"
+                                                    class="textfield " id="inputPassword" (keypress)="omitSpecialChar($event)"/>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <a (click)="SearchAllDate()"
+                                        style="color: blue;padding-right: 15px;cursor: pointer;">Search</a>
+                                    <a (click)="resetALl();" style="color: red;cursor: pointer;">Reset</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div> 
+
+      
+
+        <button class="button float-left btn-add-new" (click)="open(content)">
+            <span class="material-icons mr-2">
+                control_point
+            </span> ADD NEW MEMBER
+        </button>
+
+        <div class="l-content w-100 pl-0" style="min-height: 400px;"  ngbDropdown #content1="ngbDropdown">
+
+            <ng-template #content let-modal>
+                <div class="popup-add-roll" *ngIf="isRegistrationForm">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title" (click)="modal.dismiss('Cross click')">User Registration</h4>
+                        <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span> </button> -->
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="itemForm">
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <div *ngIf="!isDistributor">
+                                        <label>Contractor</label>
+                                        <ul class="form-chk-list">
+                                            <li class="form-chk-list-item chkbox">
+                                                <input name="A" (change)="handleChange($event)" type="radio" id="aa">
+                                                <label for="aa"> Yes</label>
+                                            </li>
+                                            <li class="form-chk-list-item chkbox">
+                                                <input name="A" type="radio" id="bb">
+                                                <label for="bb"> No</label>
+
+
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>Status</label>
+                                    <div class="toggle-switch" >
+                                        <!-- <label class="toggle-switch__label">
+                                            <input (change)="statuschange($event)"
+                                                [formControl]="itemForm.controls['is_active']"
+                                                class="toggle-switch__check" type="checkbox" />
+                                            <div class="toggle-switch__design" >
+                                                <span class="toggle-switch__circle"></span>
+                                                <span class="material-icons done"  > done </span>
+                                                <span class="material-icons clear"> clear </span>
+                                            </div>
+                                        </label> -->
+
+                                        <mat-slide-toggle class="example-margin" [color]="color" [checked]="itemForm.controls['is_active']"
+                                             (change)="statuschange($event)" [formControl]="itemForm.controls['is_active']">
+                                                   {{CheckedLable}}
+                                               </mat-slide-toggle>
+
+                                     <a *ngIf="iscontactosevice" style=" text-decoration-line: underline; color: blue; "
+                                      routerLinkActive="active" routerLinkActive="active">Click here to send reset password</a>
+
+                                 <div style="color: green;"> {{issmssend}}</div>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group col-6">
+                                <label>User Name</label>
+                                <input type="text" class="textfield" placeholder="Admin">
+                            </div> -->
+                                <div class="form-group col-6">
+                                    <label>Type </label>
+                                    <select [formControl]="itemForm.controls['role_id']" (change)="onChange($event)"
+                                        class="form-control" class="textfield" required [disabled]="isDistributor">
+                                        <option value="none" selected disabled hidden>
+                                            Select Type
+                                        </option>
+                                        <option *ngFor="let type of RoleType" [value]="type.role_id">
+                                            {{type.role_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>Role</label>
+                                    <select [formControl]="itemForm.controls['position_id']" class="form-control"
+                                        class="textfield" required>
+                                        <option value="none" selected disabled hidden>
+                                            Select Role*
+                                        </option>
+                                        <option *ngFor="let position of PositionType" [value]="position.position_id">
+                                            {{position.position_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>First Name</label>
+                                    <input [formControl]="itemForm.controls['first_name']" type="text" class="textfield"
+                                        placeholder="First Name*" required (keypress)="omitSpecialChar($event)"/>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>Last Name</label>
+                                    <input [formControl]="itemForm.controls['last_name']" type="text" class="textfield"
+                                        placeholder="Last Name" (keypress)="omitSpecialChar($event)"/>
+                                </div>
+                                <div class="form-group col-6" *ngIf="!isContractor">
+                                    <label>User Name</label>
+                                    <input [formControl]="itemForm.controls['username']" type="text" class="textfield"
+                                        placeholder="User Name*">
+                                </div>
+                                <div class="form-group col-6" *ngIf="isContractor">
+                                    <label>User Name (Email id)*</label>
+                                    <input  [formControl]="itemForm.controls['username']" type="text" class="textfield"
+                                        placeholder="User Name*" (keypress)="omitSpecialChar($event)"/>
+                                </div>
+                                <div class="form-group col-6" *ngIf="isDist">
+                                    <label>Distributor Name</label>
+                                    <input [formControl]="itemForm.controls['distributor_code']" type="text"
+                                        (change)="onDSTCodeChange($event)" class="textfield"
+                                        placeholder="Distributor Code*" [readonly]="isDistributor" (keypress)="omitSpecialChar($event)"/>
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label>Phone Number</label>
+                                    <!-- <input  [formControl]="itemForm.controls['phone_number']" type="text" class="textfield" placeholder="Phone Number*"> -->
+                                    <input type="text" pattern="[7896][0-9]{9}" maxlength="10" minlength="10"
+                                        class="textfield" (keypress)="numberOnly($event)" type="text" name="phone"
+                                        [formControl]="itemForm.controls['phone_number']" placeholder="Phone number">
+                                </div>
+                                <div class="form-group col-6" *ngIf="!isContractor">
+                                    <label>Email Id</label>
+                                    <input [formControl]="itemForm.controls['email_id']" type="text" class="textfield"
+                                        placeholder="Email Id">
+                                </div>
+                                <div class="form-group col-6" *ngIf="!isContractor">
+                                    <label>Distributor Code</label>
+                                    <input [formControl]="itemForm.controls['distributor_code']" type="text" class="textfield"
+                                        placeholder="Distributor Code">
+                                </div>
+
+
+                            </div>
+                            <div style="color: red;"> {{Valdationmessage}}</div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button button--btn-brdr clr-light-blue"
+                            (click)="modal.close('Save click')">Cancel</button>
+                        <button type="button" class="button btn-outline-dark" (click)="saveuserdata()">Next</button>
+                    </div>
+                </div>
+
+                <div id="GeoDiv" class="popup-add-roll" *ngIf="!isRegistrationForm">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">User Registration</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span> </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="popup-add-roll scheam-popup">
+
+                            <div class="modal-body scheme-drags">
+                                <div class="row">
+                                    <div fxLayout="row wrap" style="margin-top: 10px;">
+                                        <div fxFlex="100" fxFlex.gt-sm="30"></div>
+                                        <div fxFlex="100" fxFlex.gt-sm="30">
+
+                                            Search By
+                                            <mat-radio-group aria-label="Select an option"
+                                                (change)="ChangeType($event)">
+                                                <mat-radio-button [checked]="showlocationtype === 'Dist'" value="Dist">
+                                                    Distributor</mat-radio-button>
+                                                <mat-radio-button [checked]="showlocationtype === 'Div'" value="Div">
+                                                    Division</mat-radio-button>
+                                            </mat-radio-group>
+                                        </div>
+                                        <!-- <div fxFlex="100" fxFlex.gt-sm="30">
+
+
+
+                                        </div> -->
+                                    </div>
+
+                                    <!-- =========  Product Selection  =========   -->
+                                    <div class="scheme-drags__product-selection d-flex">
+                                        <div class="scheme-drags__product-selection-products-nav">
+                                            <h4>All Products</h4>
+                                            <div class="scheme-drags__product-selection-products-nav-list-wrapp">
+                                                <div class="search-order-id">
+                                                    <span class="material-icons"> search </span>
+                                                    <input autocomplete="off" (keyup)="Distributortype()"
+                                                        [formControl]="AllFilters.controls['org_name']"
+                                                        style="width: max-content !important;"
+                                                        placeholder="Search Distributor" class="textfield" type="text"
+                                                        matInput>
+                                                    <div class="btn-filter"> </div>
+                                                </div>
+                                                <ul class="scheme-drags__product-selection-products-nav-list"
+                                                    *ngIf="showDiv">
+                                                    <li class="scheme-drags__product-selection-products-nav-list-item main"
+                                                        *ngFor="let DistLit of DistributorData">
+                                                        <a href="javascript:void(0)" id="products-nav-click-a"
+                                                            class="products-nav-click"
+                                                            (click)="toggle_vehicle_list(DistLit, 'products-nav-click-a')">
+                                                            <span class="material-icons"> arrow_right </span>
+                                                        </a>
+                                                        <label for="a-m-2">
+                                                            {{DistLit.distributor_name}}
+                                                        </label>
+                                                        <ul class="scheme-drags__product-selection-products-nav-sublist"
+                                                            id={{DistLit.distributor_id}}>
+                                                            <form [formGroup]="DivisionList">
+                                                                <li *ngFor="let divi of DistLit.divData"
+                                                                    class="scheme-drags__product-selection-products-nav-sublist-item">
+                                                                    <label for="{{divi.div_id}}">
+                                                                        <input type="checkbox"
+                                                                            [formControl]="DivisionList.controls[divi.div_id]"
+                                                                            id="{{divi.div_id}}"
+                                                                            (change)="onChangeEvent(divi,$event)">
+                                                                        {{divi.div_name}}</label>
+                                                                </li>
+                                                            </form>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="scheme-drags__product-selection-products-nav-list"
+                                                    *ngIf="showDist">
+                                                    <!-- <li class="scheme-drags__product-selection-products-nav-list-item main"
+                                                    *ngFor="let DistLit of DistributorData ; let i=index;">
+                                                        <a href="javascript:void(0)" id="products-nav-click-a" class="products-nav-click"
+                                                            (click)="toggle_vehicle_list(DistLit, 'products-nav-click-a')">
+                                                            <span class="material-icons"> arrow_right </span>
+                                                        </a>
+                                                        <label for="a-m-2">
+                                                            {{DistLit.distributor_name}}
+                                                        </label> -->
+                                                    <ul id=y>
+                                                        <form [formGroup]="DistributorList">
+                                                            <li *ngFor="let DistLit of DistributorData ; let k=index;"
+                                                                class="scheme-drags__product-selection-products-nav-sublist-item">
+                                                                <label for="DistLit_{{k}}">
+                                                                    <input type="checkbox"
+                                                                        [formControl]="DistributorList.controls[DistLit.distributor_id]"
+                                                                        id="DistLit_{{k }}"
+                                                                        (change)="onChangeEvent(DistLit,$event)">
+                                                                    {{DistLit.distributor_name}}</label>
+                                                            </li>
+                                                        </form>
+                                                    </ul>
+                                                    <!-- </li> -->
+                                                </ul>
+                                            </div>
+                                            <h5 class="text-right note"></h5>
+                                        </div>
+                                        <div class="scheme-drags__product-selection-btns">
+                                            <button class="button button--btn-brdr" (click)="Add()">ADD</button>
+                                            <a><span class="material-icons"> east </span></a>
+                                        </div>
+                                        <div class="scheme-drags__product-selection-blocks">
+                                            <h4>Selected Product Lines/Products</h4>
+                                            <div class="scheme-drags__product-selection-blocks-inside">
+                                                <ul class="tags dark-blue" *ngIf="showDiv">
+                                                    <h5>Selected Divisions:</h5>
+                                                    <li class="tags__list" *ngFor="let divi of selectedDivArray">
+                                                        <a>{{divi.div_name}} <span class="material-icons"
+                                                                (click)="removeDivision(divi)"> close </span> </a>
+                                                    </li>
+                                                    <!-- <li class="tags__list">
+                                                        <a href="#">Bearings <span class="material-icons"> close </span> </a>
+                                                    </li> 
+                                                    <li class="tags__list">
+                                                        <a href="#">Body parts <span class="material-icons"> close </span> </a>
+                                                    </li> -->
+                                                </ul>
+                                                <ul class="tags dark-blue" *ngIf="showDist">
+                                                    <h5>Selected Distributors:</h5>
+                                                    <li class="tags__list" *ngFor="let divi of selectedDivArray">
+                                                        <a>{{divi.distributor_name}} <span class="material-icons"
+                                                                (click)="removeDist(divi)"> close </span> </a>
+                                                    </li>
+                                                    <!-- <li class="tags__list">
+                                                        <a href="#">278613999912_Piston Ring R/Kit - A/comp <span class="material-icons"> close </span> </a>
+                                                    </li> 
+                                                    <li class="tags__list">
+                                                        <a href="#">278613999917_Major Repair Kit <span class="material-icons"> close </span> </a>
+                                                    </li> -->
+                                                </ul>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div>
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="button button--btn-brdr clr-light-blue"
+                            (click)="back()">Back</button>
+                        <button type="button" class="button btn-outline-dark" (click)="save()">Save</button>
+                    </div>
+                </div>
+            </ng-template>
+            <!-- ===================================================
+                # eDukaan_Admin_Users_4
+            =================================================== -->
+ 
+            <div class="tags d-flex justify-content-end mb-4">
+                <ul class="tags__list" style="margin-right: 20px;">
+                    <li *ngFor="let Filterrow of Filterarray"><a style="cursor:default">{{Filterrow.Value}} <img
+                                (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key == 'from_date'"
+                                src="../../assets/images/tag-close.svg" /></a></li>
+                </ul>
+                <!-- <ul class="tags__list" fxFlex="30">
+                    <select class="form-select" aria-label="Default select example" (change)="ExportDownload($event)">
+                        <option selected value="" disabled>Select</option>
+                        <option value="Excel">Excel</option>
+                    </select>
+                </ul> -->
+            </div>
+            <div class="tbl-reports card-shadow bg-white h-100">
+                <div class="l-tbl-accordion overflow-auto">
+                    <div class="w-100 border-0 p-3">
+                        <div class="table-responsive">
+                            <table class="l-tbl">
+                                <colgroup>
+                                    <col width="50px" />
+                                </colgroup>
+                                <tr class="main-tr">
+                                    <!-- <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <div class="chkbox">
+                                                <input type="checkbox" id="a">
+                                                <label for="a"> </label>
+                                            </div>
+                                        </div>
+                                    </td> -->
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>User Name</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Type</span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Role</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>First Name</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Last Name </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Contact Number </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Email </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Contractor </span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Distributor Code </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Status</span>
+                                    </div>
+                                     </td>
+                                     <td>
+                                       <div class="td-wrapp d-flex align-items-center">
+                                           <span>  Action </span>
+                                           </div>
+                                             
+                                           
+                                         </td>
+
+                                </tr>
+                                <tr *ngFor="let row of items" class="click-tr">
+                                    <!-- <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <div class="chkbox">
+                                                <input type="checkbox" id="a">
+                                                <label for="a"> </label>
+                                            </div>
+                                        </div>
+                                    </td> -->
+                                    <td>
+                                        <div class="td-wrapp"> {{ row?.user_name }}</div>
+                                    </td>
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">{{ row?.role_name }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> {{ row?.position_name }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-start flex-column"> {{ row?.first_name
+                                            }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-start flex-column"> {{ row?.last_name }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-start flex-column"> {{ row?.contact_no
+                                            }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-start flex-column"> {{ row?.email_id }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-start flex-column"> {{row.is_contractor
+                                            ? 'Yes' : 'No'}}</div>
+                                    </td>
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-start flex-column"> {{
+                                            row?.distributor_code }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">  {{row.is_active ? 'Active' : 'Inactive'}}</div>
+
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+
+<!-- 
+                                            <button class="button float-right btn-add-new"
+                                                (click)="Editpopup(content,row)">
+                                                Edit
+                                            </button> -->
+                                            <button mat-icon-button mat-sm-button color="primary" class="mr-1" (click)="Editpopup1(content,row)">
+                                                <mat-icon>edit</mat-icon>
+                                              </button>
+
+                                            <!-- &nbsp;
+                                            <button class="button float-right btn-add-new"
+                                                (click)="Addpermissionpopup(content1,row)">
+                                                Add Permission
+                                            </button> -->
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="paging" style="margin-bottom: 40px;margin-top: 20px;">
+                    <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
+                        [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)" [showrecords]="showRecords" ></app-pagination>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- </section> -->

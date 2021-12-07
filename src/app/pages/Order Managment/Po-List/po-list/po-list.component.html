@@ -1,0 +1,396 @@
+<app-submenu-list [ActiveMenu]='4'></app-submenu-list>
+<section class="main-wrapper prod-list-page">
+    <div class="justify-content-end mb-4  float-left">
+        <ul class="tags__list" style="margin-right: 20px;">
+            <li *ngFor="let Filterrow of Filterarray" style="margin-left: 53px;"><a>{{Filterrow.Value}} <img
+                        (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key == 'from_date'"
+                        src="./assets/images/tag-close.svg" /></a></li>
+        </ul>
+    </div>
+    <div class="l-container">
+        <div class="search-order-id float-right">
+            <span class="material-icons"> search </span>
+            <input type="text" class="textfield" placeholder="Search by PO Number"
+                (keydown)="SearchPo($event)" (focusout)="showAccount($event)" [formControl]="AllFilters.controls['po_number']" >
+            <div class="btn-filter" ngbDropdown #myDrop="ngbDropdown">
+                <button class="btn-filter" id="filterPopup" ngbDropdownToggle><img src="./assets/images/filter.svg"
+                        alt="" /></button>
+                <div ngbDropdownMenu aria-labelledby="filterPopup" class="filter-popup">
+                    <div class="arrow"></div>
+                    <form [formGroup]="AllFilters">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <h4>DATE</h4>
+                                    <li class="sidebar-cards__item">
+                                        <ul class="sidebar-cards__chk-list">
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input (change)="changedatefilter('Today')" name="A" type="radio"
+                                                    id="aa">
+                                                <label for="aa"> Today</label>
+                                            </li><br>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input name="A" type="radio" id="bb"
+                                                    (change)="changedatefilter('Sevenday')">
+                                                <label for="bb"> Last 7 days</label>
+                                            </li><br>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input name="A" type="radio" id="cc"
+                                                    (change)="changedatefilter('thirtyDays')" [checked]="isThirtyDays">
+                                                <label for="cc">Last 30 days</label>
+
+                                            </li><br>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input (change)="changedatefilter('Custom')" name="A" type="radio"
+                                                    id="dd" [value]="ShowCustom">
+                                                <label for="dd">Custom</label>
+                                            </li>
+
+                                            <li class="sidebar-cards__chk-list-item" [hidden]="!ShowCustom">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group m-0 calendar">
+                                                            <div class="input-group">
+                                                                <input class="form-control"
+                                                                    [formControl]="AllFilters.controls['from_date']"
+                                                                    placeholder="yyyy-mm-dd" [readonly]="true" name="dp"
+                                                                    ngbDatepicker #d="ngbDatepicker">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-outline-secondary calendar"
+                                                                        (click)="d.toggle()" type="button"><span
+                                                                            class="material-icons">
+                                                                            calendar_today
+                                                                        </span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group m-0">
+                                                            <div class="input-group calendar">
+                                                                <input class="form-control"
+                                                                    [formControl]="AllFilters.controls['to_date']"
+                                                                    placeholder="yyyy-mm-dd" [readonly]="true" name="dp"
+                                                                    ngbDatepicker #d1="ngbDatepicker">
+                                                                <div class="input-group-append1">
+                                                                    <button class="btn btn-outline-secondary calendar"
+                                                                        (click)="d1.toggle()" type="button"><span
+                                                                            class="material-icons">
+                                                                            calendar_today
+                                                                        </span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>OTC Number</label><br />
+                                            <input [formControl]="AllFilters.controls['otc_number']" type="text"
+                                                class="textfield " id="inputPassword">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>EDN PO Number</label><br />
+                                            <input [formControl]="AllFilters.controls['po_number']" type="text"
+                                                class="textfield " id="inputPassword">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>PO Order Number</label><br />
+                                            <input [formControl]="AllFilters.controls['sap_order_number ']" type="text"
+                                                class="textfield " id="inputPassword">
+                                        </div>
+                                    </li>
+                                </div>
+
+                                <div class="col-4 border-right">
+
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>Distributor</label><br>
+                                            <input autocomplete="off" (keyup)="Distributortype()"
+                                                [formControl]="AllFilters.controls['org_name']"
+                                                style="width: max-content !important;" placeholder="Search Distributor"
+                                                class="textfield" type="text" matInput>
+                                        </div>
+                                        <ul class="sidebar-cards__chk-list">
+                                            <form [formGroup]="DistributorList">
+                                                <li *ngFor="let DistLit of DistributorData ; let i=index;"
+                                                    class="form-chk-list-item chkbox">
+                                                    <input
+                                                        [formControl]="DistributorList.controls[DistLit.distributor_id]"
+                                                        (change)="dstfilteradd(DistLit,$event)" name="B" type="checkbox"
+                                                        id={{i}}>
+                                                    <label for={{i}} title="{{DistLit.distributor_name}}">
+                                                        {{DistLit.distributor_name.substr(0,25)}}</label>
+                                                </li>
+                                            </form>
+                                        </ul>
+                                    </li>
+                                    <!-- <li>
+                                        <div class="srch-box">
+                                            <label>PO Status</label> <br />
+                                            <form [formGroup]="DivisionList">
+                                    <li *ngFor="let divi of Division; let j=index;"
+                                        class="form-chk-list-item chkbox">
+                                        <input type="checkbox" [formControl]="DivisionList.controls[divi.div_id]"
+                                            id="div_{{j}}" (change)="divisionfilteradd(divi,$event)">
+                                        <label for="div_{{j}}"
+                                            title="{{divi.div_name}}">{{divi.div_name.substr(0,25)}}</label>
+                                    </li>
+                    </form>
+
+                    <div class="sidebar-cards__ttl d-flex justify-content-between align-items-center">
+                        <label>State</label>
+                    </div>
+                    <div class="srch-box">
+                        <select  class="textfield" [formControl]="itemForm.controls.state">
+                            <option  *ngFor="let state of StateData;" [value]="state.state_code">{{state.state_name}}</option>
+                        </select>
+                    </div> 
+                </div> 
+                </li> -->
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Status</label><br />
+                                            <div class="srch-box">
+                                                <select class="textfield"
+                                                    [formControl]="AllFilters.controls['po_status']">
+                                                    <option *ngFor="let type of StatusData"   [value]=type.ORD_STAT_s  >
+                                                        {{type.ORD_STAT_s}} </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </div>
+
+                                <div class="col-4 border-right">
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>Customer</label><br>
+                                            <input autocomplete="off" (keyup)="accountType()"
+                                                [formControl]="AllFilters.controls['account_name']"
+                                                style="width: max-content !important;" placeholder="Search Customer"
+                                                class="textfield" type="text" matInput>
+                                        </div>
+                                        <ul class="sidebar-cards__chk-list">
+                                            <form [formGroup]="CustomerList">
+                                                <li *ngFor="let CustData of Accountnamedata;let k=index;"
+                                                    class="form-chk-list-item chkbox">
+                                                    <input [formControl]="CustomerList.controls[CustData.account_id]"
+                                                        (change)="filterMyOptionsCustname(CustData,$event)"
+                                                        type="checkbox" name="A" id="cust_{{k}}">
+                                                    <label for="cust_{{k}}"
+                                                        title="{{CustData.account_name}}">{{CustData.account_name.substr(0,25)}}</label>
+                                                </li>
+                                            </form>
+                                        </ul>
+                                    </li>
+
+                                    <button (click)="SearchAllDate()" class="btn btn-outline-primary">Search</button>&nbsp;
+                                    <button (click)="resetALl();" class="btn btn-outline-primary">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class=" justify-content-end   float-left">
+
+                <ul  fxFlex="30" style="color: darkolivegreen;" matTooltip="Export to Excel"
+                (click)="ExportDownload();">
+                  <span class='fa-stack fa-lg'>
+               <i class='fas fa-file-excel fa-pull-right fa-2x'></i>
+        
+                </span>
+        
+            </ul>
+             </div>
+        </div>
+        <!-- <div class="tags d-flex justify-content-end mb-4">
+            <ul class="tags__list" style="margin-right: 20px;">
+                <li *ngFor="let Filterrow of Filterarray"><a style="cursor:default" >{{Filterrow.Value}}
+                        <img (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key == 'from_date'"
+                            src="../../assets/images/tag-close.svg" /></a></li>
+            </ul>
+            
+            <ul class="tags__list" fxFlex="30" style="color: darkolivegreen; width: 100px;" matTooltip="Export to Excel"
+            (click)="ExportDownload();">
+            <span class='fa-stack fa-lg' style="margin-top: -59px;margin-left: 78px;">
+                <i class='fas fa-file-excel fa-pull-right fa-2x'></i>
+
+            </span>
+        </ul>
+        </div> -->
+        <div class="l-content w-100 pl-0">
+            <div class="tbl-reports card-shadow bg-white h-100">
+                <div class="l-tbl-accordion overflow-auto">
+                    <div class="w-100 border-0 p-3">
+                        <div class="table-responsive">
+                            <table class="l-tbl">
+                                <tr class="main-tr">
+
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>PO Number</span>
+                                            <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>OTC Number </span>
+                                            <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Customer Name </span>
+                                            <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Division Name</span>
+                                            <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Distributor Name</span>
+                                            <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>SAP Order No</span>
+                                            <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Order Date</span>
+                                            <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Order Status </span>
+                                            <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                        </div>
+                                    </td>
+
+
+                                    <!-- <td>
+                                        &nbsp;
+                                    </td> -->
+                                </tr>
+
+                                <ng-container *ngIf="items.length >0">
+
+                                    <tr *ngFor="let row of items" class="click-tr">
+
+
+                                        <td class="text-nowrap" style="cursor: pointer; color: blue;">
+                                            <div class="td-wrapp" (click)="viewPodetails(row.po_row_id)"> {{ row?.po_number }}
+                                            </div>
+
+                                        </td>
+
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp" style="color: blue;cursor: pointer;" class="td-wrapp"
+                                                (click)="details(row);">{{ row?.otc_number }}
+                                            </div>
+
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp">{{ row?.ship_account_name }}
+
+                                            </div>
+
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp">{{ row?.ord_division_name }}
+                                            </div>
+
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp">{{ row?.organization_name }}
+                                            </div>
+
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp">{{ row?.sap_order_number }}
+                                            </div>
+
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp">{{ row?.order_date | date :'dd-MM-yyyy hh:mm:ss a'
+                                                }}
+                                            </div>
+
+                                        </td>
+
+
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp"> {{ row?.order_status}}
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                </ng-container>
+                                <ng-container *ngIf="items.length == 0">
+                                    <tr>
+                                        No Data Found
+                                    </tr>
+                                </ng-container>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paging">
+
+
+
+                <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
+                    [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)"
+                    [showrecords]="showRecords"></app-pagination>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- </section>  -->
+
+    <ng-template #orderDetails let-d="dismiss">
+        <order-details [order]="orderInformations"></order-details>
+    </ng-template>
+    <ng-template #PoDetails let-d="dismiss3">
+        <app-po-details [item]="PoListInformations"></app-po-details>
+    </ng-template>
+    <ng-template #ExcelDownload let-d="dismiss">
+        <app-report-download-popup [data]="EDownload" [count]="count" [pageName]="pageName">
+        </app-report-download-popup>
+    </ng-template>

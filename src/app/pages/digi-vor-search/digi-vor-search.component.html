@@ -1,0 +1,180 @@
+<!-- new design code            -->
+
+<div class="popup-add-roll scheam-popup">
+
+    <div class="modal-body scheme-drags">
+        <div class="row">
+
+
+            <!-- =========  Product Selection  =========   -->
+            <div class="scheme-drags__product-selection d-flex">
+                <div class="scheme-drags__product-selection-products-nav">
+                    <h4>Distributor / Division</h4>
+                    <div class="scheme-drags__product-selection-products-nav-list-wrapp">
+                        <div class="search-order-id" *ngIf="isDistDrpDownVisible">
+                            <span class="material-icons"> search </span>
+                            <input autocomplete="off" (keyup)="Distributortype()"
+                                [formControl]="AllFilters.controls['org_name']" style="width: max-content !important;"
+                                placeholder="Search Distributor" class="textfield" type="text" matInput>
+                            <div class="btn-filter"> </div>
+                        </div>
+                        <ul class="scheme-drags__product-selection-products-nav-list" *ngIf="isDistDrpDownVisible">
+                            <li class="scheme-drags__product-selection-products-nav-list-item main"
+                            *ngFor="let DistLit of DistributorData ; let i=index;">
+                                <a href="javascript:void(0)" id="products-nav-click-a" class="products-nav-click"
+                                    (click)="toggle_vehicle_list(DistLit, 'products-nav-click-a')">
+                                    <span class="material-icons"> arrow_right </span>
+                                </a>
+                                <label for="a-m-2">
+                                    {{DistLit.distributor_name}}
+                                </label>
+                                <ul class="scheme-drags__product-selection-products-nav-sublist" id={{DistLit.distributor_id}}>
+                                    <form [formGroup]="DivisionList">
+                                        <li *ngFor="let divi of DistLit.divData; let j=index;"
+                                            class="scheme-drags__product-selection-products-nav-sublist-item">
+                                            <label for="div_{{j}}">
+                                            <input type="checkbox" [formControl]="DivisionList.controls[divi.div_id]"
+                                                id="div_{{j}}" (change)="divisionfilteradd(divi,$event)">
+                                            {{divi.div_name}}</label>
+                                        </li>
+                                    </form>
+                                </ul>
+                            </li>
+                            <!-- <li class="scheme-drags__product-selection-products-nav-list-item main">
+                                <a href="javascript:void(0)" id="products-nav-click-b" class="products-nav-click"
+                                    (click)="toggle_vehicle_list('products-subnav-b' )">
+                                    <span class="material-icons"> arrow_right </span>
+                                </a>
+                                <label for="a-m-2">
+                                    Division
+                                </label>
+                                <ul class="scheme-drags__product-selection-products-nav-sublist" id="products-subnav-b">
+                                    <form [formGroup]="DivisionList">
+                                        <li *ngFor="let divi of Division; let j=index;"
+                                            class="scheme-drags__product-selection-products-nav-sublist-item">
+                                            <input type="checkbox" [formControl]="DivisionList.controls[divi.div_id]"
+                                                id="div_{{j}}" (change)="divisionfilteradd(divi,$event)">
+                                            <label for="div_{{j}}">{{divi.div_name}}</label>
+                                        </li>
+                                    </form>
+                                </ul>
+                            </li> -->
+                        </ul>
+                        
+                        <ul class="scheme-drags__product-selection-products-nav-list" *ngIf="!isDistDrpDownVisible">
+                            <!-- <li class="scheme-drags__product-selection-products-nav-list-item main"
+                            *ngFor="let DistLit of DistributorData ; let i=index;">
+                                <a href="javascript:void(0)" id="products-nav-click-a" class="products-nav-click"
+                                    (click)="toggle_vehicle_list(DistLit, 'products-nav-click-a')">
+                                    <span class="material-icons"> arrow_right </span>
+                                </a>
+                                <label for="a-m-2">
+                                    {{DistLit.distributor_name}}
+                                </label> -->
+                                <ul id=y>
+                                    <form [formGroup]="DivisionList">
+                                        <li *ngFor="let divi of Division; let j=index;"
+                                            class="scheme-drags__product-selection-products-nav-sublist-item">
+                                            <label for="div_{{j}}">
+                                            <input type="checkbox" [formControl]="DivisionList.controls[divi.div_id]"
+                                                id="div_{{j}}" (change)="divisionfilteradd(divi,$event)">
+                                            {{divi.div_name}}</label>
+                                        </li>
+                                    </form>
+                                </ul>
+                            <!-- </li> -->
+                        </ul>
+                    </div>
+                    <h5 class="text-right note"></h5>
+                </div>
+                <div class="scheme-drags__product-selection-blocks" style="margin-left: 10px;">
+                    <h4>Part Number</h4>
+                    <div class="scheme-drags__product-selection-products-nav-list-wrapp">
+                        <div class="search-order-id">
+                            <span class="material-icons"> search </span>
+                            <input #partInput autocomplete="off"
+                                (keyup)="partNumbertype(partInput.value)"
+                                [formControl]="AllFilters.controls['partNumber']"
+                                style="width: max-content !important;" placeholder="Search Part Number"
+                                class="textfield" type="text" matInput>
+                            <div class="btn-filter"> </div>
+                        </div>
+                        <ul class="scheme-drags__product-selection-products-nav-list">
+
+                            <li class="scheme-drags__product-selection-products-nav-list-item main">
+                                <a href="javascript:void(0)" id="products-nav-click-c"
+                                    class="products-nav-click"
+                                    (click)="toggle_partNumber('products-subnav-c' )">
+                                    <span class="material-icons"> arrow_right </span>
+                                </a>
+                                <label for="a-m-2">
+                                    <!-- <input type="checkbox" id="a-m-2"> -->
+                                    Parts Number
+                                </label>
+                                <ul class="scheme-drags__product-selection-products-nav-sublist"
+                                    id="products-subnav-c">
+                                    <form [formGroup]="partNumberList">
+                                        <li *ngFor="let part of filteredOptionsSKU; let j=index;"
+                                            class="scheme-drags__product-selection-products-nav-sublist-item">
+                                            <label for="part_{{j}}">
+                                            <input type="checkbox"
+                                                [formControl]="partNumberList.controls[part.part_number]"
+                                                id="part_{{j}}" (change)="partNumberfilteradd(part,$event)">
+                                            {{part.part_number}}_{{part.desc_text}}</label>
+                                        </li>
+                                    </form>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <h5 class="text-right note"> </h5>
+                </div>
+                <div class="scheme-drags__product-selection-btns">
+                    <!-- <button class="button button--btn-brdr">ADD</button>
+                    <a href="#"><span class="material-icons"> east </span></a> -->
+                    <mat-form-field style="margin-left: 2% !important; margin-top: -320px !important;" appearance="outline">
+                        <mat-label>Quantity</mat-label>
+                       
+                        <input (keypress)="numberOnly($event)" min="1" max="99999" minlength="1"
+                            maxlength="5" type="text" [formControl]="Qty" matInput placeholder=" Enter Quantity" />
+            
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="button button--btn-brdr clr-light-blue" (click)="SearchReset()">Reset</button>
+        <button type="button" class="button btn-outline-dark" (click)="SearchDetails()">Search</button>
+    </div>
+</div>
+
+
+
+<!-- &nbsp; &nbsp; &nbsp; &nbsp;
+
+<br /> -->
+
+<!-- <br /> -->
+
+<mat-card class="p-0" *ngIf="isaddressshow">
+    <mat-card-title style="margin: 10px; color: #0e1068 !important;">
+        Information :
+    </mat-card-title>
+    <mat-card-content>
+        <div>
+            <b> Distributor Name :</b>{{ dealer_name }} <br />
+            <b>Division Name :</b>{{ div_name }} <br />
+            <b>Division Address :</b> {{ dealer_address }} <br />
+            <b>City :</b> {{ div_city_name }} <br />
+            <b>Contact : </b>{{ dealer_contact_no}} <br />
+            <b>Latitude : </b>{{ dealer_location_latitude }} &nbsp; &nbsp;&nbsp;&nbsp; <b>Longitude :</b>{{
+            dealer_location_longitude }}
+
+        </div>
+    </mat-card-content>
+</mat-card>

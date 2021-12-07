@@ -1,0 +1,116 @@
+<div class="modal-content" style="width: 100%;">
+    <div class="modal-header modal-title">
+        Summary
+        <div (click)="closeModal()" type="button"><i class="fa fa-times"></i></div>
+    </div>
+    <div class="modal-body">
+        <div class="scheme-drags__scheme-summary">
+            <div class="row">
+                <div class="form-group col-12 pb-3 border-bottom">
+                    <div class="row">
+                        <div class="col-3"> <label class="pr-3">Scheme status</label></div>
+                        <div class="col-9 font-weight-bolder" *ngIf="item.is_active == true"> <span class="clr-orange-2">Active</span> </div>
+                        <div class="col-9 font-weight-bolder" *ngIf="item.is_active == false"> <span class="clr-orange">Inactive</span> </div>
+                    </div>
+                    <div class="row"> 
+                        <div class="col-3"> <label class="pr-3">Discount code</label></div>
+                        <div class="col-9 font-weight-bolder"> <span>{{item.discount_code}}</span> </div>
+                    </div>
+                    <div class="row"> 
+                        <div class="col-3"> <label class="pr-3">Discount name</label></div>
+                        <div class="col-9 font-weight-bolder"> <span>{{item.discount_name}}</span> </div>
+                    </div>
+                    <div class="row"> 
+                        <div class="col-3"> <label class="pr-3">Discount %</label> </div>
+                        <div class="col-9 font-weight-bolder"><span>{{item.percentage}}</span> </div>
+                    </div>
+                    <div class="row"> 
+                        <div class="col-3"> <label class="pr-3">Customer Segment</label></div>
+                        <div class="col-9 font-weight-bolder"> <span>{{CustSegment}}</span></div>
+                    </div>
+                    <div class="row"> 
+                        <div class="col-3"> <label class="pr-3">Start date</label></div>
+                        <div class="col-9 font-weight-bolder"> <span>{{item.from_date  |date: "d MMM, y"}}</span> </div>
+                    </div>
+                    <div class="row"> 
+                        <div class="col-3"> <label class="pr-3">End date</label></div>
+                        <div class="col-9 font-weight-bolder"> <span>{{item.to_date  |date: "d MMM, y"}}</span> </div>
+                    </div>
+                </div>
+                <div class="form-group col-12 pb-3 border-bottom">
+                    <div class="row">
+                        <div class="col-3"><label class="pr-3">Selected PG Line	</label> </div>
+                        <div class="col-9">
+                            <ul class="tags dark-blue">
+                                <li class="tags__list" *ngFor="let line of productTypeDisplay">
+                                    <a>{{line}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-3"><label class="pr-3">Selected Part No	</label> </div>
+                        <div class="col-9">
+                            <ul class="tags blue">
+                                <li class="tags__list" *ngFor="let part of selectedSKUDisplay1">
+                                    <a >{{part}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-3"><label class="pr-3">Selected Distributor</label> </div>
+                        <div class="col-9 ">
+                            <ul class="tags blue">
+                                <li class="tags__list" *ngFor="let dis of selectedDisplayDistributor">
+                                    <a>{{dis}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-3"><label class="pr-3">Selected Divisions</label> </div>
+                        <div class="col-9">
+                            <ul class="tags blue">
+                                <li class="tags__list" *ngFor="let div of DisplayDivisionData">
+                                    <a>{{div}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-3"><label class="pr-3">Selected Customer</label> </div>
+                        <div class="col-9 ">
+                            <ul class="tags blue">
+                                <li class="tags__list" *ngFor="let cust of selectedDisplayCustomer">
+                                    <a>{{cust}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-12 ">
+                    <div class="row">
+                        <div class="col-3"><label class="pr-3">Owner</label> </div>
+                        <div class="col-9 font-weight-bolder">
+                            <span>{{item.owner}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"><label class="pr-3">Created By(Username)</label> </div>
+                        <div class="col-9 font-weight-bolder">
+                            <span>{{item.first_name}} {{item.last_name}} ({{item.user_name}})</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"><label class="pr-3">Created Date</label> </div>
+                        <div class="col-9 font-weight-bolder">
+                            <span>{{item.created_at  |date: "d MMM, y h:mm a"}}</span>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

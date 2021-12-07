@@ -1,0 +1,55 @@
+<!-- <div class="modal-dialog modal-xl modal-dialog-centered"> -->
+    <div class="modal-content" style="width: 100%;">
+        <div class="modal-header modal-title">
+        Credit Log
+            <div (click)="closeModal()" type="button"><i class="fa fa-times"></i></div>
+            <!-- <button (click)="closeModal()" type="button" class="close" aria-label="Close" ></button> -->
+        </div>
+        <div class="modal-body">
+            <div>
+                <span>Account Name : </span><span>{{order[0].account_data.name}}</span>
+            </div>
+            <div class="l-content w-100 pl-0">
+                <div class="tbl-reports card-shadow bg-white h-100">
+                    <div class="l-tbl-accordion overflow-auto">
+                        <div class="w-100 border-0 p-3">
+                            <div class="table-responsive" >
+                                <table class="l-tbl">
+                                    <tr class="main-tr">
+                                    <th>No Of Days</th>
+                                    <th>Credit limit(₹)</th>
+                                    <th>Balance(₹)</th>
+                                    <th>Date</th>
+                                    </tr>
+                                    <tr *ngFor="let item of order">
+                                        <td>
+                                            <div class="td-wrapp">
+                                                {{ item?.no_of_days }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp">
+                                                {{ item?.limit_amount}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp">
+                                                {{ item?.current_balance}} 
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div class="td-wrapp">
+                                                {{ item?.created_at | date :'dd-MM-yyyy hh:mm:ss a'}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!-- <div *ngIf="cashes.length == 0">
+<h1>No Data Found</h1>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

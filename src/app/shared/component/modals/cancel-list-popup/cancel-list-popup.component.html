@@ -1,0 +1,844 @@
+<!-- <div class="modal-dialog modal-xl modal-dialog-centered"> -->
+
+
+
+<div class="modal-content" style="width: 120%; margin-left: -177px;">
+    <div class="modal-header modal-title">
+        Cancellation Request Details    
+        
+        <div (click)="closeModal()" type="button"><i class="fa fa-times"></i></div>
+        <!-- <button (click)="closeModal()" type="button" class="close" aria-label="Close" >
+                    <span aria-hidden="true">&times;</span> </button> -->
+    </div>
+    <div class="modal-header modal-title" *ngIf="isFeedBackSelected">
+        Give Feedback
+        <div (click)="closeModal()" type="button"><i class="fa fa-times"></i></div>
+    </div>
+    <div class="modal-header modal-title" *ngIf="isReturn">
+        Return Parts
+        <div (click)="closeModal()" type="button"><i class="fa fa-times"></i></div>
+    </div>
+    <div class="modal-header modal-title" *ngIf="isOrderInProcessSelected">
+        Orders In-Process
+        <div (click)="closeModal()" type="button"><i class="fa fa-times"></i></div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <ul class="feedback-order-series">
+                    <li>
+                        <div class="o-title">Order Number</div>
+                        <div class="o-desc">{{ item?.order_number }}</div>
+                    </li>
+                    <li>
+                        <div class="o-title">OTC Number</div>
+                        <div class="o-desc" style=" text-decoration-line: underline; color: blue; cursor: pointer;" (click)="OTCPopup()">
+                            {{item?.otc_order_number }}</div>
+                    </li>
+                    <li>
+                        <div class="o-title">Request Number</div>
+                        <div class="o-desc">{{item?.cancel_order_number }}</div>
+                    </li>
+                    <!-- <li
+                                *ngIf="order?.CUSTOMER_POWO_s !== '' && order?.CUSTOMER_POWO_s !== undefined && order?.CUSTOMER_POWO_s !== null">
+                                <div class="o-title">PO No.:</div>
+                                <div class="o-desc">{{ item?.CUSTOMER_POWO_s }}</div>
+                            </li> -->
+                    <li>
+                        <div class="o-title">Dist. Approval Status</div>
+                        <div class="o-desc">{{ item?.approved_status | titlecase }}</div>
+
+
+                    </li>
+                    <li>
+                        <div class="o-title">Cancellation Status</div>
+                        <div class="o-desc">{{ item?.cr_request_status | titlecase}}</div>
+
+
+                    </li>
+                    <li>
+                        <div class="o-title">Order Date</div>
+                        <div class="o-desc">{{ item?.order_date | date :'dd-MM-yyyy ' }}</div>
+                    </li>
+                    <li>
+                        <div class="o-title">Cancellation Date</div>
+                        <div class="o-desc">{{ item?.created_at | date :'dd-MM-yyyy ' }}</div>
+                    </li>
+
+                    <!-- <li> -->
+                    <!-- <div class="o-title">Invoice Details</div>
+                                <div class="o-desc">{{item?.invoice_order.length}} Invoice
+                                    <div *ngIf="order?.invoice_order.length > 0" class="invoices ml-2">
+                                        <a href="javascript:void(0)" id="dropdownBasic1" placement="bottom"
+                                            [ngbPopover]="popContent" class="invoices-btn">
+                                            <img src="../../assets/images/invoice.svg" alt="">
+                                        </a> -->
+                    <!-- <ng-template class="invoices-popover" #popContent>
+                                            <ul style="width: 120% !important;" class="invoices__list">
+                                                <li *ngFor="let Detailrow of order?.invoice_order">
+                                                    <div class="row">
+                                                        <div class="col-6"><a href="#">#{{Detailrow?.INVC_NUM_s}}</a><small>2
+                                                                Products , 50 pieces</small></div>
+                                                        <div class="col-6 d-flex align-items-center">(₹)
+                                                            {{Detailrow?.INVOICE_AMT_s}}
+                                                            <a href="javascript:void(0)"  (click)="Invoiceclick(Detailrow)"
+                                                                *ngIf="Detailrow.document_status === 'uploaded'"
+                                                                class="material-icons ml-2">
+                                                                file_download </a>
+                                                            <a href="javascript:void(0)" (click)="ERROR('Invoice Copy Not generated')" style="color: red;" title="Invoice Copy Not generated" *ngIf="Detailrow.document_status !== 'uploaded'"
+                                                                class="material-icons ml-2">
+                                                                info_outline </a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+        
+                                            </ul>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </li> -->
+
+
+                    <!-- <li>
+                            <div class="o-title">Payment Method </div>
+                            <div class="o-desc">{{ item?.payment_method_db =='COD' ? 'On Credit': order?.payment_method_db
+                                =='COD_LOYALTY' ? 'On Credit & Loyalty':order?.payment_method_db =='WIRE_TRANSFER' ? 'Online
+                                Transfer' : order?.payment_method_db =='WIRE_TRANSFER_LOYALTY' ? 'Online Transfer &
+                                Loyalty': order?.payment_method_db}}</div>
+                        </li>
+                        <li>
+                            <div class="o-title">Status </div>
+                            <div class="o-desc">{{ item?.STATUS_s}}</div>
+                        </li> -->
+                    <!-- <li>
+                                <div class="o-title">Received by </div>
+                                <div class="o-desc">Nikhil J</div>
+                            </li> -->
+                </ul>
+                <ul class="feedback-order-series" *ngIf="isOrderInProcessSelected">
+                    <li>
+                        <div class="o-title">Order Number</div>
+                        <div class="o-desc">{{ item?.order_number }}</div>
+                    </li>
+                    <li>
+                        <div class="o-title">Cancellation Date </div>
+                        <div class="o-desc">{{ item?.order_date | date: 'dd-MM-yyyy h:mm:ss a' }}</div>
+                    </li>
+
+
+
+
+
+                </ul>
+                <ul class="feedback-order-series">
+                    <li>
+
+                        <div style="color: red; cursor: context-menu; " fxFlex="100" fxFlex.gt-sm="100">
+                            <b>Cancellation Reason :OtherReason</b>
+                            <a>{{RejectReason}}</a>
+                        </div>
+                        <!-- <div style="color: red; cursor: context-menu; " fxFlex="100" fxFlex.gt-sm="100">
+                                <b>Remark :- test cancek</b>
+                                <a>{{RejectReason}}</a>
+                            </div> -->
+                        <!-- <div *ngIf="DisplayAction =='Allow'" style="margin-top: 10px;" fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}"> -->
+
+                        <!-- <div fxFlex="100" fxFlex.gt-sm="30"> -->
+
+                        <!-- <button  color="primary" mat-raised-button class="mat-raised-button mat-primary ng-star-inserted" (click)="ApproveDemo(mymodal)">Approve</button>
+                                &nbsp;&nbsp;&nbsp; -->
+
+                        <!-- <button   (click)="Reject()" >Reject</button> -->
+
+
+                        <!-- </div> -->
+                        <!-- </div> -->
+
+                        <div *ngIf="ApprovedStatus =='Rejected'" style="margin-top: 10px;" fxLayout="row wrap"
+                            [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+
+                            <div style="color: red; cursor: context-menu; " fxFlex="100" fxFlex.gt-sm="100">
+                                <b>Reject Reason :</b>
+                                <a>{{RejectReason}}</a>
+                            </div>
+                        </div>
+
+                    </li>
+
+                </ul>
+
+
+
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <h3 class="cancle-tbl-header">
+                        <div class="table-responsive">
+                            <table class="table table-md">
+                                <thead>
+                                    <tr>
+                                        <th class="text-nowrap">Parts Details</th>
+                                        <th class="text-nowrap">Invoice No</th>
+                                        <th>MRP</th>
+                                        <th>Discount</th>
+                                        <th class="text-nowrap">Discounted price</th>
+                                        <th>TAX</th>
+                                        <th>QTY</th>
+                                        <th>Total</th>
+                                        <th style="white-space: nowrap;" >C R Status </th>
+
+                                    </tr>
+                                </thead>
+                                <!-- <tr *ngFor="let item of item?.order_cancelation_line; let i = index">
+
+
+                                    <td>
+                                        <div class="d-inline-flex"> <span> <img src="{{item.part_images}}" alt="image"
+                                                    style="width: 44px; height: 30px;">{{item?.part_number }}
+                                            </span></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex"> <span> {{item?.siebel_umrp | currencyFormat:'INR' }}
+                                            </span></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex"> <span> {{item?.siebel_umrp | currencyFormat:'INR' }}
+                                            </span></div>
+                                    </td>
+
+
+                                    <td>
+                                        <div class="d-inline-flex"><span>
+                                           
+
+                                            </span></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex"><span>
+                                                {{item?.tax_cgst_sgst_amount | number:'1.2-2'}}
+                                            </span></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex"><span>{{item?.tax_cgst_sgst_amount |number:'1.2-2' }}
+                                            </span></div>
+                                    </td>
+
+
+                                    <td>
+                                        <div class="d-inline-flex"><span>{{ item?.total_quantity}}
+                                            </span></div>
+                                    </td>
+
+                                    <td>
+                                        <div class="d-inline-flex"><span>
+                                                {{ item?.total_amount | number:'1.2-2' }}
+
+                                            </span></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex"><span>
+                                                {{ item?.cr_request_status }}
+
+                                            </span></div>
+                                    </td>
+                                    
+                                </tr> -->
+                                <tr *ngFor="let item of item?.order_cancelation_line; let i = index">
+
+
+                                    <td>
+                                        <div class="d-inline-flex"> <span> <img src="{{item.part_images}}" alt="image"
+                                                    style="width: 44px; height: 30px;">{{item?.part_number }}
+                                            </span></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex"> <span> {{item?.invoice_no   }}
+                                            </span></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex"> <span> {{  item?.siebel_umrp | currencyFormat:'INR' }}
+                                            </span></div>
+                                    </td>
+
+
+                                    <td>
+                                        <div class="d-inline-flex"><span>
+                                            <!-- {{item?.rule_discount  | currencyFormat:'INR'}} -->
+                                            {{  Calculate(item.base_discount_amount,item.scheme_discount_amount,MATERIAL_DISCOUNT_AMNT) | number:'1.2-2' }}
+
+                                            </span></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex"><span>
+                                            <!-- {{item?.taxable_amount  | currencyFormat:'INR'}} -->
+                                            {{  CalculateDiscountPrice(item.total_amount,item.tax_cgst_sgst_amount,item.total_quantity)  | number:'1.2-2' }}
+
+                                            </span></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex"><span>
+                                            <!-- {{item?.tax_cgst_sgst  | currencyFormat:'INR'}} -->
+                                            {{  calculateatax (item.tax_cgst_sgst_amount,item.total_quantity)   | number:'1.2-2' }}
+                                            </span></div>
+                                    </td>
+
+
+                                    <td>
+                                        <div class="d-inline-flex"><span>{{ item?.total_quantity }}
+                                            </span></div>
+                                    </td>
+
+                                    <td>
+                                        <div class="d-inline-flex"><span>{{ item?.total_amount }}
+                                            </span></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex" ><span>
+                                                {{ item?.cr_request_status }}
+
+                                            </span></div>
+                                    </td>
+                                </tr>
+
+
+                            </table>
+                        </div>
+                        <table>
+                        </table>
+                        <div style="margin-top: 40px;">
+                            <div>
+                                <button color="primary" mat-raised-button
+                                    class="mat-raised-button mat-primary ng-star-inserted"
+                                    (click)="ApproveDemo(mymodal)">Approve</button>
+                                &nbsp;&nbsp;&nbsp;
+
+                                <button color="warn" mat-raised-button class="mat-raised-button mat-warn"
+                                    (click)="Reject()">Reject</button>
+                            </div>
+
+                            <div *ngIf="ApprovedStatus =='Rejected'" style="margin-top: 10px;" fxLayout="row wrap"
+                                [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+
+                                <div style="color: red; cursor: context-menu; " fxFlex="100" fxFlex.gt-sm="100">
+                                    <b>Reject Reason :</b>
+                                    <a>{{RejectReason}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </h3>
+                </div>
+
+                <!-- <div>
+                        <a  style=" text-decoration-line: underline; color: blue;" routerLinkActive="active" ><strong>View Order/Invoices </strong> </a>
+                       </div> -->
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <ng-container>
+                        <div class="table-responsive">
+                            <table class="table mat-price-table">
+                                <thead>
+                                    <tr>
+                                        <th>Total</th>
+
+                                        <th class="text-end">{{FinalMrp | currencyFormat:'INR'}}</th>
+                                    </tr>
+                                    <!-- <tr>
+                                        <th>Sub Total:</th>
+
+                                        <th class="text-end">{{ currency }} {{
+                                            item.order_cancelation_line[0].base_discount
+                                            | number:'1.2-2' }}</th>
+                                    </tr> -->
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Base Discount</td>
+                                        <td class="text-end"><span class="me-3">(-)</span>{{ currency }} {{
+                                            FinalBaseDisc | number:'1.2-2' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Scheme Discount: <span></span></td>
+                                        <td class="text-end"><span class="me-3">(-)</span>{{ currency }} {{
+                                            FinalSchemeDic | number:'1.2-2' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Material Discount: <span></span></td>
+                                        <td class="text-end"><span class="me-3">(-)</span>{{ currency }} {{
+                                            FinalMatDiscount| number:'1.2-2' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>TML Discount</td>
+                                        <td class="text-end"><span class="me-3">(-)</span>{{ currency }} {{
+                                            TMLDiscount| number:'1.2-2' }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Distributor Discount:</td>
+                                        <td class="text-end"><span class="me-3">(-)</span>{{ currency }} {{
+                                            DealerDiscount | number:'1.2-2' }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>GST <span></span></td>
+                                        <td class="text-end"><span class="me-3">(+)</span>{{ currency }} {{
+                                            item.order_cancelation_line[0].tax_cgst_sgst_amount | number:'1.2-2' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex mat-grand-total border-top border-bottom">
+                                <div class="col" class="feedback-tbl-header"> Grand Total </div>
+                                <div class="col text-end feedback-tbl-header">{{ currency }}{{
+                                    item.order_cancelation_line[0].total_amount | number:'1.2-2' }}</div>
+                            </div>
+
+                        </div>
+                        <br>
+                        <div>
+                            <h4><strong>Bill To</strong></h4>
+                            <p>{{ item?.account_data.name}} </p>
+                            <h4 class="feedback-tbl-header">Billing Address:</h4>
+                            <p> {{ item?.account_data.address }} {{ item?.account_data.address_line_2 }}
+                                <br> {{ item?.account_data.address_line_3 }} {{ item?.account_data.city }} {{
+                                item?.account_data.state }}
+                                {{ item?.account_data.pincode }}
+                            </p>
+                            <!-- <h5><strong>Shipping Address</strong></h5>
+                            <p> {{ item?.order_address[0].street_address1 }} {{ item?.order_address[0].street_address2 }}
+                              <br> {{ item?.order_address[0].city }} {{ item?.order_address[0].district }} {{ item?.order_address[0].country }}
+                              {{ item?.order_address[0].postal_code }}</p> -->
+                            <!-- </div> -->
+                        </div>
+
+                        <div class=" justify-content-between align-items-center mb-2 ">
+                            <h4 class="feedback-tbl-header">Shipping Address:</h4>
+                        </div>
+                        <!-- <h5><strong>Shipping Address</strong></h5> -->
+                        <p> {{ item?.order_address[0].street_address1 }} {{ item?.order_address[0].street_address2 }}
+                            <br> {{ item?.order_address[0].city }} {{ item?.order_address[0].district }} {{
+                            item?.order_address[0].country }}
+                            {{ item?.order_address[0].postal_code }}
+                        </p>
+                        <!-- 
+                            <div class="justify-content-between align-items-center mb-2 ">
+                                <h4 class="feedback-tbl-header">Distributor Address:</h4>
+                            </div> -->
+
+                        <div style=" width: 450px;">
+                            <h4><strong>Bill From</strong></h4>
+                            <p> {{ item?.organization_name }}</p>
+                            {{ item?.division_name }}
+
+                            <!-- <p>{{ product?.billing_address }} </p> -->
+
+                        </div>
+
+                        <!-- <p class="mat-location-name">{{ item?.div_address?.ORG_NAME }}</p>
+                        <p class="mat-deliver-address">{{
+                            item?.div_address?.PRIMISE_TALUKA_s?(item?.div_address?.PRIMISE_TALUKA_s+','):'' }}
+                            {{ item?.div_address?.PRIMISE_CITY_s?(item?.div_address?.PRIMISE_CITY_s+','):'' }}
+                            {{ item?.div_address?.PRIMISE_DISTRICT_s?(item?.div_address?.PRIMISE_DISTRICT_s+','):''
+                            }}
+                            {{ item?.div_address?.PRIMISE_ZIPCODE_s?( ' - '+item?.div_address?.PRIMISE_ZIPCODE_s+',
+                            '):'' }}
+                            {{ item?.div_address?.PRIMISE_STATE_s ? (item?.div_address?.PRIMISE_STATE_s+','):''
+                            }}<br>
+                            {{ item?.div_address?.PRIMISE_MAIN_PHNUM_s ? (item?.div_address?.PRIMISE_MAIN_PHNUM_s+'.'):''
+                            }}
+                        </p> -->
+                        <!-- <br><br><br><br><br><br> -->
+
+                    </ng-container>
+                    <ng-container
+                        *ngIf="!isOTCSelected && isFeedBackSelected && !isReturn && !isOrderInProcessSelected">
+                        <h4 class="rate-feedback-header">
+                            Rate your eDukaan experience
+                        </h4>
+                        <div class="rate-star">
+                            <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i
+                                class="far fa-star"></i><i class="far fa-star"></i>
+                        </div>
+                        <div class="What-did-you-like-th">
+                            What did you like the most?
+                        </div>
+                        <div class="like-part">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="like1" value="Part search">
+                                <label class="form-check-label" for="like1">Part search</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="like2" value="Part information">
+                                <label class="form-check-label" for="like2">Part information</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="like3"
+                                    value="Checkout and order placement">
+                                <label class="form-check-label" for="like3">Checkout and order placement</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="like4" value="Order tracking">
+                                <label class="form-check-label" for="like4">Order tracking</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="like5" value="Delivery experience">
+                                <label class="form-check-label" for="like5">Delivery experience</label>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-12 col-sm-3 pt-2 Anything-else"> Anything else:</label>
+                            <div class="col-12 col-sm-9">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12 col-sm-12 position-relative">
+                                <label class="Help-us-serve-you-be">Help us serve you better</label>
+                                <textarea class="form-control" rows="5"
+                                    placeholder="Tell us how we can improve"></textarea>
+                                <a class="textarea-mic" href="javascript:void(0)"
+                                    style="position: absolute; top: 30px; right: 18px; z-index: 1;"><img alt=""
+                                        src="./assets/images/noun-mic.svg" /></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 text-end">
+                                <button type="button" class="btn btn-sm btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container
+                        *ngIf="!isOTCSelected && !isFeedBackSelected && isReturn && !isOrderInProcessSelected">
+                        <h4 class="rate-feedback-header">
+                            Parts to be returned
+                        </h4>
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead *ngIf="partsToReturn?.length">
+                                    <tr>
+                                        <th></th>
+                                        <th>Parts</th>
+                                        <th>Unit price</th>
+                                        <th>Qty</th>
+                                        <th>(₹)Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="partsToReturn?.length">
+                                        <tr *ngFor="let item of partsToReturn; let i = index">
+                                            <td *ngIf="isReturn">
+                                                <div class="form-check form-check-inline mb-0"
+                                                    style="min-height: 16px;">
+                                                    <!-- <input class="form-check-input" (change)="selectItem($event,item)" type="checkbox" /> -->
+                                                </div>
+                                                {{i+1}}
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-flex">
+                                                    <img alt="" [src]="item?.images" style="width: 44px; height: 30px;">
+                                                </div>
+                                                <div class="d-inline-flex ps-2"
+                                                    style="vertical-align: top; flex-direction: column;">
+                                                    <div class="tbl-c-title"
+                                                        [routerLink]="['/shop/product-details/',item.part_number]">{{
+                                                        item?.part_number }}</div>
+                                                    <div class="tbl-c-desc"
+                                                        title="{{ (item?.part_desc == '' || item?.part_desc == null) ? '-' : item?.part_desc}}">
+                                                        {{ (item?.part_desc == " " || item?.part_desc == null) ? "-" :
+                                                        item?.part_desc?.substr(0,20)}}</div>
+                                                </div>
+                                            </td>
+                                            <td>{{item?.rate | currencyFormat:'INR'}}
+                                                <div class="td-actual-mrp"> <span *ngIf="item?.rate < item?.umrp">MRP
+                                                        {{item?.umrp | currencyFormat:'INR'}}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td>{{ item.total_quantity }}</td>
+                                            <td class="text-end">{{ item?.taxable_amount | currencyFormat:'INR' }}</td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="5" class="text-end" *ngIf="partsToReturn?.length > 0">Total : {{
+                                            sumOfParts?.toFixed(0) |
+                                            currencyFormat:'INR' || 0}}</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <ng-container [formGroup]="orderCancelForm">
+                            <div class="address-card__name">
+                                Reason For Replacement <span class="error-message">*</span>:<br>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-sm-12 position-relative">
+                                    <select id="checkout-state" formControlName="ReasonRepalcement" required
+                                        class="form-control form-control-select2"
+                                        (change)="OnchangeReason($event.target.value)">
+                                        <option value="" selected disabled>-- Select Reason --</option>
+                                        <option value="Wrong Part">Wrong Part</option>
+                                        <option value="Part broken">Part broken</option>
+                                        <option value="Short quantity">Short quantity</option>
+                                        <option value="Excess quantity">Excess quantity</option>
+                                        <option value="My customer has cancelled the order">My customer has cancelled
+                                            the
+                                            order
+                                        </option>
+                                        <option value="Other Reason">Other Reason</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3" *ngIf="showOther">
+                                <div class="col-12 col-sm-12 position-relative">
+                                    <label class="Help-us-serve-you-be">Help us serve you better</label>
+                                    <textarea class="form-control" rows="5" formControlName="OtherReason" placeholder="Enter remarks in case of Other Reason 
+                                        (Character length cannot exceed 100 characters.)"></textarea>
+                                    <a class="textarea-mic"
+                                        style="position: absolute; top: 30px; right: 18px; z-index: 1;"><img alt=""
+                                            src="./assets/images/noun-mic.svg" /></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 text-end">
+                                    <button type="button" class="btn btn-sm btn-primary"
+                                        (click)="OrderCanceldetail('CancelOrder')">Submit</button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container
+                        *ngIf="isOrderInProcessSelected && !isOTCSelected && !isFeedBackSelected && !isReturn">
+                        <div class="table-responsive">
+                            <table class="table mat-price-table">
+                                <thead>
+                                    <tr>
+                                        <th>Total</th>
+                                        <th class="text-end">{{ order?.umrp_total | currencyFormat:'INR'}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Base Discount</td>
+                                        <td class="text-end"><span class="me-3">(-)</span>{{ order?.total_base_discount
+                                            |
+                                            currencyFormat:'INR'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Scheme Discount <span></span></td>
+                                        <td class="text-end"><span class="me-3">(-)</span>{{order?.total_scheme_discount
+                                            ||
+                                            0 | currencyFormat:'INR'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>TATA motors Discount <span></span></td>
+                                        <td class="text-end"><span
+                                                class="me-3">(-)</span>{{order?.total_tml_rule_discount
+                                            || 0 | currencyFormat:'INR' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Distributor Discount</td>
+                                        <td class="text-end"><span
+                                                class="me-3">(-)</span>{{order?.total_dealer_rule_discount || 0 |
+                                            currencyFormat:'INR' }}< </td>
+                                    </tr>
+                                    <tr>
+                                        <td>GST <span></span></td>
+                                        <td class="text-end"><span class="me-3">(+)</span>{{ order?.total_tax || 0 |
+                                            currencyFormat:'INR' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex mat-grand-total border-top border-bottom">
+                                <div class="col" class="feedback-tbl-header"> Grand Total </div>
+                                <div class="col text-end feedback-tbl-header">{{ order.total_amount |
+                                    currencyFormat:'INR'}}
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-between align-items-center mb-2 "
+                            *ngIf="order && billingAddress">
+                            <h4 class="feedback-tbl-header">Billing Address:</h4>
+                        </div>
+                        <p class="mat-location-name" *ngIf="order && billingAddress">{{ billingAddress?.street_address1
+                            }}
+                        </p>
+                        <p class="mat-deliver-address" *ngIf="order && billingAddress">{{
+                            billingAddress?.street_address2 }}
+                            {{ billingAddress?.taluka?(billingAddress?.taluka+','):'' }}
+                            {{ billingAddress?.city?(billingAddress?.city+','):'' }}
+                            {{billingAddress?.district?(billingAddress.district+','):'' }}
+                            {{ billingAddress?.postal_code?( ' - '+ billingAddress.postal_code+', '):'' }}
+                            {{ billingAddress?.state ? (billingAddress.state+'.'):'' }}<br>
+                            {{ billingAddress?.country }}
+                        </p>
+
+                        <div class="d-flex justify-content-between align-items-center mb-2 "
+                            *ngIf="order && shippingAddress">
+                            <h4 class="feedback-tbl-header">Shipping Address:</h4>
+                        </div>
+                        <p class="mat-location-name" *ngIf="order && shippingAddress ">{{
+                            shippingAddress?.street_address1}}
+                        </p>
+                        <p class="mat-deliver-address" *ngIf="order && shippingAddress ">{{
+                            shippingAddress?.street_address2
+                            }}
+                            {{ shippingAddress?.taluka?(shippingAddress?.taluka+','):'' }}
+                            {{ shippingAddress?.city?(shippingAddress?.city+','):'' }}
+                            {{shippingAddress?.district?(shippingAddress.district+','):'' }}
+                            {{ shippingAddress?.postal_code?( ' - '+ shippingAddress.postal_code+', '):'' }}
+                            {{ shippingAddress?.state ? (shippingAddress.state+'.'):'' }}<br>
+                            {{ shippingAddress?.country }}
+                        </p>
+                        <p class="mat-phone" *ngIf="shippingAddress?.contact_no">Contact No. : +91 {{
+                            shippingAddress?.contact_no }}</p>
+                        <p class="mat-gst" *ngIf="shippingAddress?.gst_no">GST No. {{ shippingAddress?.gst_no }} </p>
+                        <!-- <div class="d-flex justify-content-between align-items-center mb-2 ">
+                                <h4 class="feedback-tbl-header">Distributor Address:</h4>
+                            </div>
+                            <p class="mat-location-name">{{ order?.div_address?.ORG_NAME }}</p>
+                            <p class="mat-deliver-address">{{
+                                order?.div_address?.PRIMISE_TALUKA_s?(order?.div_address?.PRIMISE_TALUKA_s+','):'' }}
+                                {{ order?.div_address?.PRIMISE_CITY_s?(order?.div_address?.PRIMISE_CITY_s+','):'' }}
+                                {{ order?.div_address?.PRIMISE_DISTRICT_s?(order?.div_address?.PRIMISE_DISTRICT_s+','):''
+                                }}
+                                {{ order?.div_address?.PRIMISE_ZIPCODE_s?( ' - '+order?.div_address?.PRIMISE_ZIPCODE_s+',
+                                '):'' }}
+                                {{ order?.div_address?.PRIMISE_STATE_s ? (order?.div_address?.PRIMISE_STATE_s+','):''
+                                }}<br>
+                                {{ order?.div_address?.PRIMISE_MAIN_PHNUM_s ? (order?.div_address?.PRIMISE_MAIN_PHNUM_s+'.'):''
+                                }}
+                            </p> -->
+                        <div class="table-responsive" *ngIf="paymentHistory && paymentHistory?.length">
+                            <h3 class="feedback-tbl-header">
+                                Payment History
+                            </h3>
+                            <div class="table-responsive">
+                                <table class="table table-md">
+                                    <thead>
+                                        <tr>
+                                            <th>Member Id</th>
+                                            <th>Payment No.</th>
+                                            <th>Order Type</th>
+                                            <th>Mode</th>
+                                            <th>(₹)Amount</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let payment of paymentHistory">
+                                            <td>{{payment?.member_id}}</td>
+                                            <td>{{payment?.PAYMENT_NO_s}}</td>
+                                            <td>{{payment?.ORDER_TYPE_s}}</td>
+                                            <td>{{payment?.PAY_TYPE_CD_s}}</td>
+                                            <td>{{payment?.X_AMOUNT_s || 0 | currencyFormat:'INR'}}</td>
+                                            <td>{{payment?.ORDER_CAT_s | date:'dd-MM-yyyy':'UTC'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <!-- </div> -->
+            <!-- </div> -->
+
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+
+                <!-- <div>
+                    <a *ngIf="(item.otc_order_number)" (click)="Click(item.otc_order_number)"
+                        style=" text-decoration-line: underline; color: blue;" routerLinkActive="active">View Order/Invoices
+                    </a>
+                </div>
+    
+            </div> -->
+
+                <div>
+                    <!-- <div style="color: red; cursor: context-menu; " fxFlex="100" fxFlex.gt-sm="100">
+                                    <b>Cancellation Reason :Wrong Part</b>
+                                    <a>{{RejectReason}}</a>
+                                </div> -->
+                    <!-- <div style="color: red; cursor: context-menu; " fxFlex="100" fxFlex.gt-sm="100">
+                                    <b>Remark :- test cancek</b>
+                                    <a>{{RejectReason}}</a>
+                                </div> -->
+                    <!-- <div *ngIf="DisplayAction =='Allow'" style="margin-top: 10px;" fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}"> -->
+
+                    <!-- <div fxFlex="100" fxFlex.gt-sm="30">
+        
+                                    <button  color="primary" mat-raised-button class="mat-raised-button mat-primary ng-star-inserted" (click)="ApproveDemo(mymodal)">Approve</button>
+                                    &nbsp;&nbsp;&nbsp;
+        
+                                     <button  color="warn" mat-raised-button class="mat-raised-button mat-warn" (click)="Reject()" >Reject</button> 
+        
+                                </div> -->
+                    <!--     
+                                <div *ngIf="ApprovedStatus =='Rejected'" style="margin-top: 10px;" fxLayout="row wrap"
+                                    [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+        
+                                    <div style="color: red; cursor: context-menu; " fxFlex="100" fxFlex.gt-sm="100">
+                                        <b>Reject Reason :</b>
+                                        <a>{{RejectReason}}</a>
+                                    </div>
+                                </div> -->
+
+                </div>
+                <ng-template #cancelOrder let-d="dismiss">
+                    <app-logout [orderCancel]="orderCancel" (userLogout)="orderCancelled($event)"></app-logout>
+                </ng-template>
+
+                <ng-template #orderDetails let-d="dismiss">
+                    <order-details [order]="orderInformations"></order-details>
+                </ng-template>
+                <ng-container *ngIf="showLoader">
+                    <div class="loader">
+                        <div class="ng-spinner ng-spinner-icon"></div>
+                    </div>
+                </ng-container>
+                <ng-template #mymodal let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">Reason</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- <select formControlName="country">
+                            <option value="null" disabled>Select</option>
+                            <option *ngFor="let option of inputOptions " value="option.reason">{{option.reason}}</option>
+                          </select> -->
+                        <!-- <div class="srch-box">
+                                 <input autocomplete="off" #text (keyup)="reasonType(text.value)"
+                                    [formControl]="ReasonControl" style="width: max-content !important;"
+                                     placeholder="Search reason"  class="textfield"  type="text"  matInput>
+                                                                        
+                                                                    
+                            </div> -->
+
+
+
+
+                          <ul class="scheme-drags__product-selection-products-nav-sublist">
+
+                            <form [formGroup]="ReasonList">
+                                                                            
+                                <li *ngFor="let option of
+                                    inputOptions ; let i=index;" class="scheme-drags__product-selection-products-nav-sublist-item">
+                                    <input [formControl]="ReasonList.controls[option.id]"
+                                        (change)="reasonFilter(option,$event)" name="B" type="checkbox" id={{i}}>
+                                    <label for={{i}}> {{option.reason}}</label>
+                                </li>
+                            </form>
+
+                                 
+                        </ul>
+
+
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')"
+                            (click)="submit1()">Submit</button>
+                    </div>
+                </ng-template>

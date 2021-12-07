@@ -1,0 +1,573 @@
+<app-submenu-list [ActiveMenu]='0'></app-submenu-list>
+<section class="main-wrapper prod-list-page">
+    <div class="l-container">
+        <div class="search-order-id float-right">
+            <span class="material-icons"> search </span>
+            <input type="text" class="textfield" placeholder="Search by Division Id" (keydown)="SearchAccount($event)"
+                (focusout)="showAccount($event)" [formControl]="AllFilters.controls['division_id']">
+            <div class="btn-filter" ngbDropdown #myDrop="ngbDropdown">
+
+                <button class="btn-filter" id="filterPopup" ngbDropdownToggle><img src="./assets/images/filter.svg"
+                        alt="" /></button>
+
+                <div ngbDropdownMenu aria-labelledby="filterPopup" class="filter-popup">
+                    <div class="arrow"></div>
+                    <form [formGroup]="AllFilters">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-6 border-right">
+                                    <h4>DATE</h4>
+                                    <li class="sidebar-cards__item">
+                                        <ul class="sidebar-cards__chk-list">
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input (change)="changedatefilter('Today')" name="A" type="radio"
+                                                    id="aa">
+                                                <label for="aa"> Today</label>
+                                            </li><br>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input name="A" type="radio" id="bb"
+                                                    (change)="changedatefilter('Sevenday')">
+                                                <label for="bb"> Last 7 days</label>
+                                            </li><br>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input name="A" type="radio" id="cc"
+                                                    (change)="changedatefilter('thirtyDays')" [checked]="isThirtyDays">
+                                                <label for="cc">Last 30 days</label>
+
+                                            </li><br>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input (change)="changedatefilter('Custom')" name="A" type="radio"
+                                                    id="dd" [value]="ShowCustom">
+                                                <label for="dd">Custom</label>
+                                            </li>
+
+                                            <li class="sidebar-cards__chk-list-item" [hidden]="!ShowCustom">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group m-0 calendar">
+                                                            <div class="input-group">
+                                                                <input class="form-control"
+                                                                    [formControl]="AllFilters.controls['from_date']"
+                                                                    placeholder="yyyy-mm-dd" [readonly]="true" name="dp"
+                                                                    ngbDatepicker #d="ngbDatepicker">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-outline-secondary calendar"
+                                                                        (click)="d.toggle()" type="button"><span
+                                                                            class="material-icons">
+                                                                            calendar_today
+                                                                        </span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group m-0">
+                                                            <div class="input-group calendar">
+                                                                <input class="form-control"
+                                                                    [formControl]="AllFilters.controls['to_date']"
+                                                                    placeholder="yyyy-mm-dd" [readonly]="true" name="dp"
+                                                                    ngbDatepicker #d1="ngbDatepicker">
+                                                                <div class="input-group-append1">
+                                                                    <button class="btn btn-outline-secondary calendar"
+                                                                        (click)="d1.toggle()" type="button"><span
+                                                                            class="material-icons">
+                                                                            calendar_today
+                                                                        </span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+
+                                            <label>Division Id</label><br />
+                                            <input  [formControl]="AllFilters.controls['division_id']"  type="text"
+                                               placeholder="Division Id" class="textfield " id="inputPassword">
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="srch-box">
+
+                                            <label>Row Id</label><br />
+                                            <input [formControl]="AllFilters.controls['division_allocation_id']"
+                                               placeholder="Row Id" type="text" class="textfield " id="inputPassword">
+                                        </div>
+                                    </li>
+
+                                    <!-- <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">State</label><br />
+                                            <div class="srch-box">
+                                                <select class="textfield" [formControl]="AllFilters.controls['state_code']">
+                                                    <option *ngFor="let state of StateDatacode;">
+                                                        {{state.state_name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </li> -->
+                                </div>
+                                <div class="col-6 border-right">
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>Division Name</label><br />
+                                            <input [formControl]="AllFilters.controls['division_name']" type="text"
+                                               placeholder="Division Name" class="textfield ">
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Division Category</label><br />
+                                            <div class="srch-box">
+                                                <select class="textfield"
+                                                    [formControl]="AllFilters.controls['division_category']">
+                                                    <option hidden></option>
+
+                                                    <option *ngFor="let DivData of Divnamedata;">
+                                                        {{DivData.division_category}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </li>
+
+
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">State</label>
+                                            <div class="srch-box">
+                                                <select class="textfield"
+                                                    [formControl]="AllFilters.controls['state_code']"
+                                                    (change)="onChange($event.target.value)">
+                                                    <option hidden></option>
+
+                                                    <option *ngFor="let SateData of statenamedata;">
+                                                        {{SateData.state_name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!-- <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">District</label><br />
+                                            <div class="srch-box">
+                                                <select class="textfield"
+                                                    [formControl]="AllFilters.controls['district_name']">
+                                                    <option *ngFor="let DisData of Disnamedata;">
+                                                        {{DisData.district_name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </li> -->
+
+                                    <button class="btn btn-outline-primary"
+                                        (click)="SearchAllDate()">Search</button>&nbsp;&nbsp;
+                                    <button class="btn btn-outline-primary" (click)="resetALl();">Reset</button>
+                      
+                                </div>
+
+                               
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class=" justify-content-end float-left">
+
+                <ul fxFlex="30" style="color: darkolivegreen; width: 100px;" matTooltip="Export to Excel"
+                    (click)="ExportDownload();">
+                    <span class='fa-stack fa-lg'>
+                        <i class='fas fa-file-excel fa-pull-right fa-2x'></i>
+
+                    </span>
+
+                </ul>
+            </div>
+        </div>
+        <button class="button float-left btn-add-new" (click)="open(content)">
+            <span class="material-icons mr-2">
+                control_point
+            </span> ADD NEW
+        </button>
+        <div class="tags d-flex justify-content-end mb-4">
+            <ul class="tags__list" style="margin-left: 20px;">
+                <li *ngFor="let Filterrow of Filterarray"><a style="cursor: default;">{{Filterrow.Value}} <img
+                            (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key == 'from_date'"
+                            src="./assets/images/tag-close.svg" /></a></li>
+            </ul>
+            &nbsp;&nbsp;
+            <!-- <ul class="tags__list" fxFlex="30">
+                <select class="form-select" aria-label="Default select example" (change)="ExportDownload($event)">
+                    <option selected value="" disabled>Select</option>
+                    <option value="Excel">Excel</option>
+                </select>
+            </ul> -->
+            <!-- <ul  fxFlex="30" style="color: darkolivegreen; width: 100px;" matTooltip="Export to Excel"
+                (click)="ExportDownload();">
+                <span class='fa-stack fa-lg'>
+                    <i class='fas fa-file-excel fa-pull-right fa-2x'></i>
+
+                </span>
+            </ul> -->
+        </div>
+
+        <div class="l-content w-100 pl-0">
+
+            <ng-template #content let-modal>
+                <div class="popup-add-roll">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">Add Division</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span> </button>
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="itemForm">
+                            <div class="row">
+
+                                <div class="form-group col-6">
+                                    <label>Division id </label>
+                                    <input [formControl]="itemForm.controls['division_id']" type="text"
+                                        class="textfield" placeholder="Divsion id**" required>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>Division Name</label>
+                                    <input [formControl]="itemForm.controls['division_name']" type="text"
+                                        class="textfield" placeholder="Division Name*" required>
+                                </div>
+
+
+
+                                <div class="form-group col-6">
+                                    <label>State </label>
+                                    <select [formControl]="itemForm.controls['state_code']" class="form-control"
+                                        class="textfield" required (change)="onChange($event.target.value)">
+                                            <option hidden></option>
+
+                                        <option *ngFor="let SateData of statenamedata;">
+                                            {{SateData.state_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-6">
+                                  <label for="inputPassword">Division Category </label>
+                                      
+                                    <select   [formControl]="itemForm.controls['division_category']" class="form-control"
+                                        class="textfield" required>
+                                          <option hidden></option>
+                                        <option *ngFor="let DivData of Divnamedata;">
+                                            {{DivData.division_category}}</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group col-6">
+                                    <label>District </label>
+                                    <select [formControl]="itemForm.controls['district_name']"
+                                         name="District" class="form-control"
+                                        class="textfield" required>
+                                        <option  hidden></option>
+                                        <option *ngFor="let DisData of Disnamedata;">
+                                            {{DisData.district_name}}
+                                        </option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button button--btn-brdr clr-light-blue"
+                            (click)="modal.close('Save click')">Cancel</button>
+                        <button type="button" class="button btn-outline-dark"
+                            (click)="saveuserdata('insert')">Save</button>
+                    </div>
+
+                </div>
+
+
+
+            </ng-template>
+
+            <ng-template #content1 let-modal>
+                <div class="popup-add-roll">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title"> Add Divsion </h4>
+                        <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span> </button> -->
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="itemForm">
+                            <div class="row">
+
+                                <div class="form-group col-6">
+                                    <label>Divsion id </label>
+                                    <input [formControl]="itemForm.controls['division_id']" type="text"
+                                        class="textfield" placeholder="Divsion id**" required>
+                                </div>
+
+
+
+                                <div class="form-group col-6">
+                                    <label>Division Name</label>
+                                    <input [formControl]="itemForm.controls['division_name']" type="text"
+                                        class="textfield" placeholder="Division Name*" required>
+                                </div>
+
+
+
+
+                                <div class="form-group col-6">
+                                    <label>Division Category </label>
+                                    <select [formControl]="itemForm.controls['division_category']" class="form-control"
+                                        class="textfield" required>
+
+                                        <option value="none" selected disabled hidden>
+                                            Division Category
+                                        </option>
+                                        <option *ngFor="let DivData of Divnamedata;">
+                                            {{DivData.division_category}}</option>>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label>State </label>
+                                    <select [formControl]="itemForm.controls['state_code']" class="form-control"
+                                        class="textfield" required (change)="onChange($event.target.value)">
+                                        <option value="none" selected disabled hidden>
+                                            State </option>
+                                        <option *ngFor="let SateData of statenamedata;">
+                                            {{SateData.state_name}}</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group col-6">
+                                    <label>District </label>
+                                    <select [formControl]="itemForm.controls['district_name']"
+                                        (change)="onChange($event)" class="form-control" class="textfield" required>
+                                        <option value="none" selected disabled hidden>
+                                            District
+                                        </option>
+                                        <option *ngFor="let DisData of Disnamedata;">
+                                            <options>
+                                                {{DisData.district_name}}
+                                            </options>
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button button--btn-brdr clr-light-blue"
+                            (click)="modal.close('Save click')">Cancel</button>
+                        <button type="button" *ngIf="btnSave" class="button btn-outline-dark"
+                            (click)="save()">Save</button>
+                        <button type="button" *ngIf="btnupdate" class="button btn-outline-dark"
+                            (click)="Update(itemForm.value)">Update</button>
+                    </div>
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="button button--btn-brdr clr-light-blue"
+                            (click)="modal.close('Save click')">Cancel</button>
+                        <button type="button" class="button btn-outline-dark" (click)="Savepermission()">Save</button>
+                    </div> -->
+                </div>
+            </ng-template>
+            <!-- ===================================================
+                        # eDukaan_Admin_Users_4
+                    =================================================== -->
+
+
+
+            <div>
+                <div class="l-content w-100 pl-0">
+                    <div class="tbl-reports card-shadow bg-white h-100">
+                        <div class="l-tbl-accordion overflow-auto">
+                            <div class="w-100 border-0 p-3">
+                                <div class="table-responsive">
+                                    <table class="l-tbl">
+                                        <tr class="main-tr">
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Division id</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Is Active </span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/5-.png"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Row id</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Division Name</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Division Category </span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <!-- <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>State</span>
+                                                    
+                                                </div>
+                                            </td> -->
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>State </span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>District</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Created Date </span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Updated Date </span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+
+
+
+                                        </tr>
+
+                                        <ng-container *ngIf="items.length >0">
+
+                                            <tr *ngFor="let row of items" class="click-tr">
+
+
+                                                <td class="text-nowrap" style="cursor: pointer;">
+                                                    <a (click)="Editpopup(content1,row)" style=" color: blue; ">
+                                                        {{ row?.division_id }}</a>
+                                                </td>
+
+                                                <td class="text-nowrap" style="text-transform: capitalize;">
+                                                    <div class="td-wrapp">
+
+                                                        {{ row?.is_active}}
+                                                    </div>
+                                                </td>
+
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.id }}
+                                                    </div>
+
+                                                </td>
+
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.division_name }}
+                                                    </div>
+
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.division_category }}</div>
+
+                                                </td>
+                                                <!-- <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+
+                                                        {{ row?.state }}
+
+
+                                                    </div>
+
+                                                </td> -->
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+
+                                                        {{ row?.state_code }}
+
+
+                                                    </div>
+
+                                                </td>
+
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp"> {{ row?.district}}
+
+                                                    </div>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+
+                                                        {{ row?.created_at | date :'dd-MM-yyyy hh:mm:ss a'}}
+                                                    </div>
+                                                </td>
+
+
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+
+                                                        {{ row?.updated_at | date :'dd-MM-yyyy hh:mm:ss a'}}
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        </ng-container>
+                                        <ng-container *ngIf="items.length == 0">
+                                            <tr>
+                                                No Data Found
+                                            </tr>
+                                        </ng-container>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="paging">
+                        <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
+                            [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)"
+                            [showrecords]="showRecords"></app-pagination>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+            <ng-template #ExcelDownload let-d="dismiss">
+                <app-report-download-popup [data]="EDownload" [count]="count" [pageName]="pageName">
+                </app-report-download-popup>
+            </ng-template>
+
+            <!-- </section> -->

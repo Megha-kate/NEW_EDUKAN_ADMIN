@@ -1,0 +1,50 @@
+<!-- <div class="modal-dialog modal-xl modal-dialog-centered"> -->
+    <div class="modal-content" style="width: 100%;">
+        <div class="modal-header modal-title">
+            Invoice Log
+            <!-- <div (click)="closeModal()" type="button"><i class="fa fa-times"></i></div> -->
+            <!-- <button (click)="closeModal()" type="button" class="close" aria-label="Close" ></button> -->
+        </div>
+        <div class="modal-body">
+            <div class="l-content w-100 pl-0">
+                <div class="tbl-reports card-shadow bg-white h-100">
+                    <div class="l-tbl-accordion overflow-auto">
+                        <div class="w-100 border-0 p-3">
+                            <div class="table-responsive">
+                                <table class="l-tbl" >
+                                    <tr class="main-tr">
+                                    <th style="color: black !important;">Invoice No</th>
+                                    <th style="color: black !important;">Status</th>
+                                    <th style="color: black !important;">Date Time</th>
+                                    <th style="color: black !important;">POC Image</th>
+                                    <th style="color: black !important;" class="text-nowrap">Signature Image</th>
+                                    </tr>
+                                    
+                                     <tr *ngFor="let item of items">  
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp" style="color: black !important;">
+                                                {{ item?.invoice_no }}
+                                            </div>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp colorCss" style="color: black !important;">
+                                                {{ item?.status | titlecase }}
+                                            </div>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp colorCss" style="color: black !important;">
+                                                {{ item?.tracking_date  | date :'dd-MM-yyyy hh:mm:ss a' }} 
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div class="td-wrapp " style="color: black !important;">
+                                            </div>
+                                        </td>
+                                    </tr>  
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

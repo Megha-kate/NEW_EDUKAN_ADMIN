@@ -1,0 +1,1976 @@
+<app-submenu-list [ActiveMenu]='1'></app-submenu-list>
+<section class="main-wrapper prod-list-page">
+    <div class="l-container l-page-nav">
+        <!-- <ul class="l-page-nav__list">
+            <li class="l-page-nav__list-item"><a [ngClass]="{'active': isActiveTab === 'TML'}"
+                    (click)="onClickTab(1)">TML Schemes </a></li>
+            <li class="l-page-nav__list-item"><a [ngClass]="{'active': isActiveTab === 'Distributor'}"
+                    (click)="onClickTab(2)">Distributor Schemes</a></li>
+        </ul> -->
+        <ul class="l-page-nav__list--icon">
+            <li class="l-page-nav__list--icon-item"><a (click)="onClickTab(1)" [ngClass]="{'active': tabchange===1}">
+                    <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 26">
+                            <g fill="none" fill-rule="evenodd">
+                                <g fill="#d9dadf" fill-rule="nonzero">
+                                    <g>
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M12.186 0L24 5.93v13.34L12.052 25.2 0 19.27V5.93L12.186 0zM1.5 8.218v10.135L12 23.518V12.66l-.006.004L1.5 8.218zm21-.001l-9 3.81V22.82l9-4.465V8.216zM6.748 4.297L1.702 6.754l10.293 4.298 4.437-1.851-9.683-4.904zm5.427-2.64L8.42 3.485l9.76 4.987 4.137-1.726-10.14-5.089z"
+                                                    transform="translate(-43 -279) translate(29 265) translate(14 6) translate(0 8)" />
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </i>
+                    <div class="txt">
+                        <span>TML Schemes</span>
+                    </div>
+                </a></li>
+            <li class="l-page-nav__list--icon-item"><a (click)="onClickTab(2)" [ngClass]="{'active': tabchange===2}">
+                    <i><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32"
+                            height="34" viewBox="0 0 32 34">
+                            <defs>
+                                <path id="gyln81heya"
+                                    d="M16 .5c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16S7.163.5 16 .5zm0 1.6C8.047 2.1 1.6 8.547 1.6 16.5S8.047 30.9 16 30.9s14.4-6.447 14.4-14.4S23.953 2.1 16 2.1z" />
+                            </defs>
+                            <g fill="none" fill-rule="evenodd">
+                                <g>
+                                    <g>
+                                        <g>
+                                            <g transform="translate(-193 -275) translate(193 274) translate(0 1.5)">
+                                                <mask id="ff6a77pzhb" fill="#fff">
+                                                    <use xlink:href="#gyln81heya" />
+                                                </mask>
+                                                <use fill="#D4D5DB" xlink:href="#gyln81heya" />
+                                                <path fill="#FFA518" stroke="#FFF" stroke-width="3"
+                                                    d="M15 17.5L25.138 0.5 15 -2.5z" mask="url(#ff6a77pzhb)" />
+                                            </g>
+                                            <path fill="#FFA518" d="M16.75 21.75v2h-1.5v-2h1.5zm0-11.75v10h-1.5V10h1.5z"
+                                                transform="translate(-193 -275) translate(193 274) translate(0 1.5)" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </i>
+                    <div class="txt">
+                        <span>Distributor Schemes</span>
+                    </div>
+                </a></li>
+        </ul>
+    </div>
+    <div class="l-container">
+        <div class="search-order-id float-right">
+            <span class="material-icons"> search </span>
+            <input type="text" class="textfield" placeholder="Search by Scheme Code " (keydown)="SearchByCode($event)"
+                (focusout)="showByCode($event)" [formControl]="AllFilters.controls['code']">
+            <div class="btn-filter" ngbDropdown #myDrop="ngbDropdown">
+                <button class="btn-filter" id="filterPopup" ngbDropdownToggle><img src="./assets/images/filter.svg"
+                        alt="" /></button>
+                <div ngbDropdownMenu aria-labelledby="filterPopup" class="filter-popup">
+                    <div class="arrow"></div>
+                    <form>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <li class="sidebar-cards__item">
+                                        <ul class="sidebar-cards__chk-list">
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input (change)="changedatefilter('Today')" name="A" type="radio"
+                                                    id="aa">
+                                                <label for="aa"> Today</label>
+                                            </li><br>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input name="A" type="radio" id="bb"
+                                                    (change)="changedatefilter('Sevenday')">
+                                                <label for="bb"> Last 7 days</label>
+                                            </li><br>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input name="A" type="radio" id="cc"
+                                                    (change)="changedatefilter('thirtyDays')" [checked]="isThirtyDays">
+                                                <label for="cc">Last 30 days</label>
+
+                                            </li><br>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input (change)="changedatefilter('Custom')" name="A" type="radio"
+                                                    id="dd" [value]="ShowCustom">
+                                                <label for="dd">Custom</label>
+                                            </li>
+
+                                            <li class="sidebar-cards__chk-list-item" [hidden]="!ShowCustom">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group m-0 calendar">
+                                                            <div class="input-group">
+                                                                <input class="form-control"
+                                                                    [formControl]="AllFilters.controls['from_date']"
+                                                                    placeholder="yyyy-mm-dd" [readonly]="true" name="dp"
+                                                                    ngbDatepicker #d="ngbDatepicker">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-outline-secondary calendar"
+                                                                        (click)="d.toggle()" type="button"><span
+                                                                            class="material-icons">
+                                                                            calendar_today
+                                                                        </span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group m-0">
+                                                            <div class="input-group calendar">
+                                                                <input class="form-control"
+                                                                    [formControl]="AllFilters.controls['to_date']"
+                                                                    placeholder="yyyy-mm-dd" [readonly]="true" name="dp"
+                                                                    ngbDatepicker #d1="ngbDatepicker">
+                                                                <div class="input-group-append1">
+                                                                    <button class="btn btn-outline-secondary calendar"
+                                                                        (click)="d1.toggle()" type="button"><span
+                                                                            class="material-icons">
+                                                                            calendar_today
+                                                                        </span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                <div class="srch-box">
+                                                    <label>Status</label><br />
+                                                    <select class="textfield"
+                                                        [formControl]="AllFilters.controls['status']">
+                                                        <option value="True">Publish</option>
+                                                        <option value="False">Un-Publish</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>Scheme Code</label><br />
+                                            <input type="text" placeholder="Scheme Code" class="textfield"
+                                                [formControl]="AllFilters.controls['discount_code']">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>Scheme Name</label><br />
+                                            <input type="text" placeholder="Scheme Name" class="textfield"
+                                                [formControl]="AllFilters.controls['discount_name']">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>Created By(User Name)</label><br />
+                                            <input type="text" placeholder="Created By" class="textfield"
+                                                [formControl]="AllFilters.controls['created_by']">
+                                        </div>
+                                    </li>
+                                </div>
+                                <div class="col-4 border-right">
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>Min Percentage</label><br />
+                                            <!-- <input type="number" placeholder="Min Percentage" xtfield"
+                                            (keypress)="numberOnly($event)"maxlength="2" minlength="2" 
+                                             [formControl]="AllFilters.controls['min_percentage']"> -->
+                                            <input placeholder="Min percentage"
+                                                [formControl]="AllFilters.controls['min_percentage']" class="textfield"
+                                                (keypress)="numberOnly($event)" maxlength="2">
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>Max Percentage</label><br />
+                                            <input placeholder="Max percentage" class="textfield"
+                                                (keypress)="numberOnly($event)" maxlength="3"
+                                                [formControl]="AllFilters.controls['max_percentage']">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <!-- <a style="color: blue;padding-right: 15px;cursor: pointer;"
+                                                (click)="Search()">Search</a>
+                                            <a style="color: red;cursor: pointer;" (click)="reset()">Reset</a> -->
+                                            <button class="btn btn-outline-primary"
+                                                (click)="Search()">Search</button>&nbsp;&nbsp;
+                                            <button class="btn btn-outline-primary" (click)="reset();">Reset</button>
+                                        </div>
+                                    </li>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <button class="button float-left btn-add-new" (click)="open(content)">
+            <span class="material-icons mr-2">
+                control_point
+            </span> CREATE NEW SCHEME
+        </button>
+        <!-- Modal = Scheme Details-->
+        <ng-template #content let-modal>
+            <div class="popup-add-roll scheam-popup">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">Scheme Details</h4>
+                    <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span> </button> -->
+                </div>
+                <div class="modal-body scheme-drags">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <ul class="steps">
+                                <li class="steps__item">
+                                    <a class="active done"
+                                        *ngIf="productdetails == true || locationdetails == true || productsummary == true">
+                                        <!-- done -->
+                                        <i>
+                                            <span class="material-icons"> done </span>
+                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;"
+                                                xml:space="preserve">
+                                                <g>
+                                                    <path fill="#C0C2DA" d="M23.9,11.4l-2.1-2.7l0.2-3.5c0-0.4-0.3-0.7-0.7-0.9L18,3.3l-1.9-3c-0.4-0.4-0.8-0.4-1-0.3L12,1.3L9,0.1
+                                                            C8.8,0,8.6,0,8.4,0.1C8.2,0.1,8,0.3,7.9,0.4L6.1,3.3L2.8,4.2C2.4,4.4,2.2,4.7,2.2,5.1l0.1,3.7l-2.2,2.8c-0.1,0.3-0.1,0.6,0,1
+                                                            l2.1,2.7l-0.2,3.5c0,0.4,0.3,0.7,0.7,0.9L6,20.7l1.8,2.9c0.1,0.2,0.3,0.3,0.5,0.4c0.1,0,0.2,0,0.3,0c0.1,0,0.2,0,0.3-0.1l3.1-1.3
+                                                            l3.1,1.3l0.3,0c0.3,0,0.6-0.1,0.7-0.4l1.9-2.9l3.3-1.1c0.4-0.1,0.6-0.5,0.6-0.9l-0.2-3.5l2.2-2.8C24,12.1,24,11.7,23.9,11.4z
+                                                            M20.2,14.5C20,14.7,20,14.9,20,15.1l0.2,3l-2.9,0.8c-0.2,0-0.4,0.2-0.5,0.4L15.1,22l-2.8-1.1l-0.3,0c-0.2,0-0.3,0-0.4,0.2
+                                                            l-2.7,1.1l-1.7-2.8C7,19.2,6.9,19.1,6.7,19l-2.9-0.8L4,15c0-0.1,0-0.4-0.2-0.5L2,12l1.9-2.5c0.2-0.2,0.2-0.4,0.2-0.6L3.9,5.8L6.8,5
+                                                            c0.2,0,0.4-0.2,0.5-0.4l1.6-2.7L11.8,3l0.4,0l2.9-1.1l1.7,2.7C17,4.8,17.1,4.9,17.3,5l2.9,0.8L20,9c0,0.1,0,0.4,0.2,0.5L22,12
+                                                            L20.2,14.5z" />
+                                                    <path fill="#C0C2DA" d="M16.7,12.3c-1-0.5-2.1-0.2-2.9,0.6c-0.8,0.8-1,2-0.6,3.1c0.5,1.1,1.4,1.8,2.5,1.8c1.4,0,2.6-1.2,2.7-2.8
+                                                            C18.3,13.8,17.7,12.8,16.7,12.3z M16.1,15.9C15.7,16,15.2,16,15,15.7c-0.3-0.3-0.4-0.8-0.2-1.2c0.2-0.6,0.6-0.7,0.9-0.7
+                                                            c0.5,0,1,0.6,1.1,1.1C16.8,15.3,16.4,15.8,16.1,15.9z" />
+                                                    <path fill="#C0C2DA" d="M16.6,7.4c-0.1-0.1-0.2-0.5-0.7-0.5c-0.2,0-0.6,0-0.8,0.3l-6.5,8.7c-0.3,0.2-0.4,0.6-0.2,1
+                                                            c0.1,0.1,0.2,0.5,0.7,0.5c0.1,0,0.2-0.1,0.3-0.1c0.1,0,0.1-0.1,0.3-0.1l0.1,0l6.6-8.8C16.6,8.1,16.7,7.7,16.6,7.4z M16.2,7.5
+                                                            C16.2,7.5,16.2,7.5,16.2,7.5L16.2,7.5L16.2,7.5z" />
+                                                    <path fill="#C0C2DA"
+                                                        d="M11.8,9.6c0-1.5-1.2-2.8-2.7-2.8S6.4,8.1,6.4,9.6c0,1.5,1.2,2.8,2.7,2.8C10.6,12.4,11.8,11.2,11.8,9.6z
+                                                            M8.1,9.6c0-0.6,0.4-1,1-1c0.3,0,0.6,0.1,0.8,0.4C10,9,10.1,9.2,10.1,9.6c0,0.6-0.4,1-1,1C8.6,10.6,8.1,10.2,8.1,9.6z" />
+                                                </g>
+                                            </svg>
+
+                                        </i>
+                                        <p>Offer Details</p>
+                                    </a>
+                                    <a class="active done"
+                                        *ngIf="productdetails == false && locationdetails == false && productsummary == false">
+                                        <!-- done -->
+                                        <i>
+                                            <!-- <span class="material-icons"> done </span> -->
+                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;"
+                                                xml:space="preserve">
+                                                <g>
+                                                    <path fill="#C0C2DA" d="M23.9,11.4l-2.1-2.7l0.2-3.5c0-0.4-0.3-0.7-0.7-0.9L18,3.3l-1.9-3c-0.4-0.4-0.8-0.4-1-0.3L12,1.3L9,0.1
+                                                            C8.8,0,8.6,0,8.4,0.1C8.2,0.1,8,0.3,7.9,0.4L6.1,3.3L2.8,4.2C2.4,4.4,2.2,4.7,2.2,5.1l0.1,3.7l-2.2,2.8c-0.1,0.3-0.1,0.6,0,1
+                                                            l2.1,2.7l-0.2,3.5c0,0.4,0.3,0.7,0.7,0.9L6,20.7l1.8,2.9c0.1,0.2,0.3,0.3,0.5,0.4c0.1,0,0.2,0,0.3,0c0.1,0,0.2,0,0.3-0.1l3.1-1.3
+                                                            l3.1,1.3l0.3,0c0.3,0,0.6-0.1,0.7-0.4l1.9-2.9l3.3-1.1c0.4-0.1,0.6-0.5,0.6-0.9l-0.2-3.5l2.2-2.8C24,12.1,24,11.7,23.9,11.4z
+                                                            M20.2,14.5C20,14.7,20,14.9,20,15.1l0.2,3l-2.9,0.8c-0.2,0-0.4,0.2-0.5,0.4L15.1,22l-2.8-1.1l-0.3,0c-0.2,0-0.3,0-0.4,0.2
+                                                            l-2.7,1.1l-1.7-2.8C7,19.2,6.9,19.1,6.7,19l-2.9-0.8L4,15c0-0.1,0-0.4-0.2-0.5L2,12l1.9-2.5c0.2-0.2,0.2-0.4,0.2-0.6L3.9,5.8L6.8,5
+                                                            c0.2,0,0.4-0.2,0.5-0.4l1.6-2.7L11.8,3l0.4,0l2.9-1.1l1.7,2.7C17,4.8,17.1,4.9,17.3,5l2.9,0.8L20,9c0,0.1,0,0.4,0.2,0.5L22,12
+                                                            L20.2,14.5z" />
+                                                    <path fill="#C0C2DA" d="M16.7,12.3c-1-0.5-2.1-0.2-2.9,0.6c-0.8,0.8-1,2-0.6,3.1c0.5,1.1,1.4,1.8,2.5,1.8c1.4,0,2.6-1.2,2.7-2.8
+                                                            C18.3,13.8,17.7,12.8,16.7,12.3z M16.1,15.9C15.7,16,15.2,16,15,15.7c-0.3-0.3-0.4-0.8-0.2-1.2c0.2-0.6,0.6-0.7,0.9-0.7
+                                                            c0.5,0,1,0.6,1.1,1.1C16.8,15.3,16.4,15.8,16.1,15.9z" />
+                                                    <path fill="#C0C2DA" d="M16.6,7.4c-0.1-0.1-0.2-0.5-0.7-0.5c-0.2,0-0.6,0-0.8,0.3l-6.5,8.7c-0.3,0.2-0.4,0.6-0.2,1
+                                                            c0.1,0.1,0.2,0.5,0.7,0.5c0.1,0,0.2-0.1,0.3-0.1c0.1,0,0.1-0.1,0.3-0.1l0.1,0l6.6-8.8C16.6,8.1,16.7,7.7,16.6,7.4z M16.2,7.5
+                                                            C16.2,7.5,16.2,7.5,16.2,7.5L16.2,7.5L16.2,7.5z" />
+                                                    <path fill="#C0C2DA"
+                                                        d="M11.8,9.6c0-1.5-1.2-2.8-2.7-2.8S6.4,8.1,6.4,9.6c0,1.5,1.2,2.8,2.7,2.8C10.6,12.4,11.8,11.2,11.8,9.6z
+                                                            M8.1,9.6c0-0.6,0.4-1,1-1c0.3,0,0.6,0.1,0.8,0.4C10,9,10.1,9.2,10.1,9.6c0,0.6-0.4,1-1,1C8.6,10.6,8.1,10.2,8.1,9.6z" />
+                                                </g>
+                                            </svg>
+
+                                        </i>
+                                        <p>Offer Details</p>
+                                    </a>
+                                </li>
+                                <li class="steps__item">
+                                    <a class="active done" *ngIf="locationdetails == true || productsummary == true ">
+                                        <i>
+                                            <span class="material-icons"> done </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 23">
+                                                <g fill="none" fill-rule="evenodd">
+                                                    <g fill="#C0C2DA" fill-rule="nonzero" stroke="#C0C2DA"
+                                                        stroke-width=".5">
+                                                        <g>
+                                                            <g>
+                                                                <g>
+                                                                    <path
+                                                                        d="M10.31 0l9.998 5.017v11.289l-10.11 5.017L0 16.306V5.017L10.31 0zM1.27 6.954v8.575l8.884 4.37v-9.186l-.006.004L1.27 6.954zm17.768-.001l-7.615 3.223v9.134l7.615-3.778v-8.58zM5.71 3.636L1.44 5.715l8.709 3.637 3.754-1.567L5.71 3.636zm4.592-2.234L7.124 2.95l8.258 4.22 3.5-1.46-8.58-4.307z"
+                                                                        transform="translate(-703 -450) translate(-1 -1) translate(694 440) translate(11 12)" />
+                                                                </g>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </i>
+                                        <p *ngIf="isDefault == true"> Product Selection</p>
+                                        <p *ngIf="isPartWise == true">Part/Quantity</p>
+                                    </a>
+                                    <a class="active done" *ngIf="locationdetails == false && productsummary == false">
+                                        <i>
+                                            <!-- <span class="material-icons"> done </span> -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 23">
+                                                <g fill="none" fill-rule="evenodd">
+                                                    <g fill="#C0C2DA" fill-rule="nonzero" stroke="#C0C2DA"
+                                                        stroke-width=".5">
+                                                        <g>
+                                                            <g>
+                                                                <g>
+                                                                    <path
+                                                                        d="M10.31 0l9.998 5.017v11.289l-10.11 5.017L0 16.306V5.017L10.31 0zM1.27 6.954v8.575l8.884 4.37v-9.186l-.006.004L1.27 6.954zm17.768-.001l-7.615 3.223v9.134l7.615-3.778v-8.58zM5.71 3.636L1.44 5.715l8.709 3.637 3.754-1.567L5.71 3.636zm4.592-2.234L7.124 2.95l8.258 4.22 3.5-1.46-8.58-4.307z"
+                                                                        transform="translate(-703 -450) translate(-1 -1) translate(694 440) translate(11 12)" />
+                                                                </g>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </i>
+                                        <p *ngIf="isDefault == true"> Product Selection</p>
+                                        <p *ngIf="isPartWise == true">Part/Quantity</p>
+                                    </a>
+                                </li>
+                                <li class="steps__item">
+                                    <a class="active done" *ngIf="productsummary == true">
+                                        <i>
+                                            <span class="material-icons"> done </span>
+                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                viewBox="0 0 15 20" style="enable-background:new 0 0 15 20;"
+                                                xml:space="preserve">
+                                                <g>
+                                                    <path fill="#C0C2DA"
+                                                        d="M6.9,0C4.2,0.2,1.8,1.9,0.7,4.3c-1.2,2.6-0.9,5.6,0.8,7.9l5.4,7.5C7.1,19.9,7.3,20,7.5,20 c0.2,0,0.4-0.1,0.6-0.3l5.4-7.5c1.7-2.3,2-5.3,0.8-7.9C13.2,1.9,10.8,0.2,8.1,0C7.7,0,7.3,0,6.9,0L6.9,0z M13,4.9 c1,2.1,0.7,4.6-0.6,6.5l-4.9,6.7l-4.9-6.7C1.3,9.5,1,7,2,4.9c0.9-2,2.8-3.4,5-3.5c0.2,0,0.3,0,0.5,0c0.2,0,0.3,0,0.5,0 C10.2,1.6,12.1,2.9,13,4.9L13,4.9L13,4.9z" />
+                                                    <path fill="#C0C2DA"
+                                                        d="M4.3,7.5c0,1.8,1.4,3.2,3.2,3.2s3.2-1.4,3.2-3.2S9.3,4.3,7.5,4.3C5.7,4.3,4.3,5.7,4.3,7.5z M9.3,7.5 c0,1-0.8,1.8-1.8,1.8c-1,0-1.8-0.8-1.8-1.8c0-1,0.8-1.8,1.8-1.8C8.5,5.7,9.3,6.5,9.3,7.5L9.3,7.5z" />
+                                                </g>
+                                            </svg>
+                                        </i>
+                                        <p>Offer Location</p>
+                                    </a>
+                                    <a class="active done" *ngIf="productsummary == false">
+                                        <i>
+                                            <!-- <span class="material-icons"> done </span> -->
+                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                viewBox="0 0 15 20" style="enable-background:new 0 0 15 20;"
+                                                xml:space="preserve">
+                                                <g>
+                                                    <path fill="#C0C2DA"
+                                                        d="M6.9,0C4.2,0.2,1.8,1.9,0.7,4.3c-1.2,2.6-0.9,5.6,0.8,7.9l5.4,7.5C7.1,19.9,7.3,20,7.5,20 c0.2,0,0.4-0.1,0.6-0.3l5.4-7.5c1.7-2.3,2-5.3,0.8-7.9C13.2,1.9,10.8,0.2,8.1,0C7.7,0,7.3,0,6.9,0L6.9,0z M13,4.9 c1,2.1,0.7,4.6-0.6,6.5l-4.9,6.7l-4.9-6.7C1.3,9.5,1,7,2,4.9c0.9-2,2.8-3.4,5-3.5c0.2,0,0.3,0,0.5,0c0.2,0,0.3,0,0.5,0 C10.2,1.6,12.1,2.9,13,4.9L13,4.9L13,4.9z" />
+                                                    <path fill="#C0C2DA"
+                                                        d="M4.3,7.5c0,1.8,1.4,3.2,3.2,3.2s3.2-1.4,3.2-3.2S9.3,4.3,7.5,4.3C5.7,4.3,4.3,5.7,4.3,7.5z M9.3,7.5 c0,1-0.8,1.8-1.8,1.8c-1,0-1.8-0.8-1.8-1.8c0-1,0.8-1.8,1.8-1.8C8.5,5.7,9.3,6.5,9.3,7.5L9.3,7.5z" />
+                                                </g>
+                                            </svg>
+                                        </i>
+                                        <p>Offer Location</p>
+                                    </a>
+                                </li>
+                                <!-- <li class="steps__item">
+                                    <a class="active">
+                                        <i>
+                                            <span class="material-icons"> done </span>
+                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                viewBox="0 0 15 20" style="enable-background:new 0 0 15 20;"
+                                                xml:space="preserve">
+                                                <g>
+                                                    <path fill="#C0C2DA"
+                                                        d="M6.9,0C4.2,0.2,1.8,1.9,0.7,4.3c-1.2,2.6-0.9,5.6,0.8,7.9l5.4,7.5C7.1,19.9,7.3,20,7.5,20 c0.2,0,0.4-0.1,0.6-0.3l5.4-7.5c1.7-2.3,2-5.3,0.8-7.9C13.2,1.9,10.8,0.2,8.1,0C7.7,0,7.3,0,6.9,0L6.9,0z M13,4.9 c1,2.1,0.7,4.6-0.6,6.5l-4.9,6.7l-4.9-6.7C1.3,9.5,1,7,2,4.9c0.9-2,2.8-3.4,5-3.5c0.2,0,0.3,0,0.5,0c0.2,0,0.3,0,0.5,0 C10.2,1.6,12.1,2.9,13,4.9L13,4.9L13,4.9z" />
+                                                    <path fill="#C0C2DA"
+                                                        d="M4.3,7.5c0,1.8,1.4,3.2,3.2,3.2s3.2-1.4,3.2-3.2S9.3,4.3,7.5,4.3C5.7,4.3,4.3,5.7,4.3,7.5z M9.3,7.5 c0,1-0.8,1.8-1.8,1.8c-1,0-1.8-0.8-1.8-1.8c0-1,0.8-1.8,1.8-1.8C8.5,5.7,9.3,6.5,9.3,7.5L9.3,7.5z" />
+                                                </g>
+                                            </svg>
+                                        </i>
+                                        <p>Product Summary</p>
+                                    </a>
+                                </li> -->
+                            </ul>
+                        </div>
+                        <!-- =========  Offer Details  =========   -->
+                        <div class="scheme-drags__offer-details" *ngIf="offerdetails == true">
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="">Discount Type</label>
+                                    <ul class="sidebar-cards__chk-list" style="padding-bottom: 0px !important;">
+                                        <li class="sidebar-cards__chk-list-item chkbox"><input type="checkbox" id="p"
+                                                [checked]="isDefault"
+                                                (change)="searchDiscountType('Default',$event)"><label for="p">Default
+                                                Discount</label></li>
+                                        <li class="sidebar-cards__chk-list-item chkbox"><input type="checkbox" id="l"
+                                                [checked]="isPartWise"
+                                                (change)="searchDiscountType('partwise',$event)"><label for="l">Part
+                                                Quantity Wise Discount</label></li>
+                                        <li class="sidebar-cards__chk-list-item chkbox text-nowrap"
+                                            *ngIf="Role=='Distributor'" style="margin-left: 386px ;margin-top: -34px;">
+                                            <input type="checkbox" id="mm" [checked]="isCashDiscount"
+                                                (change)="searchDiscountType('cashdiscount',$event)"><label for="mm">
+                                                cash Discount</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label>Name of the Scheme<span class="mandatory">*</span></label>
+                                    <input type="text" class="textfield" placeholder="Name of the Scheme"
+                                        [formControl]="itemForm.controls['discount_name']">
+
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-8">
+                                    <label for="">Scheme Duration</label>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label for="">Start date<span class="mandatory">*</span></label>
+                                            <div class="form-group m-0 calendar">
+                                                <div class="input-group">
+                                                    <input class="form-control" placeholder="dd-MM-yyyy" name="dp"
+                                                        [minDate]="minDate" [readonly]="true" ngbDatepicker
+                                                        #d="ngbDatepicker"
+                                                        [formControl]="itemForm.controls['from_date']" readonly>
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary calendar"
+                                                            (click)="d.toggle()" type="button"><span
+                                                                class="material-icons">
+                                                                calendar_today
+                                                            </span></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 pl-0">
+                                            <div class="form-group m-0 ">
+                                                <label for="">End date<span class="mandatory">*</span></label>
+                                                <div class="input-group calendar">
+                                                    <input class="form-control" placeholder="dd-MM-yyyy" name="dp"
+                                                        [minDate]="minDate" ngbDatepicker #d1="ngbDatepicker"
+                                                        [formControl]="itemForm.controls['to_date']" readonly>
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary calendar"
+                                                            (click)="d1.toggle()" type="button"><span
+                                                                class="material-icons">
+                                                                calendar_today
+                                                            </span></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 pl-0">
+                                            <label>Discount Percentage (%)<span class="mandatory">*</span></label>
+                                            <input type="text" class="textfield discount"
+                                                placeholder="Discount Percentage" (keypress)="isNumberKey($event)"
+                                                minlength="1" maxlength="5"
+                                                [formControl]="itemForm.controls['percentage']"
+                                                (change)="ChangePercentage($event)">
+
+                                        </div>
+                                        <p style="color: red;" *ngIf="Showerror">Please enter a value between 0.1 and
+                                            100</p>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- <div class="form-group col-6">
+                                    <label for="">Segment Of Customers<span class="mandatory">*</span></label>
+                                    <ul class="sidebar-cards__chk-list">
+                                     
+
+                                        <li class="sidebar-cards__chk-list-item chkbox"><input type="checkbox" id="h"
+                                                [formControl]="itemForm.controls['All']" [checked]='All'
+                                                (change)="onChange($event.target.checked)"><label for="h">All</label>
+                                        </li>
+                                        <li class="sidebar-cards__chk-list-item chkbox"><input type="checkbox" id="i"
+                                            [formControl]="itemForm.controls['Fleetowner']" [disabled]="FleetownerDis"
+                                            (change)="onChangeCustomer('FO',$event)" [checked]='Fleetowner'><label for="i">Key Account</label></li>
+
+                                        <li class="sidebar-cards__chk-list-item chkbox"><input type="checkbox" id="j"
+                                                [formControl]="itemForm.controls['GovtCust']" [disabled]='GovtCustDis'
+                                                [checked]='GovtCust' (change)="onChangeCustomer('GOV',$event)"><label
+                                                for="j">Govt. Customers</label></li>
+                                        <li class="sidebar-cards__chk-list-item chkbox"><input type="checkbox" id="k"
+                                                [formControl]="itemForm.controls['Retiler']" [disabled]='RetilerDis'
+                                                [checked]='Retiler' (change)="onChangeCustomer('RT',$event)"><label
+                                                for="k">Retailers</label></li>
+                                    </ul>
+                                </div> -->
+                                <div class="form-group col-6">
+                                    <label for="">Segment Of Customers<span class="mandatory">*</span></label>
+                                    <ul class="sidebar-cards__chk-list">
+
+                                        <mat-checkbox [formControl]="itemForm.controls['All']"
+                                            (change)="onChange($event.checked)">All
+                                        </mat-checkbox>
+
+                                        <mat-checkbox [formControl]="itemForm.controls['Fleetowner']"
+                                            [disabled]="FleetownerDis" (change)="onChangeCustomer('FO',$event)"
+                                            [checked]='Fleetowner'>Key Account
+                                        </mat-checkbox>
+                                        <mat-checkbox [formControl]="itemForm.controls['GovtCust']"
+                                            [disabled]='GovtCustDis' [checked]='GovtCust'
+                                            (change)="onChangeCustomer('GOV',$event)">
+                                            Govt. Customers
+                                        </mat-checkbox>
+                                        <mat-checkbox [formControl]="itemForm.controls['Retiler']"
+                                            [disabled]='RetilerDis' [checked]='Retiler'
+                                            (change)="onChangeCustomer('RT',$event)">
+                                            Retailers
+                                        </mat-checkbox>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="row">
+                                <div class="form-group col-8">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <mat-form-field appearance="outline" style="width: 100%;">
+                                                <input #autoCompleteInput class="form-control" type="text"
+                                                    placeholder="Search By Customer" aria-label="Number" matInput
+                                                    [formControl]="myControl1" [matAutocomplete]="auto">
+
+                                                <mat-icon matSuffix>arrow_drop_down</mat-icon>
+                                                <mat-autocomplete [panelWidth]="700" #auto="matAutocomplete">
+
+                                                    <mat-option *ngFor="let user of CustomerData "
+                                                        [value]="SelectedCustomer">
+                                                        <div (click)="optionClicked($event, user)">
+                                                            <mat-checkbox [checked]="user.selected"
+                                                                (change)="toggleSelection(user)"
+                                                                (click)="$event.stopPropagation()">
+                                                                {{ user.display }}
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-3">
+                                            <button style="margin-top: inherit" mat-raised-button
+                                                (click)="AddSelectCustomer()" matTooltip="Add"
+                                                style="color: white; background-color: blue;">
+                                                <mat-icon>add</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="row"> -->
+                            <!-- <div class="form-group col-6">
+                                    <li>
+                                        <div class="srch-box">
+                                            <input autocomplete="off" style="width: max-content !important;"
+                                                placeholder="Search Customer" class="textfield" type="text" matInput>
+                                        </div>
+                                        <ul class="sidebar-cards__chk-list">
+                                            <li class="form-chk-list-item chkbox">
+                                                <input type="checkbox" name="A" id="cust_{{k}}">
+                                                <label for="cust_{{k}}">Customer Name</label>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </div> -->
+                            <!-- <mat-form-field appearance="outline" style=width:50%>
+                                    <input #autoCompleteInput class="form-control" type="text"
+                                        placeholder="Search By Customer" aria-label="Number" matInput
+                                        [matAutocomplete]="auto">
+                                    <mat-icon matSuffix>arrow_drop_down</mat-icon>
+                                    <mat-autocomplete [panelWidth]="500" #auto="matAutocomplete">
+                                        <mat-option>
+                                            <mat-checkbox>
+                                                2516 LPK Axle
+                                            </mat-checkbox>
+                                        </mat-option>
+                                        <mat-option>
+                                            <mat-checkbox>
+                                                3906251_Compressor Air
+                                            </mat-checkbox>
+                                        </mat-option>
+
+                                        <mat-option *ngFor="let user of CustomerData " [value]="SelectedCustomer">
+                                        <div (click)="optionClicked($event, user)">
+                                          <mat-checkbox [checked]="user.selected" (change)="toggleSelection(user)"
+                                            (click)="$event.stopPropagation()">
+                                            {{ user.display }}
+                                          </mat-checkbox>
+                                        </div>
+                                      </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field> -->
+
+                            <!-- 
+                                <mat-dialog-content cdkScrollable>
+                                    <div fxLayout="row" style="margin-top: 5px;">
+                                        <div fxFlex="100" fxFlex.gt-sm="80">
+                                            <mat-form-field appearance="outline">
+                                                <input #autoCompleteInput class="form-control" type="text"
+                                                    placeholder="Search By Customer" aria-label="Number" matInput
+                                                    [formControl]="myControl1" [matAutocomplete]="auto">
+
+
+                                                <mat-icon matSuffix>arrow_drop_down</mat-icon>
+                                                <mat-autocomplete [panelWidth]="700" #auto="matAutocomplete">
+
+
+                                                    <mat-option *ngFor="let user of CustomerData "
+                                                        [value]="SelectedCustomer">
+                                                        <div (click)="optionClicked($event, user)">
+                                                            <mat-checkbox [checked]="user.selected"
+                                                                (change)="toggleSelection(user)"
+                                                                (click)="$event.stopPropagation()">
+                                                                {{ user.display }}
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+
+                                        </div>
+
+
+                                        <div fxFlex="100" fxFlex.gt-sm="20">
+                                            <button style="margin-top: inherit" mat-raised-button
+                                                (click)="AddSelectCustomer()" matTooltip="Add"
+                                                style="color: white; background-color: blue;">
+                                                <mat-icon>add</mat-icon>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </mat-dialog-content> -->
+                            <!-- </div> -->
+                            <div style="color: red;"> {{Valdationmessage}}</div>
+                            <div class="row">
+                                <div class="scheme-drags__product-selection-blocks" style="width: 100%;">
+                                    <h4>Selected Customer</h4>
+                                    <div class="scheme-drags__product-selection-blocks-inside">
+                                        <ul class="tags dark-blue" *ngIf="SelectedCustomer.length==0">
+                                            <li class="tags__list">
+                                                <a>All</a>
+                                            </li>
+                                        </ul>
+                                        <ul class="tags dark-blue" *ngIf="SelectedCustomer.length!=0">
+                                            <li class="tags__list" *ngFor="let cust of SelectedCustomer">
+                                                <a>{{cust.value}}_{{ cust.display }} <span class="material-icons"
+                                                        (click)="removeCustomer(cust.display)"> close
+                                                    </span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <h5 class="text-right note" *ngIf="SelectedCustomer.length>0">
+                                        {{SelectedCustomer.length}} Customers</h5>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- <button type="button" class="button button--btn-brdr clr-light-blue"
+                                (click)="modal.close('Save click')">Cancel</button> -->
+                                <button type="button" class="button btn-outline-dark" (click)="onClick(1)">Next</button>
+                            </div>
+                        </div>
+                        <!-- =========  Product Selection  =========   -->
+                        <div *ngIf="productdetails == true">
+                            <div class="scheme-drags__offer-details">
+                                <div class="row" *ngIf="isDefault == true">
+                                    <div class="form-group col-6">
+                                        <label for="">Search By</label>
+                                        <ul class="sidebar-cards__chk-list" style="padding-bottom: 0px !important;">
+                                            <li class="sidebar-cards__chk-list-item chkbox"><input type="checkbox"
+                                                    id="p" [checked]="isPgLine"
+                                                    (change)="searchPart('pg',$event)"><label for="p">Pg
+                                                    Line</label></li>
+                                            <li class="sidebar-cards__chk-list-item chkbox"><input type="checkbox"
+                                                    id="l" [checked]="isPart"
+                                                    (change)="searchPart('part',$event)"><label for="l">Part</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="row" *ngIf="isPart == true">
+
+                                          <div class="col-4">
+
+
+                                                <span  class="sidebar-cards__chk-list-item chkbox" 
+                                                    style="padding-left: 21px;"><input type="checkbox" id="j"
+                                                        [checked]="isIndividual" 
+                                                        (change)="searchParts('Individual',$event)" ><label
+                                                        for="j">Single Part</label></span>
+                                                        
+                                                <mat-form-field appearance="outline"  *ngIf="isBulk==false">
+                                                    <input type="text" placeholder="Search By Single  Part"
+                                                        aria-label="Number" matInput [formControl]="myControl"
+                                                        [matAutocomplete]="auto">
+                                                    <mat-autocomplete #auto="matAutocomplete" hidden>
+                                                        <mat-option stymat-autocompletele=""
+                                                            (Change)="SelectedPartWise(item,$event)"
+                                                            *ngFor="let item of individualParts;let k=index;"
+                                                            [value]="item.part_number">
+                                                            {{item.part_number}}_{{item.desc_text}}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+                                                </mat-form-field>
+
+                                              </div>
+
+                                          
+
+
+
+                                      
+                                   
+
+                                       
+                                        <div class="col-4">
+                                            <span class="sidebar-cards__chk-list-item chkbox text-nowrap"
+                                                style="padding-left: 61px;"><input type="checkbox" id="k"
+                                                    [checked]="isBulk" (change)="searchParts('bulk',$event)"><label
+                                                    for="k">Bulk Upload</label></span>
+                                            <div class="row" *ngIf="isBulk == true">
+                                                <div class="form-group col-12">
+                                                    <div class="row" style="padding-left: 8px;">
+                                                        <div class="col-6" style="padding-right: 50px;">
+                                                           
+                                                            <label>
+                                                                <input #inputFile type="file" (change)="fileUpload($event)" style="display:none" />
+
+                                                            <a mat-raised-button color="primary">
+                                                              <mat-icon>file_upload</mat-icon>
+                                                              Upload Excel
+                                                            </a>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-6 text-nowrap">
+                                                            <a style="color: blue;"
+                                                             href="./assets/Samples/SinglePartBulkUpload.xlsx">Download
+                                                                Template</a>
+
+                                                            <div class="text-nowrap"
+                                                                style="color: red; cursor: context-menu;" fxFlex="100"
+                                                                fxFlex.gt-sm="100">
+                                                                <b>*Maximum 1000 parts can be uploaded</b>
+                                                                <!-- <a style="color: blue;" href="./assets/Samples/validate_part_number.xlsx">Download Template</a>
+
+                                                                <br><a style="color: red; font-size: small;">*Maximum 150 parts can be uploaded</a>
+                                                 -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-nowrap"
+                                                            style="color: red; cursor: context-menu; " fxFlex="100"
+                                                            fxFlex.gt-sm="100">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="isPartWise == true" style="width: 950px;">
+                                         
+
+                                      
+
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                          
+
+                            <div *ngIf="isDefault == true">
+
+
+                                <div class="scheme-drags__product-selection d-flex" *ngIf="isPgLine == true">
+                                    <div class="row">
+                                        <div class="scheme-drags__product-selection-products-nav">
+                                            <h4>All Products</h4>
+                                            <div class="scheme-drags__product-selection-products-nav-list-wrapp">
+                                                <div class="search-order-id">
+                                                    <span class="material-icons"> search </span>
+                                                    <input type="text"
+                                                        placeholder="Search by productline, part name, part number…"
+                                                        class="textfield" [formControl]="AllFilters.controls['pgline']"
+                                                        (keyup)="pgLineType()">
+                                                    <div class="btn-filter"> </div>
+                                                </div>
+                                                <ul class="scheme-drags__product-selection-products-nav-list">
+                                                    <li class="scheme-drags__product-selection-products-nav-list-item ttl"
+                                                        *ngFor="let item of Type;let k=index;">
+                                                        <label for="a-t"><input type="checkbox" id="a-t"
+                                                                (change)="SelectedPGLine(item,$event)"
+                                                                [formControl]="ProductLineList.controls[item.LINE_2_s]">{{item.LINE_2_s}}</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <h5 class="text-right note" *ngIf="selectedPGLineArray.length>0">
+                                                {{selectedPGLineArray.length}} products selected</h5>
+                                            <h5 class="text-right note" *ngIf="selectedPGLineArray.length == 0">No
+                                                products selected</h5>
+                                        </div>
+
+                                        <div class="scheme-drags__product-selection-btns">
+                                            <button class="button button--btn-brdr" (click)="addProduct()">ADD</button>
+                                            <a><span class="material-icons"> east </span></a>
+                                        </div>
+                                        <div class="scheme-drags__product-selection-blocks">
+                                            <h4>Selected Product Lines</h4>
+                                            <div class="scheme-drags__product-selection-blocks-inside">
+                                                <ul class="tags dark-blue" *ngIf="productTypeDisplay.length>0">
+                                                    <h5>Product Lines:</h5>
+                                                    <li class="tags__list" *ngFor="let item of productTypeDisplay">
+                                                        <a>{{item.LINE_2_s}}<span class="material-icons"
+                                                                (click)="removeLine(item.LINE_2_s)"> close
+                                                            </span> </a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="tags dark-blue" *ngIf="productTypeDisplay.length == 0">
+                                                    <h5>Product Lines:</h5>
+                                                    <li class="tags__list">
+                                                        <a>All</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <h5 class="text-right note" *ngIf="productTypeDisplay.length>0">
+                                                {{productTypeDisplay.length}} product lines</h5>
+                                            <h5 class="text-right note" *ngIf="productTypeDisplay.length == 0">0 product
+                                                lines</h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="scheme-drags__product-selection d-flex" *ngIf="isPart == true"
+                                    style="margin-bottom: 10px;">
+
+                                    <div class="row" *ngIf="isDefault == true">
+                                     <div class="scheme-drags__product-selection-products-nav" >
+                                            <h4>All Products</h4>
+                                            <div class="scheme-drags__product-selection-products-nav-list-wrapp">
+                                                <div class="search-order-id">
+                                                    <span class="material-icons"> search </span>
+                                                    <input type="text"
+                                                        placeholder="Search by productline, part name, part Single number…"
+                                                        class="textfield">
+                                                    <div class="btn-filter"> </div>
+                                                </div>
+                                                <ul class="scheme-drags__product-selection-products-nav-list">
+                                                 
+
+                                                    <li class="scheme-drags__product-selection-products-nav-list-item main"
+                                                        *ngFor="let item of Type;let k=index;">
+                                                        <a href="javascript:void(0)" id="products-nav-el"
+                                                            class="products-nav-click"
+                                                            (click)="toggle_Part_list(item.LINE_2_s,'products-nav-el')">
+                                                            <span class="material-icons"> arrow_right </span>
+                                                        </a>
+                                                        <label for="a-m-2">
+                                                            <input type="checkbox" id="a-m"
+                                                                (change)="SelectedPGLine(item,$event)"
+                                                                [formControl]="ProductLineList.controls[item.LINE_2_s]">
+                                                            {{item.LINE_2_s}}
+                                                        </label>
+                                                        <ul class="scheme-drags__product-selection-products-nav-sublist"
+                                                            id={{item.LINE_2_s}}>
+                                                            <li *ngFor="let part of SKU[item.LINE_2_s]; let j=index;"
+                                                                class="scheme-drags__product-selection-products-nav-sublist-item">
+                                                                <label for="part_{{j}}">
+                                                                    <input type="checkbox" id="part_{{j}}"
+                                                                        (change)="SelectedPartLine(part,$event)">
+                                                                    {{part.desc_text}}</label>
+                                                            </li>
+                                                            <!-- <li>abc</li>
+                                                        <li>abc</li> -->
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- <h5 class="text-right note">{{selectedPGLineArray.length}} products and
+                                                {{selectedPartArray.length}} part selected</h5> -->
+                                        </div>
+                                        <div class="scheme-drags__product-selection-btns">
+                                            <button class="button button--btn-brdr" (click)="addProduct()">ADD</button>
+                                            <a href="#"><span class="material-icons"> east </span></a>
+                                        </div>
+                                        <div class="scheme-drags__product-selection-blocks">
+                                            <h4>Selected Product Lines/Products</h4>
+                                            <div class="scheme-drags__product-selection-blocks-inside">
+                                                <ul class="tags dark-blue" *ngIf="productTypeDisplay.length>0">
+                                                    <h5>Product Lines:</h5>
+                                                    <li class="tags__list" *ngFor="let item of productTypeDisplay">
+                                                        <a>{{item.LINE_2_s}}<span class="material-icons"
+                                                                (click)="removeLine(item.LINE_2_s)"> close
+                                                            </span> </a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="tags dark-blue" *ngIf="productTypeDisplay.length == 0">
+                                                    <h5>Product Lines:</h5>
+                                                    <li class="tags__list">
+                                                        <a>All</a>
+                                                    </li>
+                                                </ul>
+                                             
+                                                <ul class="tags blue" *ngIf="selectedSKUDisplay.length > 0">
+                                                    <h5>Part Lines:</h5>
+                                                    <li class="tags__list" *ngFor="let item of selectedSKUDisplay">
+                                                        <a>{{item.display}}_{{part_description}}
+                                                            <span class="material-icons"
+                                                                (click)="removePart(item.part_number)"> close </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="tags blue" *ngIf="selectedSKUDisplay.length == 0">
+                                                    <h5>Part Lines:</h5>
+                                                    <li class="tags__list">
+                                                        <a>All</a>
+                                                       
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- <h5 class="text-right note">{{productTypeDisplay.length}} product lines and
+                                                {{selectedSKUDisplay.length}} part added</h5> -->
+                                        </div>
+                                    </div>
+                                 
+                                </div>
+                            </div>
+
+                            <div *ngIf="isPartWise == true">
+
+
+
+                                <div class="col-4">
+
+                                    <li class="sidebar-cards__item" >
+
+                                        <span  class="sidebar-cards__chk-list-item chkbox"
+                                            style="padding-left: 21px;"><input type="checkbox" id="j"
+                                                [checked]="isIndividual" 
+                                                (change)="searchParts('Individual',$event)" ><label
+                                                for="j">Individual Part</label></span>
+                                               </li>
+                                  
+
+
+                                </div>
+
+                                <div class="col-4">
+                                    <span class="sidebar-cards__chk-list-item chkbox text-nowrap"
+                                        style="padding-left: 61px;"><input type="checkbox" id="k"
+                                            [checked]="isBulk" (change)="searchParts('bulk',$event)"><label
+                                            for="k">Bulk Upload</label></span>
+                                    <div class="row" *ngIf="isBulk == true">
+                                        <div class="form-group col-12">
+                                            <div class="row" style="padding-left: 8px;">
+                                                <div class="col-6" style="padding-right: 50px;">
+                                                   
+                                                    <label>
+                                                        <input #inputFile type="file" (change)="SelectDocumentFiles($event)" style="display:none" />
+
+                                                    <a mat-raised-button color="primary">
+                                                      <mat-icon>file_upload</mat-icon>
+                                                      Upload Excel
+                                                    </a>
+                                                    </label>
+                                                </div>
+                                                <div class="col-6 text-nowrap">
+                                                    <a style="color: blue;"
+                                                     href="./assets/Samples/validate_part_number.xlsx">Download
+                                                        Template</a>
+
+                                                    <div class="text-nowrap"
+                                                        style="color: red; cursor: context-menu;" fxFlex="100"
+                                                        fxFlex.gt-sm="100">
+                                                        <b>*Maximum 150 parts can be uploaded</b>
+                                                       
+                                                    </div>
+
+                                                    
+              
+                                                </div>
+                                                <div class="text-nowrap"
+                                                    style="color: red; cursor: context-menu; " fxFlex="100"
+                                                    fxFlex.gt-sm="100">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="scheme-drags__product-selection d-flex" *ngIf="isIndividual == true">
+                                    <div class="row">
+                                        <div class="scheme-drags__product-selection-products-nav" style="width: 70%;">
+                                            <h4>Individual Parts</h4>
+                                            <div class="scheme-drags__product-selection-products-nav-list-wrapp">
+                                                <div class="search-order-id">
+                                                    <span class="material-icons"> search </span>
+                                                    <input type="text" (keyup)="SearchByPart()"
+                                                        [formControl]="AllFilters.controls['parts']"
+                                                        placeholder="Search byIndividual Parts…" class="textfield"
+                                                        style="width: 100%;">
+                                                    <div class="btn-filter"> </div>
+                                                </div>
+                                                <ul class="scheme-drags__product-selection-products-nav-list">
+                                                    <form [formGroup]="partList">
+                                                        <li class="scheme-drags__product-selection-products-nav-list-item ttl"
+                                                            *ngFor="let item of individualParts;let k=index;">
+                                                            <label for="a-t"><input type="checkbox" id="a-t"
+                                                                    (change)="SelectedPartWise(item,$event)"
+                                                                    [formControl]="partList.controls[item.part_number]">{{item.part_number}}_{{item.desc_text}}</label>
+                                                        </li>
+                                                    </form>
+                                                </ul>
+                                            </div>
+
+                                        
+                                        
+                                        </div>
+                                        <div class="scheme-drags__product-selection-btns">
+                                            <input type="text" placeholder="Quantity" class="textfield"
+                                                [formControl]="itemForm.controls['quantity']" min="1" max="99999"
+                                                (keypress)="numberOnly($event)">
+                                            <button class="button button--btn-brdr"
+                                                (click)="addIndividualParts()">ADD</button>
+                                            <!-- <a><span class="material-icons" (click)="addIndividualParts()"> east
+                                                </span></a> -->
+                                        </div>
+                                          
+                                       
+
+
+
+                                        <!-- <h5 class="text-right note" *ngIf="selectedPGLineArray.length>0">
+                                            {{SKUPartQty.length}} part selected</h5> 
+                                    <h5 class="text-right note" *ngIf="selectedPGLineArray.length == 0">
+                                            {{SKUPartQty.length}}  products selected</h5>  -->
+                                    <!-- <div class="scheme-drags__product-selection-bloc
+                                        <!-- <div class="scheme-drags__product-selection-blocks">
+                                        <h4>Selected Parts</h4>
+                                        <div class="scheme-drags__product-selection-blocks-inside">
+                                            <ul class="tags dark-blue" *ngIf="SKUPartQty.length>0">
+                                                <h5>Parts:</h5>
+                                                <li class="tags__list" *ngFor="let item of SKUPartQty">
+                                                    <a>{{item.display}} ({{item.qty}})<span class="material-icons" (click)="removePartWise(item.display)"> close
+                                                        </span> </a>
+                                                </li>
+                                            </ul>
+                                            <ul class="tags dark-blue" *ngIf="SKUPartQty.length == 0">
+                                                <h5>Parts:</h5>
+                                                <li class="tags__list">
+                                                    <a>All</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <h5 class="text-right note" *ngIf="SKUPartQty.length>0">{{SKUPartQty.length}} part</h5>
+                                        <h5 class="text-right note" *ngIf="SKUPartQty.length == 0">0 part</h5>
+                                    </div> -->
+                                    </div>
+                                    <!-- <div *ngIf="isCashDiscount == true">
+                                    <li class="sidebar-cards__chk-list-item chkbox">
+                                        <input type="checkbox" id="i" (change)="changeSearch('Div',$event)"
+                                            [checked]="isDivisionSearch">
+                                        <label for="i">Division</label>
+                                    </li>
+                                    </div> -->
+
+                                </div>
+
+                                <div class="scheme-drags__offer-details" *ngIf="isBulk == true">
+
+                                    <!-- <div class="row">
+                                    <div class="col-4">
+                                        <label>
+                                            <input #inputFile type="file"  style="display:none" />
+                                            <a mat-raised-button color="primary"><mat-icon>file_upload</mat-icon>Upload Excel</a>
+                                        </label>
+                                    </div>
+                                </div> -->
+                                  
+                                </div>
+                                <div class="row" style="margin-left: 5px;">
+                                    <div class="l-content w-100 pl-0">
+                                        <div class="tbl-reports card-shadow bg-white h-100" style="margin-right: 30px;">
+                                            <div class="l-tbl-accordion overflow-auto">
+                                                <div class=" w-100 border-0 p-3">
+                                                    <div class="table-responsive">
+                                                        <table class="l-tbl">
+                                                            <tr class="main-tr">
+                                                                <td>
+                                                                    <div class=" d-flex align-items-center">
+                                                                        <span>Part No</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class=" d-flex align-items-center">
+                                                                        <span>Qty</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class=" d-flex align-items-center">
+                                                                        <span>Default Discount</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class=" d-flex align-items-center">
+                                                                        <span>Quantity Discount</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class=" d-flex align-items-center">
+                                                                        <span>Action</span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <ng-container *ngIf="SKUPartQty.length>0">
+                                                                <tr *ngFor="let item of SKUPartQty" class="click-tr">
+                                                                    <td class="text-nowrap">
+                                                                        <div class="td-wrapp">{{item?.display}}</div>
+                                                                    </td>
+                                                                    <td class="text-nowrap">
+                                                                        <div class="td-wrapp"> {{ item?.qty }}</div>
+                                                                    </td>
+                                                                    <td class="text-nowrap">
+                                                                        <div>
+                                                                            {{item?.default_discount}}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="text-nowrap">
+                                                                        <div>
+                                                                            {{ item?.quantity_discount}}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="text-nowrap">
+                                                                        <div (click)="removePartWise(item.display)"
+                                                                            style="color: red;cursor: pointer;">
+                                                                            Remove
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="SKUPartQty.length == 0">
+                                                                <tr class="click-tr">
+                                                                    <td class="text-nowrap">
+                                                                        <div class="td-wrapp">No data to display</div>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-container>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="scheme-drags__offer-details" *ngIf="isCashDiscount==false">
+                                    <div class="row">
+                                        <!-- <div class="form-group col-6">
+                                            <mat-form-field appearance="outline" style="width: 216%;">
+                                                <input #autoCompleteInput class="form-control" type="text"
+                                                    placeholder="Search By Customer" aria-label="Number" matInput
+                                                    [formControl]="myControl1" [matAutocomplete]="auto">
+
+                                                <mat-icon matSuffix>arrow_drop_down</mat-icon>
+                                                <mat-autocomplete [panelWidth]="700" #auto="matAutocomplete">
+
+                                                    <mat-option *ngFor="let user of CustomerData "
+                                                        [value]="SelectedCustomer">
+                                                        <div (click)="optionClicked($event, user)">
+                                                            <mat-checkbox [checked]="user.selected"
+                                                                (change)="toggleSelection(user)"
+                                                                (click)="$event.stopPropagation()">
+                                                                {{ user.display }}
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                           
+                                            
+                                  
+                                             
+                                        </div>
+                                        
+                                        <div fxFlex.gt-sm="10">
+                                  
+                                            <button mat-raised-button (click)="DistributorAdd()" matTooltip="Add"
+                                              style=" margin-top: 10px;   margin-left: 10px; color: white; background-color: blue;">
+                                              <mat-icon>add</mat-icon>
+                                            </button>
+                              
+                                        </div> -->
+
+                                        <li class="sidebar-cards__item">
+                                            <!-- <mat-form-field appearance="outline">
+                                                    
+                                                        <mat-select appearance="outline" class="grid-7-11" [placeholder]="' Search by Division'"
+                                                        [errorMsg]="errorMessage" [showErrorMsg]="showError" [options]="Division" [display]="'display'"
+                                                        [value]="'value'" [multiple]='true' [labelCount]="1" [selectedOptions]="selectedOptions"
+                                                        (selectionChange)="getDivisionSelectedOptions($event)">
+                                                        </mat-select>
+                                                      </mat-form-field> -->
+                                            <!-- <mat-form-field  class="filterwidth">
+                                                        <input width="100px"  type="text"
+                                                               placeholder="Division Name"
+                                                               aria-label="Number"
+                                                               matInput
+                                                               [formControl]="myControl1"
+                                                               [matAutocomplete]="auto1">
+                                                             
+                                                        <mat-autocomplete    #auto1="matAutocomplete">
+                                                          <mat-option  stymat-autocompletele="width: 100%;" (onSelectionChange)="getDivisionSelectedOptions($event)"  
+                                                           *ngFor="let DivisionData of Division " [value]="DivisionData.div_name">
+                                                            {{DivisionData.div_name}}
+                                                          </mat-option>
+                                                        </mat-autocomplete>
+                                                      </mat-form-field>
+                                                      &nbsp;&nbsp;
+                                                    <button style="margin-top: inherit" mat-raised-button
+                                                        (click)="AddSelectCustomer()" matTooltip="Add"
+                                                        style="color: white; background-color: blue;">
+                                                        <mat-icon>add</mat-icon>
+                                                    </button>
+                                            </li> -->
+                                            <!-- <div class="col-9">
+                                            <mat-form-field appearance="outline" style="width: 100%;">
+                                                <input #autoCompleteInput class="form-control" type="text"
+                                                    placeholder="Search By Customer" aria-label="Number" matInput
+                                                    [formControl]="myControl1" [matAutocomplete]="auto">
+
+                                                <mat-icon matSuffix>arrow_drop_down</mat-icon>
+                                                <mat-autocomplete [panelWidth]="700" #auto="matAutocomplete">
+
+                                                    <mat-option *ngFor="let user of CustomerData "
+                                                        [value]="SelectedCustomer">
+                                                        <div (click)="optionClicked($event, user)">
+                                                            <mat-checkbox [checked]="user.selected"
+                                                                (change)="toggleSelection(user)"
+                                                                (click)="$event.stopPropagation()">
+                                                                {{ user.display }}
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div> -->
+                                            <!-- <div class="col-3">
+                                            <button style="margin-top: inherit" mat-raised-button
+                                                (click)="AddSelectCustomer()" matTooltip="Add"
+                                                style="color: white; background-color: blue;">
+                                                <mat-icon>add</mat-icon>
+                                            </button>
+                                        </div> -->
+                                    </div>
+
+                                </div>
+                                <div *ngIf="isPgLine==false">
+                                    <h5 class="text-right note" *ngIf="selectedPGLineArray.length>0"style="padding-right:16px ;">
+                                        {{SKUPartQty.length}} part selected</h5> 
+                                <h5 class="text-right note" *ngIf="selectedPGLineArray.length == 0" style="padding-right:16px ;">
+                                        {{SKUPartQty.length}}  products selected</h5> 
+
+                                    </div>
+                                    <div *ngIf="isPartWise==true">
+                                        <h5 class="text-right note" *ngIf="selectedPGLineArray.length>0"style="padding-right:16px ;">
+                                            {{SKUPartQty.length}} part selected</h5> 
+                                    <h5 class="text-right note" *ngIf="selectedPGLineArray.length == 0" style="padding-right:16px ;">
+                                            {{SKUPartQty.length}}  products selected</h5> 
+    
+                                        </div>
+                            </div>
+                            <div class="modal-footer" style="margin-top: 20px;">
+                                <button type="button" class="button button--btn-brdr clr-light-blue"
+                                    (click)="onClickBack(2)">Back</button>
+                                <button type="button" class="button btn-outline-dark" (click)="onClick(2)">Next</button>
+                            </div>
+                        </div>
+
+                        <!-- =========  Location Selection  =========   -->
+
+
+
+                        <div class="scheme-drags__offer-details" *ngIf="locationdetails == true">
+                            <div *ngIf="isDistributorShow == false">
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label for="">Search By</label>
+                                        <ul class="sidebar-cards__chk-list">
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <!-- <input name="A" type="radio" id="aa">
+                                               <label for="aa">Distributor</label> -->
+                                                <input type="checkbox" id="h" (change)="changeSearch('Dis',$event)"
+                                                    [checked]="isDistributorSearch">
+                                                <label for="h">Distributor</label>
+                                            </li>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input type="checkbox" id="i" (change)="changeSearch('Div',$event)"
+                                                    [checked]="isDivisionSearch">
+                                                <label for="i">Division</label>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <!-- <mat-select appearance="outline" class="grid-7-11"
+                                            [placeholder]="' Search by Zone'" [errorMsg]="errorMessage"
+                                            [showErrorMsg]="showError" [options]="options" [display]="'display'"
+                                            [value]="'value'" [multiple]='true' [labelCount]="1"
+                                            [selectedOptions]="selectedOptions">
+                                        </mat-select> -->
+                                        <div class="srch-box">
+                                            <label>Zone</label>
+                                            <select class="textfield" [formControl]="itemForm.controls['zone']"
+                                                placeholder="Zone">
+                                                <!-- <option *ngFor="let zone of zonedata;" [value]="zone.zone">
+                                                    {{zone.zone}}</option> -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <!-- <li class="sidebar-cards__item">
+                                            <mat-select-autocomplete appearance="outline" class="grid-7-11"
+                                                [placeholder]="'Search by State'" [errorMsg]="errorMessage"
+                                                [showErrorMsg]="showError" [options]="State" [display]="'display'"
+                                                [value]="'value'" [multiple]='true' [labelCount]="1"
+                                                [selectedOptions]="selectedOptions"
+                                                (selectionChange)="getStateSelectedOptions($event)">
+                                            </mat-select-autocomplete>
+                                        </li> -->
+
+                                        <div class="srch-box">
+                                            <label>State</label>
+                                            <select class="textfield"
+                                            [formControl]="itemForm.controls['state_code']"
+                                            (change)="onChanges($event.target.value)">
+                                            <option hidden></option>
+
+                                            <option *ngFor="let SateData of statenamedata;">
+                                                {{SateData.state_name}}</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-4">
+                                      
+                                        <label>District </label>
+                                        <select [formControl]="itemForm.controls['district_name']"
+                                            (change)="onChangedis($event)" name="District" class="form-control"
+                                            class="textfield" required placeholder="District">
+                                            <option value="none" selected disabled hidden>
+                                                District
+                                            </option>
+                                            <option *ngFor="let DisData of Disnamedata;">
+                                                {{DisData.district_name}}
+                                            </option>
+                                        </select>
+                                    </div> -->
+
+                                    <div class="form-group col-4">
+                                        <label>District </label>
+                                        <select [formControl]="itemForm.controls['district_name']"
+                                        (change)="onChanges($event)" class="form-control" class="textfield" required>
+                                        <option hidden></option>
+                                        <option *ngFor="let DisData of Disnamedata;">
+                                            <options>
+                                                {{DisData.district_name}}
+                                            </options>
+                                        </option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                        <div class="col-8">
+                            <mat-select-autocomplete appearance="outline" class="grid-7-11" [placeholder]="' Search by Distributor'"
+        [errorMsg]="errorMessage" [showErrorMsg]="showError" [options]="Distributor" [display]="'display'"
+        [value]="'value'" [multiple]='true' [labelCount]="1" [selectedOptions]="selectedOptions"
+        (selectionChange)="getDistributorSelectedOptions($event)">
+      </mat-select-autocomplete>
+                        </div>
+                        <div class="col-2" *ngIf="isDistributorSearch == true">
+                            <button (click)="DistributorAdd()" matTooltip="Add"
+                            style=" margin-top: 10px;   margin-left: 10px;      color: white; background-color: blue;">
+                            <mat-icon>add</mat-icon>
+                          </button>
+                        </div>
+
+                    </div>
+                    <div class="row" *ngIf="isDivisionSearch == true">
+                        <div class="col-6">
+                            <mat-select-autocomplete appearance="outline" class="grid-7-11" [placeholder]="' Search by Division'"
+        [errorMsg]="errorMessage" [showErrorMsg]="showError" [options]="Division" [display]="'display'"
+        [value]="'value'" [multiple]='true' [labelCount]="1" [selectedOptions]="selectedOptions"
+        (selectionChange)="getDivisionSelectedOptions($event)">
+      </mat-select-autocomplete>
+                        </div>
+                        <div class="col-6">
+                            <button (click)="DistributorAdd()" matTooltip="Add"
+                            style=" margin-top: 10px;   margin-left: 10px;      color: white; background-color: blue;">
+                            <mat-icon>add</mat-icon>
+                          </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="scheme-drags__product-selection-blocks" style="width: 100%;">
+                            <h4 [hidden]="isDivisionSearch == true">Selected Distributor</h4>
+                            <h4 [hidden]="isDistributorSearch == true">Selected Distributor & Division</h4>
+                            <div class="scheme-drags__product-selection-blocks-inside">
+                                <ul class="tags dark-blue"  *ngIf="selectedDisplayDistributor.length > 0">
+                                    <h5>Distributor:</h5>
+                                    <li class="tags__list" *ngFor="let Distributor of selectedDisplayDistributor">
+                                        <a>{{Distributor.value}}<span class="material-icons" (click)="removeDistributor(Distributor.display)"> close
+                                            </span></a>
+                                    </li>
+                                </ul>
+                                <ul class="tags dark-blue"  *ngIf="selectedDisplayDistributor.length == 0">
+                                    <h5>Distributor:</h5>
+                                    <li class="tags__list" *ngFor="let Distributor of selectedDisplayDistributor">
+                                        <a>ALL</a>
+                                    </li>
+                                </ul>
+                                <div *ngIf="isDivisionSearch == true">
+                                <ul class="tags blue" *ngIf="selectedDisplayDivision.length>0">
+                                    <h5>Division:</h5>
+                                    <li class="tags__list" *ngFor="let Division of selectedDisplayDivision">
+                                        <a > {{ Division.value}}<span class="material-icons" (click)="removeDivision(Division.display)"> close
+                                            </span> </a>
+                                    </li>
+                                    </ul>
+                                    <ul class="tags blue" *ngIf="selectedDisplayDivision.length == 0"> 
+                                    <li class="tags__list">
+                                        <a>ALL</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            </div>
+                            <h5 class="text-right note" *ngIf="isDistributorSearch == true">{{selectedDisplayDistributor.length}} Distributor Selected</h5>
+                            <h5 class="text-right note" *ngIf="isDivisionSearch == true">3 Distributor Selected & {{selectedDisplayDivision.length}} Divsion Selected</h5>
+                        </div>
+                    </div> -->
+
+
+                                <div class="scheme-drags__product-selection d-flex" *ngIf="isDistributorSearch == true">
+                                    <div class="row">
+                                        <div class="scheme-drags__product-selection-products-nav">
+                                            <h4>Distributor</h4>
+                                            <div class="scheme-drags__product-selection-products-nav-list-wrapp">
+                                                <div class="search-order-id">
+                                                    <span class="material-icons"> search </span>
+                                                    <input type="text"
+                                                        [formControl]="AllFilters.controls['org_name']"
+                                                        (keyup)="Distributortype()" placeholder="Search by distributor"
+                                                        class="textfield">
+                                                    <div class="btn-filter"> </div>
+                                                </div>
+                                                <ul class="scheme-drags__product-selection-products-nav-list">
+                                                    <li class="scheme-drags__product-selection-products-nav-list-item ttl"
+                                                        *ngFor="let DistLit of Distributor ; let i=index;">
+                                                        <label for="DistLit_{{i}}"><input type="checkbox"
+                                                                id=DistLit_{{i}}
+                                                                (change)="SelectedDistributor(DistLit,$event)"
+                                                                [formControl]="DistributorList.controls[DistLit.distributor_id]">{{DistLit.distributor_name}}</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <h5 class="text-right note" *ngIf="selectedDistrArray.length>0">
+                                                {{selectedDistrArray.length}} Distribuor selected</h5>
+                                            <h5 class="text-right note" *ngIf="selectedDistrArray.length == 0">No
+                                                Distributor selected</h5>
+                                        </div>
+                                        <div class="scheme-drags__product-selection-btns">
+                                            <button class="button button--btn-brdr"
+                                                (click)="addDistributor()">ADD</button>
+                                            <a><span class="material-icons"> east </span></a>
+                                        </div>
+                                        <div class="scheme-drags__product-selection-blocks">
+                                            <h4>Selected Distributor</h4>
+                                            <div class="scheme-drags__product-selection-blocks-inside">
+                                                <ul class="tags dark-blue" *ngIf="selectedDisplayDistributor.length>0">
+                                                    <h5>Distributor:</h5>
+                                                    <li class="tags__list"
+                                                        *ngFor="let item of selectedDisplayDistributor">
+                                                        <a>{{item.distributor_name}}<span class="material-icons"
+                                                                (click)="removeDistributor(item.distributor_name)">
+                                                                close
+                                                            </span> </a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="tags dark-blue"
+                                                    *ngIf="selectedDisplayDistributor.length == 0">
+                                                    <h5>Distributor:</h5>
+                                                    <li class="tags__list">
+                                                        <a>All</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <h5 class="text-right note" *ngIf="selectedDisplayDistributor.length>0">
+                                                {{selectedDisplayDistributor.length}} Distributor</h5>
+                                            <h5 class="text-right note" *ngIf="selectedDisplayDistributor.length == 0">0
+                                                Distributor</h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="scheme-drags__product-selection d-flex" *ngIf="isDivisionSearch == true"
+                                    style="margin-bottom: 10px;">
+                                    <div class="row">
+                                        <div class="scheme-drags__product-selection-products-nav">
+                                            <h4> Division</h4>
+                                            <div class="scheme-drags__product-selection-products-nav-list-wrapp">
+                                                <div class="search-order-id">
+                                                    <span class="material-icons"> search </span>
+                                                    <input type="text"
+                                                        [formControl]="AllFilters.controls['organsization_name']"
+                                                        (keyup)="Distributortype()" placeholder="Search by Divsion"
+                                                        class="textfield">
+                                                    <div class="btn-filter"> </div>
+                                                </div>
+                                                <ul class="scheme-drags__product-selection-products-nav-list">
+
+
+                                                    <li class="scheme-drags__product-selection-products-nav-list-item main"
+                                                        *ngFor="let DistLit of Distributor ; let i=index;">
+                                                        <a href="javascript:void(0)" id="products-nav-click-a"
+                                                            class="products-nav-click"
+                                                            (click)="toggle_vehicle_list(DistLit, 'products-nav-click-a')">
+                                                            <span class="material-icons"> arrow_right </span>
+                                                        </a>
+                                                        <label for="a-m-2"
+                                                            (change)="SelectedDistributor(DistLit,$event)">
+                                                            <!-- <input 
+                                                                (change)="SelectedDistributor(DistLit,$event)"
+                                                                [formControl]="DistributorList.controls[DistLit.distributor_id]"> -->
+                                                            {{DistLit.distributor_name}}
+                                                        </label>
+                                                        <ul class="scheme-drags__product-selection-products-nav-sublist"
+                                                            id={{DistLit.distributor_id}}>
+                                                            <form [formGroup]="DivisionList">
+                                                                <li *ngFor="let divi of DistLit.divData; let j=index;"
+                                                                    class="scheme-drags__product-selection-products-nav-sublist-item">
+                                                                    <label for="div_{{i}}">
+                                                                        <input type="checkbox"
+                                                                            [formControl]="DivisionList.controls[divi.div_id]"
+                                                                            id="div_{{j}}"
+                                                                            (change)="SelectedDivision(divi,$event)">
+                                                                        {{divi.div_name}}</label>
+                                                                </li>
+                                                            </form>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <h5 class="text-right note">
+                                                {{selectedDivArray.length}} division selected</h5>
+                                        </div>
+                                        <div class="scheme-drags__product-selection-btns">
+                                            <button class="button button--btn-brdr"
+                                                (click)="addDistributor()">ADD</button>
+                                            <a><span class="material-icons"> east </span></a>
+                                        </div>
+                                        <div class="scheme-drags__product-selection-blocks">
+                                            <h4>Selected Distributor/Division</h4>
+                                            <div class="scheme-drags__product-selection-blocks-inside">
+                                                <!-- <ul class="tags dark-blue" *ngIf="selectedDisplayDistributor.length>0">
+                                                    <h5>Distributor:</h5>
+                                                    <li class="tags__list"
+                                                        *ngFor="let item of selectedDisplayDistributor">
+                                                        <a>{{item.distributor_name}}<span class="material-icons"
+                                                                (click)="removeDistributor(item.distributor_name)">
+                                                                close
+                                                            </span> </a>
+                                                    </li>
+                                                </ul> -->
+                                                <!-- <ul class="tags dark-blue"
+                                                    *ngIf="selectedDisplayDistributor.length == 0">
+                                                    <h5>Distributor:</h5>
+                                                    <li class="tags__list">
+                                                        <a>All</a>
+                                                    </li>
+                                                </ul> -->
+                                                <ul class="tags blue" *ngIf="selectedDisplayDivision.length>0">
+                                                    <h5>Division:</h5>
+                                                    <li class="tags__list" *ngFor="let div of selectedDisplayDivision">
+                                                        <a>{{div.div_name}}<span class="material-icons"
+                                                                (click)="removeDivision(div.div_name)">close</span> </a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="tags blue" *ngIf="selectedDisplayDivision.length == 0">
+                                                    <h5>Division:</h5>
+                                                    <li class="tags__list">
+                                                        <a>All</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <h5 class="text-right note">
+                                                 {{selectedDisplayDivision.length}} division added</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="isDistributorShow == true">
+                                <div class="scheme-drags__product-selection d-flex">
+                                    <div class="row">
+                                        <div class="scheme-drags__product-selection-products-nav">
+                                            <h4>All Division</h4>
+                                            <div class="scheme-drags__product-selection-products-nav-list-wrapp">
+                                                <div class="search-order-id">
+                                                    <span class="material-icons"> search </span>
+                                                    <input type="text"
+                                                        [formControl]="AllFilters.controls['division_name']"
+                                                        (keyup)="Divisiontype()"
+                                                        placeholder="Search by productline, part name, part number…"
+                                                        class="textfield">
+                                                    <div class="btn-filter"> </div>
+                                                </div>
+                                                <ul class="scheme-drags__product-selection-products-nav-list">
+                                                    <form [formGroup]="DivisionList">
+                                                        <li class="scheme-drags__product-selection-products-nav-list-item ttl"
+                                                            *ngFor="let divi of Division ; let i=index;">
+                                                            <label for="divi_{{j}}"><input type="checkbox" id=divi_{{j}}
+                                                                    (change)="SelectedDivision(divi,$event)"
+                                                                    [formControl]="DivisionList1.controls[divi.div_id]">{{divi.div_name}}</label>
+                                                        </li>
+                                                    </form>
+                                                </ul>
+                                            </div>
+                                            <h5 class="text-right note" *ngIf="selectedDivArray.length>0">
+                                                {{selectedDivArray.length}} Division selected</h5>
+                                            <h5 class="text-right note" *ngIf="selectedDivArray.length == 0">No Division
+                                                selected</h5>
+                                        </div>
+                                        <div class="scheme-drags__product-selection-btns">
+                                            <button class="button button--btn-brdr" (click)="addDivision()">ADD</button>
+                                            <a><span class="material-icons"> east </span></a>
+                                        </div>
+                                        <div class="scheme-drags__product-selection-blocks">
+                                            <h4>Selected Division</h4>
+                                            <div class="scheme-drags__product-selection-blocks-inside">
+                                                <ul class="tags dark-blue" *ngIf="selectedDisplayDivision.length>0">
+                                                    <h5>Division:</h5>
+                                                    <li class="tags__list" *ngFor="let item of selectedDisplayDivision">
+                                                        <a>{{item.div_name}}<span class="material-icons"
+                                                                (click)="removeDivision(item.div_name)"> close
+                                                            </span> </a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="tags dark-blue" *ngIf="selectedDisplayDivision.length == 0">
+                                                    <h5>Division:</h5>
+                                                    <li class="tags__list">
+                                                        <a>All</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <h5 class="text-right note" *ngIf="selectedDisplayDivision.length>0">
+                                                {{selectedDisplayDivision.length}} Division</h5>
+                                            <h5 class="text-right note" *ngIf="selectedDisplayDivision.length == 0">0
+                                                Division</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="button button--btn-brdr clr-light-blue"
+                                    (click)="onClickBack(3)">Back</button>
+                                <!-- <button type="button" class="button btn-outline-dark" (click)="onClick(3)">Next</button> -->
+                                <button type="button" class="button btn-outline-dark"
+                                    (click)="SaveScheme()">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </ng-template>
+        <div class="tags d-flex justify-content-end mb-4">
+            <ul class="tags__list" fxFlex="70" style="margin-right: 20px;">
+                <li *ngFor="let Filterrow of Filterarray"><a style="cursor:default">{{Filterrow.Value}} <img
+                            [hidden]="Filterrow.Key == 'from_date'" (click)="onRemoveFilter(Filterrow)"
+                            src="../../assets/images/tag-close.svg" /></a></li>
+            </ul>
+        </div>
+        <div class="l-content w-100 pl-0" *ngIf="isActiveTab === 'TML'">
+            <!-- ===================================================
+                # Edukan_Admin_Scheme_8
+            =================================================== -->
+            <div class="tbl-reports card-shadow bg-white h-100">
+                <div class="l-tbl-accordion overflow-auto">
+                    <div class="w-100 border-0 p-3">
+                        <div class="table-responsive">
+                            <table class="l-tbl">
+                                <tr class="main-tr">
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> <span>Scheme Code</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> <span>Scheme Name </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> <span>% Discount</span> </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> <span>Discount Type</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> <span>Start Date</span> </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> <span>End Date </span> </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center "> <span>Created by </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center "> <span>Created Date</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center "> <span>Status</span> </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center "> <span>Action</span> </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center "> <span>Copy Data</span> </div>
+                                    </td>
+                                </tr>
+                                <ng-container *ngIf="items.length >0">
+
+                                    <tr class="click-tr" *ngFor="let row of items">
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp" style="color: blue;cursor: pointer;"
+                                                (click)="openOfferDetails(row)">{{row.discount_code}}</div>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp d-flex align-items-center">{{row.discount_name}}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">{{row.percentage}}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">{{row.discount_type}}</div>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp d-flex align-items-start flex-column">{{row.from_date |
+                                                date :'dd-MM-yyyy'}}</div>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp d-flex align-items-start flex-column">{{row.to_date |
+                                                date
+                                                :'dd-MM-yyyy'}}</div>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp d-flex align-items-start flex-column">
+                                                {{row.first_name}}
+                                                {{row.last_name}}</div>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp d-flex align-items-start flex-column">{{row.created_at
+                                                |
+                                                date :'dd-MM-yyyy hh:mm:ss a'}}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                *ngIf="row.is_active === true">Active</div>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                *ngIf="row.is_active === false ">Inactive</div>
+                                        </td>
+                                        <td *ngIf='!isDistributor'>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                *ngIf="checkstatus(row.is_active,row.owner)" (click)="Approve(row)"
+                                                style="color: blue;cursor: pointer;">Publish</div>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                *ngIf="!checkstatus(row.is_active,row.owner)" (click)="DeApprove(row)"
+                                                style="color: red;cursor: pointer;">Un-Publish</div>
+                                        </td>
+                                        <td *ngIf='isDistributor'>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                *ngIf="row.is_active === true">Publish</div>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                *ngIf="row.is_active === false ">Un-Publish</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                (click)="SetFormDiscountData(row,content)"
+                                                style="color: blue;cursor: pointer;">Copy Data</div>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <ng-container *ngIf="items.length == 0">
+                                    <tr>
+                                        No Data Found
+                                    </tr>
+                                </ng-container>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="paging" style="margin-bottom: 40px;margin-top: 20px;">
+                <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
+                    [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)"
+                    [showrecords]="showRecords"></app-pagination>
+            </div>
+        </div>
+
+        <div class="l-content w-100 pl-0" *ngIf="isActiveTab === 'Distributor'">
+            <div class="tbl-reports card-shadow bg-white h-100">
+                <div class="l-tbl-accordion overflow-auto">
+                    <div class="w-100 border-0 p-3">
+                        <div class="table-responsive">
+                            <table class="l-tbl">
+                                <tr class="main-tr">
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> <span>Scheme Code</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> <span>Scheme Name </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> <span>% Discount</span> </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> <span>Discount Type</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> <span>Start Date</span></div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center"> <span>End Date </span> </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center "> <span>Created by </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center "> <span>Created Date</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center "> <span>Action</span> </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center "> <span>Status</span> </div>
+                                    </td>
+                                </tr>
+                                <ng-container *ngIf="items.length >0">
+
+                                    <tr class="click-tr" *ngFor="let row of items">
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp" style="color: blue;cursor: pointer;"
+                                                (click)="openOfferDetails(row)">{{row.discount_code}}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">{{row.discount_name}}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">{{row.percentage}}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-center">{{row.discount_type}}</div>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp d-flex align-items-start flex-column">{{row.from_date |
+                                                date
+                                                :'dd-MM-yyyy'}}</div>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp d-flex align-items-start flex-column">{{row.to_date |
+                                                date
+                                                :'dd-MM-yyyy'}}</div>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp d-flex align-items-start flex-column">
+                                                {{row.first_name}}
+                                                {{row.last_name}}</div>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div class="td-wrapp d-flex align-items-start flex-column">{{row.created_at
+                                                |
+                                                date
+                                                :'dd-MM-yyyy hh:mm:ss a'}}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                *ngIf="row.is_active === true">Active</div>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                *ngIf="row.is_active === false ">Inactive</div>
+                                        </td>
+                                        <td *ngIf='isDistributor'>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                *ngIf="checkstatus(row.is_active,row.owner)" (click)="Approve(row)"
+                                                style="color: blue;cursor: pointer;">Publish</div>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                *ngIf="!checkstatus(row.is_active,row.owner)" (click)="DeApprove(row)"
+                                                style="color: red;cursor: pointer;">Un-Publish</div>
+                                        </td>
+                                        <td *ngIf='!isDistributor'>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                *ngIf="row.is_active === true">Publish</div>
+                                            <div class="td-wrapp d-flex align-items-start flex-column"
+                                                *ngIf="row.is_active === false ">Un-Publish</div>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <ng-container *ngIf="items.length == 0">
+                                    <tr>
+                                        No Data Found
+                                    </tr>
+                                </ng-container>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="paging">
+                <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
+                    [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)"
+                    [showrecords]="showRecords"></app-pagination>
+            </div>
+        </div>
+    </div>
+
+</section>
+<ng-template #offerpopup let-d="dismiss1">
+    <app-discount-master-popup [item]="offerdetailsDetails"></app-discount-master-popup>
+</ng-template>

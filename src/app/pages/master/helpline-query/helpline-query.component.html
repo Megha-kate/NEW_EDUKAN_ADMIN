@@ -1,0 +1,314 @@
+<app-submenu-list [ActiveMenu]='4'></app-submenu-list>
+<section class="main-wrapper prod-list-page">
+    <div class="l-container">
+        <div class="search-order-id float-right">
+        <span class="material-icons"> search </span>
+        <input type="text" class="textfield" placeholder="Search by part number">
+        <div class="btn-filter" ngbDropdown #myDrop="ngbDropdown">
+         <button class="btn-filter" id="filterPopup" ngbDropdownToggle><img
+         src="./assets/images/filter.svg" alt="" /></button>
+         <div ngbDropdownMenu aria-labelledby="filterPopup" class="filter-popup">
+            <div class="arrow"></div>
+            <form [formGroup]="AllFilters">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-4 border-right">
+                            <li>
+                                <div class="srch-box">
+                                    <label>Part Number</label><br />
+                                    <input [formControl]="AllFilters.controls['part_number']" type="text"
+                                        class="textfield " id="inputPassword">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="srch-box">
+                                    <label>Account Id</label><br />
+                                    <input [formControl]="AllFilters.controls['account_id']" type="text"
+                                        class="textfield " id="inputPassword">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="srch-box">
+                                    <label>Emai Id</label><br />
+                                    <input [formControl]="AllFilters.controls['email_id']" type="text"
+                                        class="textfield " id="inputPassword">
+                                </div>
+                            </li>
+                              </div>
+
+                              <div  class="col-4 border-right">
+                                <li>
+                                    <div class="srch-box">
+                                        <label>Reference Number</label><br />
+                                        <input [formControl]="AllFilters.controls['refrence_number']" type="text"
+                                            class="textfield " id="inputPassword">
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="srch-box">
+                                        <label>Registration Number</label><br />
+                                        <input [formControl]="AllFilters.controls['registration_number']" type="text"
+                                            class="textfield " id="inputPassword">
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="srch-box">
+                                        <label>Chassis Number</label><br />
+                                        <input [formControl]="AllFilters.controls['chassis_number']" type="text"
+                                            class="textfield " id="inputPassword">
+                                    </div>
+                                </li>
+                                  </div>
+
+                                  <div class="col-4 border-right">
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>Customer</label><br>
+                                            <input autocomplete="off" (keyup)="accountType()"
+                                                [formControl]="AllFilters.controls['account_name']"
+                                                style="width: max-content !important;" placeholder="Search Customer" class="textfield"
+                                                type="text" matInput>
+                                        </div>
+                                        <ul class="sidebar-cards__chk-list">
+                                            <form [formGroup]="CustomerList">
+                                                <li *ngFor="let CustData of Accountnamedata;let k=index;"
+                                                    class="form-chk-list-item chkbox">
+                                                    <input [formControl]="CustomerList.controls[CustData.account_id]"
+                                                        (change)="filterMyOptionsCustname(CustData,$event)" type="checkbox" name="A"
+                                                        id="cust_{{k}}">
+                                                    <label for="cust_{{k}}"
+                                                        title="{{CustData.account_name}}">{{CustData.account_name.substr(0,25)}}</label>
+                                                </li>
+                                            </form>
+                                        </ul>
+                                    </li>
+                                   
+                                    <button (click)="SearchAllDate()" class="btn btn-outline-primary ">Search</button>&nbsp;
+                                    <button (click)="resetALl();" class="btn btn-outline-primary">Reset</button>
+                                </div>
+
+                    </div>
+               
+
+                </div>
+               
+            </form>
+        </div>
+    </div>
+
+    </div>
+
+    <div class="l-content w-100 pl-0">
+
+        <div class="tbl-reports card-shadow bg-white h-100">
+            <div class="l-tbl-accordion overflow-auto">
+                <div class="w-100 border-0 p-3">
+                    <div class="table-responsive">
+                        <table class="l-tbl">
+                            <tr class="main-tr">
+
+
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Part Number</span>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Account Id</span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                alt=""></i> -->
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Customer Name </span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                alt=""></i> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Contact Number </span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                alt=""></i> -->
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Email Id </span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                alt=""></i> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Part Desc</span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                alt=""></i> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Registration Number</span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                alt=""></i> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Chassis Number</span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                alt=""></i> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Reference Number</span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                alt=""></i> -->
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Image</span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/5-.png" -->
+                                        <!-- alt=""></i> -->
+                                    </div>
+                                </td>
+                                  <td>
+                                    <div class="td-wrapp d-flex align-items-center ">
+                                        <span>Mail Status</span>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center ">
+                                        <span>Mail To</span>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center ">
+                                        <span>Is Active</span>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center ">
+                                        <span>Created At</span>
+
+                                    </div>
+                                </td>
+                                <!-- <td>
+                                    <div class="td-wrapp d-flex align-items-center ">
+                                        <span>Updated At</span>
+
+                                    </div>
+                                </td> -->
+                            </tr>
+
+                            <ng-container *ngIf="items?.length >0">
+                                <tr *ngFor="let row of items" class="click-tr">
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp"> {{ row?.part_number }}</div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">
+                                            {{ row?.account_id }}</div>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">
+                                            {{ row?.account_name }}</div>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{ row?.contact_no}}
+                                        </div>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp"> {{row?.email_id}}</div>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp"> {{row?.description}}
+                                        </div>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{row?.registration_number}}
+                                        </div>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp"> {{row?.chassis_number}}
+                                        </div>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{row?.refrence_number}}
+                                        </div>
+                                    </td>
+
+                                    <td class="text-wrap">
+                                        <div class="td-wrapp d-flex align-items-center">
+
+                                            <img src={{row?.image_url}} alt="" width="60px" height="30px"
+                                            
+                                            style="cursor: pointer;">
+                                            </div>
+
+                                    </td>
+                                    
+                                    <td class="text-wrap">
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            {{row?.mail_status }}</div>
+
+                                    </td>
+                                    <td class="text-wrap">
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            {{row?.mail_to}}</div>
+
+                                    </td>
+                                    <td class="text-wrap">
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            {{row?.is_active}}</div>
+
+                                    </td>
+
+                                    <td class="text-wrap">
+                                        <div class="td-wrapp d-flex align-items-start flex-column">
+                                            {{row?.created_at | date :'dd-MM-yyyy hh:mm:ss a'}}
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="items.length == 0">
+                                <tr>
+                                    No Data Found
+                                </tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="paging">
+
+
+
+            <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
+             [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)" [showrecords]="showRecords"></app-pagination>
+
+
+
+        </div>
+    </div>
+
+
+
+<!-- </section> -->

@@ -1,0 +1,59 @@
+<div class="modal-header modal-title">
+    <!-- <ul class="feedback-order-series" > -->
+        <li >
+            <div class="o-title">Invoice Number: {{invoiceNo}}</div>
+            <!-- <div class="o-desc">{{invoiceNo}}</div> -->
+        </li>
+        <li>
+            <div class="o-title">Status: {{InvoiceStatus}}</div>
+        </li>
+        <li>
+            <div class="o-title">Date: {{Date | date :'dd-MM-yyyy hh:mm:ss a' }}</div>
+        </li>
+          <a  class="product-rating">
+          <star-rating [rating]="GetInvoiceRatingInvoice()" [starType]="'svg'" [readOnly]="true" [size]="'medium'">
+          </star-rating>
+          </a>
+            <!-- <a class="product-rating">
+        <star-rating [rating]="Rating" [starType]="'svg'" [readOnly]="true" [size]="'medium'">
+        </star-rating>
+        </a> -->
+    <!-- </ul> -->
+</div>
+<div class="modal-body">
+    <div class="row" style="margin-left: 15px;">
+        <ul class="feedback-order-series">
+            <!-- <li>
+                <button title="View  Log" mat-raised-button (click)="openPopUp()">
+                    <mat-icon>info</mat-icon>
+                </button>
+            </li>
+            <li>
+                <button title="View  Comment" mat-raised-button (click)="openPopUpRating()">
+                    <mat-icon>comment</mat-icon>
+                </button>
+            </li> -->
+
+            <li>
+                <button title="View  Log" mat-raised-button (click)="openInvoicePopup()">
+                    <span class="mat-button-wrapper">
+                        <mat-icon _ngcontent-cee-c27="" class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true" style=" vertical-align: middle; padding: 0 !important;">info</mat-icon> View log </span>                    </button>
+            </li>
+            <li>
+                <button title="View  Comment" mat-raised-button (click)="openPopUpRating()">
+                    <span class="mat-button-wrapper">
+                    <mat-icon _ngcontent-cee-c27="" class="mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true" style=" vertical-align: middle;">comment</mat-icon> Comments </span>                    </button>
+            </li>
+        </ul>
+    </div>
+    <div class="row" style="margin-left: 15px;margin-top: -10px;">
+        <iframe width="900" height="1000" frameBorder="0" [src]="urlSafe"></iframe>
+    </div>
+</div>
+
+<ng-template #invoiceDetails let-d="dismiss1" container="body" >
+<app-order-popup [items]="orderInvoiceInformations"></app-order-popup>
+</ng-template>
+<ng-template #invoicePopup let-d="dismiss2" container="body" >
+<app-order-popup [items]="invoiceData"></app-order-popup>
+</ng-template>

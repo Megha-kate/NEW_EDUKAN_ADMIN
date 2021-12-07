@@ -1,0 +1,75 @@
+.cdk-overlay-pane {
+    overflow: auto !important;
+    }
+    
+    
+    .example-full-width {
+        width: 100%;
+       
+      }
+      
+      
+      
+      // [dir="rtl"] {
+      //   .handle {}
+      //   #app-customizer {
+      //     right: auto;
+      //     left: 0;
+      //   }
+      // }
+ 
+      .my-class .mat-dialog-container{
+         height: max-content;
+         width: max-content;
+         
+         border-radius: 10px;
+        // margin-left: 100px;
+        // margin-top: 80px;
+        // margin-bottom: 200px;
+         
+        // background: lightcyan;
+       //  color: #039be5;
+       }
+    
+       .gm-ui-hover-effect {
+        display: none !important;
+    }
+    
+    .gm-style-iw {
+        padding: 0;
+        background-color: #AAAAAA;
+        text-align: left;
+        color: white;
+    }
+    
+    /* remove overflow scroll */
+    .gm-style-iw-d {
+        overflow: none;
+    }
+    
+    a.Circle:hover{
+        cursor: default;
+       color: whitesmoke;
+        background: black;
+        /* width: 120px; */
+        /* line-height: 120px; */
+        border-radius: 70%;
+        text-align: center;
+        /* font-size: 32px; */
+        border: 2px solid #666;
+        padding: 3px;
+    }
+    
+    
+       .circle {
+    
+        color: whitesmoke;
+        background: black;
+        /* width: 120px; */
+        /* line-height: 120px; */
+        border-radius: 70%;
+        text-align: center;
+        /* font-size: 32px; */
+        border: 2px solid #666;
+        padding: 3px;
+       }

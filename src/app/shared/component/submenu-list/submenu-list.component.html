@@ -1,0 +1,19 @@
+<div class="l-container l-page-nav" style="margin-top: 32px;">
+    <ul class="l-page-nav__list">
+        <li *ngFor="let Detailrow of MenuDetails  ; index as i" class="l-page-nav__list-item">
+            <a (click)="onClick(i,Detailrow)" [ngClass]="{'active': ActiveMenu == i}">{{Detailrow.page_display_name}} </a>
+        </li>
+<!--          
+         <li class="l-page-nav__list-item text-end" style="margin-left: 700px;">
+            <label>from_date</label>
+               <mat-icon _ngcontent-mpt-c26 class="spin text-white mat-icon notranslate material-icons mat-icon-no-color" role="img"title=" Advanced Search"
+               aria-hidden="true">search</mat-icon>
+            
+        </li>  -->
+      
+          
+       <!-- <div class="card-title-text">Delivery Timeline
+        </div>  -->
+        
+    </ul>
+</div>

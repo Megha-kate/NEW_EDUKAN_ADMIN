@@ -1,0 +1,139 @@
+
+<!-- <div class="modal-dialog modal-xl modal-dialog-centered"> -->
+    <div class="modal-content" style="width: 100%;">
+        <div class="modal-header modal-title">
+            Payment Details
+            <div (click)="closeModal()" type="button"><i class="fa fa-times"></i></div>
+            <!-- <button (click)="closeModal()" type="button" class="close" aria-label="Close" ></button> -->
+        </div>
+        <div class="modal-body">
+            <div class="l-content w-100 pl-0">
+                <div class="tbl-reports card-shadow bg-white h-100">
+                    <div class="l-tbl-accordion overflow-auto">
+                        <div class="w-100 border-0 p-3">
+                            <div class="table-responsive" >
+                                <table class="l-tbl">
+                                    <tr class="main-tr">
+                                    <th>PAYMENT NO</th>
+                                    <th>ORDER TYPE</th>
+                                    <th>MODE</th>
+                                    <th>AMOUNT</th>
+                                    <th>DATE</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="td-wrapp">
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp">
+                                                
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-wrapp">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-4">
+                            <li>
+                                <div class="o-title"><strong>Amount</strong></div>
+                                <div class="o-desc">{{payment?.order_transaction[0]?.dec_amount | currencyFormat:'INR' ||
+                                    0}} </div>
+                            </li>
+                        </div>
+                        <div class="col-4">
+                            <li>
+                                <div class="o-title"><strong>Portal Order Id</strong></div>
+                                <div class="o-desc">{{payment?.order_transaction[0]?.portal_order_id}}</div>
+                            </li>
+                        </div>
+                        <div class="col-4">
+                            <li>
+                                <div class="o-title"><strong>Payment Status</strong></div>
+                                <div class="o-desc">{{payment?.order_transaction[0]?.payment_status}}</div>
+                            </li>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-top: 20px;">
+                        <div class="col-4">
+                            <li *ngIf="upi">
+                                <div class="o-title"><strong>Bank</strong></div>
+                                <div class="o-desc">{{payment?.order_transaction[0]?.bank}}</div>
+                            </li>
+                            <li >
+                                <div class="o-title"><strong>Method</strong></div>
+                                <div class="o-desc">{{payment?.order_transaction[0]?.method}}</div>
+                            </li>
+                        </div>
+                        <div class="col-4">
+                            <li>
+                                <div class="o-title"><strong>Razor Pay Order Id</strong></div>
+                                <div class="o-desc">{{payment?.order_transaction[0]?.razorpay_order_id}} </div>
+                            </li>
+                        </div>
+                        <div class="col-4">
+                            <li *ngIf="wallet">
+                                <div class="o-title"><strong>Wallet</strong></div>
+                                <div class="o-desc"> {{payment?.order_transaction[0]?.wallet}}</div>
+                            </li>
+                            <li *ngIf="!wallet">
+                                <div class="o-title"><strong>Tax</strong></div>
+                                <div class="o-desc">{{payment?.order_transaction[0]?.tax/100  | currencyFormat:'INR' ||
+                                    0}}</div>
+                            </li>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-top: 20px;">
+                        <div class="col-4">
+                            <li>
+                                <div class="o-title"><strong>FEE</strong></div>
+                                <div class="o-desc">{{payment?.order_transaction[0]?.fee/100  | currencyFormat:'INR' ||
+                                    0}}</div>
+                            </li>
+                        </div>
+                        <div class="col-4">
+                            <li>
+                                <div class="o-title"><strong>Razor Payment Id</strong></div>
+                                <div class="o-desc">{{payment?.order_transaction[0]?.razorpay_payment_id}}</div>
+                            </li>
+                        </div>
+                        <div class="col-4">
+                            <li *ngIf="wallet">
+                                <div class="o-title"><strong>Tax</strong></div>
+                                <div class="o-desc">{{payment?.order_transaction[0]?.tax/100  | currencyFormat:'INR' ||
+                                    0}}</div>
+                            </li>
+                            <li *ngIf="!wallet">
+                                <div class="o-title"><strong>Contact</strong></div>
+                                <div class="o-desc">{{payment?.order_transaction[0]?.contact}}</div>
+                            </li>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-top: 20px;">
+                        <div class="col-4">
+                        <li *ngIf="wallet">
+                            <div class="o-title"><strong>Contact</strong></div>
+                            <div class="o-desc">{{payment?.order_transaction[0]?.contact}}</div>
+                        </li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

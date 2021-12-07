@@ -1,0 +1,445 @@
+<app-submenu-list [ActiveMenu]='0'></app-submenu-list>
+<section class="main-wrapper prod-list-page">
+    <div>
+        <div class="l-container">
+
+            <div class="justify-content-end mb-4  float-left">
+                <ul class="tags__list" style="margin-right: 20px;">
+                    <li *ngFor="let Filterrow of Filterarray"><a>{{Filterrow.Value}} <img
+                                (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key == 'from_date'"
+                                src="./assets/images/tag-close.svg" /></a></li>
+                </ul>
+            </div>
+            <div class="search-order-id float-left" style="margin-left: 1116px;">
+                <span class="material-icons"> search </span>
+                <input type="text" class="textfield" placeholder="Search by Customer Id"
+                    (keydown)="SearchAccount($event)" (focusout)="showAccount($event)"
+                    [formControl]="AllFilters.controls['account_id_search']" maxlength="8" minlength="8">
+                <div class="btn-filter" ngbDropdown #myDrop="ngbDropdown">
+                    <button class="btn-filter" id="filterPopup" ngbDropdownToggle><img
+                            src="./assets/images/filter.svg" alt="" /></button>
+                    <div ngbDropdownMenu aria-labelledby="filterPopup" class="filter-popup">
+                        <div class="arrow"></div>
+                        <form [formGroup]="AllFilters">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-6 border-right">
+                                        <!-- <h4>Contact No</h4> -->
+
+                                        <!-- <li class="sidebar-cards__item">
+                                            <div
+                                                class="sidebar-cards__ttl d-flex justify-content-between align-items-center">
+                                                <a href="#"
+                                                    class="d-flex justify-content-between align-items-center btn-link">
+                                                </a>
+                                            </div>
+                                            <ul class="sidebar-cards__chk-list">
+                                                <li class="sidebar-cards__chk-list-item chkbox">
+                                                    <input (change)="changedatefilter('Today')" name="A" type="radio"
+                                                        id="aa">
+                                                    <label for="aa"> Today</label>
+                                                </li><br>
+                                                <li class="sidebar-cards__chk-list-item chkbox">
+                                                    <input name="A" type="radio" id="bb"
+                                                        (change)="changedatefilter('Sevenday')">
+                                                    <label for="bb"> Last 7 days</label>
+                                                </li><br>
+                                                <li class="sidebar-cards__chk-list-item chkbox">
+                                                    <input name="A" type="radio" id="cc"
+                                                        (change)="changedatefilter('thirtyDays')"  [checked]="isThirtyDays">
+                                                    <label for="cc">Last 30 days</label>
+
+                                                </li><br>
+                                                <li class="sidebar-cards__chk-list-item chkbox">
+                                                    <input (change)="changedatefilter('Custom')" name="A" type="radio"
+                                                        id="dd" [value]="ShowCustom">
+                                                    <label for="dd">Custom</label>
+                                                </li>
+
+                                                <li class="sidebar-cards__chk-list-item" [hidden]="!ShowCustom">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="form-group m-0 calendar">
+                                                                <div class="input-group">
+                                                                    <input class="form-control"
+                                                                        [formControl]="AllFilters.controls['from_date']"
+                                                                        placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+                                                                        #d="ngbDatepicker">
+                                                                    <div class="input-group-append">
+                                                                        <button
+                                                                            class="btn btn-outline-secondary calendar"
+                                                                            (click)="d.toggle()" type="button"><span
+                                                                                class="material-icons">
+                                                                                calendar_today
+                                                                            </span></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="form-group m-0">
+                                                                <div class="input-group calendar">
+                                                                    <input class="form-control"
+                                                                        [formControl]="AllFilters.controls['to_date']"
+                                                                        placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+                                                                        #d1="ngbDatepicker">
+                                                                    <div class="input-group-append1">
+                                                                        <button
+                                                                            class="btn btn-outline-secondary calendar"
+                                                                            (click)="d1.toggle()" type="button"><span
+                                                                                class="material-icons">
+                                                                                calendar_today
+                                                                            </span></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </li>
+                                            </ul>
+                                        </li> -->
+                                        <li>
+                                            <div class="srch-box">
+                                                <label>Contact No</label><br />
+                                                <input [formControl]="AllFilters.controls['contact_no']" type="text"
+                                                    class="textfield " id="inputPassword" (keypress)="numberOnly($event)">
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="srch-box">
+                                                <label>District</label><br />
+                                                <input [formControl]="AllFilters.controls['district']" type="text"
+                                                    class="textfield " id="inputPassword" (keypress)="omitSpecialChar($event)"/>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="srch-box">
+                                                <label>City</label><br />
+                                                <input [formControl]="AllFilters.controls['city']" type="text"
+                                                    class="textfield " id="inputPassword"(keypress)="omitSpecialChar($event)"/>
+                                            </div>
+                                        </li>
+
+                                    </div>
+
+
+
+                                    <div class="col-6 border-right">
+                                        <li>
+                                            <div class="srch-box">
+                                                <label>Customer</label><br>
+                                                <input autocomplete="off" (keyup)="accountType()"
+                                                    [formControl]="AllFilters.controls['account_name']"
+                                                    style="width: max-content !important;" placeholder="Search Customer"
+                                                    class="textfield" type="text" matInput>
+                                            </div>
+                                            <ul class="sidebar-cards__chk-list" style="width: 321px;">
+                                                <form [formGroup]="CustomerList">
+                                                    <li *ngFor="let CustData of Accountnamedata;let k=index;"
+                                                        class="form-chk-list-item chkbox">
+                                                        <input
+                                                            [formControl]="CustomerList.controls[CustData.account_id]"
+                                                            (change)="filterMyOptionsCustname(CustData,$event)"
+                                                            type="checkbox" name="A" id="cust_{{k}}">
+                                                        <label for="cust_{{k}}"
+                                                            title="{{CustData.account_name}}">{{CustData.account_name.substr(0,25)}}</label>
+                                                    </li>
+                                                </form>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <div class="srch-box">
+                                                <label for="inputPassword">State</label><br />
+                                                <div class="srch-box">
+                                                    <select class="textfield"
+                                                        [formControl]="AllFilters.controls['state']">
+                                                        <option *ngFor="let state of StateData;"
+                                                            [value]="state.state_code">
+                                                            {{state.state_name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- <a (click)="SearchAllDate()"
+                                            style="color: blue;padding-right: 15px;cursor: pointer;">Search</a>
+                                        <a (click)="resetALl();" style="color: red;cursor: pointer;">Reset</a> -->
+                                        <button class="btn btn-outline-primary"
+                                        (click)="SearchAllDate()">Search</button>&nbsp;&nbsp;
+                                      <button class="btn btn-outline-primary" (click)="resetALl();">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <!-- <ul class="tags__list" style="margin-right: 20px;">
+                        <li *ngFor="let Filterrow of Filterarray"><a style="cursor:default">{{Filterrow.Value}}
+                                <img (click)="onRemoveFilter(Filterrow)" src="./assets/images/tag-close.svg" /></a>
+                        </li>
+                    </ul> -->
+                    <!-- <ul class="tags__list" fxFlex="30">
+                        <select class="form-select" aria-label="Default select example" (change)="ExportDownload($event)">
+                            <option selected value="" disabled>Select</option>
+                            <option value="Excel">Excel</option>
+                        </select>
+                      
+                    </ul> -->
+                    <ul  fxFlex="30" style="color: darkolivegreen;" (click)="ExportDownload();">
+                      <span class='fa-stack fa-lg'>
+                   <i class='fas fa-file-excel fa-pull-right fa-2x'></i>
+            
+                    </span>
+            
+                </ul>
+                <!-- </ul> -->
+                </div>
+                <div class="l-content w-100 pl-0">
+                    <div class="tbl-reports card-shadow bg-white h-100">
+                        <div class="l-tbl-accordion overflow-auto">
+                            <div class="w-100 border-0 p-3">
+                                <div class="table-responsive">
+                                    <table class="l-tbl">
+                                        <tr class="main-tr">
+
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Customer Id</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Customer Name</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                                </div>
+                                            </td>
+
+
+
+
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Contact No </span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Customer Location</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                                </div>
+                                            </td>
+
+
+
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Created Date</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i> -->
+                                                </div>
+                                            </td>
+
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Customer Type </span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/5-.png" alt=""></i> -->
+                                                </div>
+                                            </td>
+
+                                            <!-- <td >
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Distibutor Name </span>
+                                            <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Customer ID </span>
+                                            <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Customer Name </span>
+                                            <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Cancel Amount </span>
+                                            <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Dist. Approval </span>
+                                            <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Cancellation Status </span>
+                                            <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                    alt=""></i>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        &nbsp;
+                                    </td> -->
+                                        </tr>
+                                        <ng-container *ngIf="items?.length >0">
+
+
+                                            <tr *ngFor="let row of items" class="click-tr">
+
+
+                                                <td class="text-nowrap" style="cursor: pointer;">
+                                                    <a (click)="GetAccountList(row)" style=" color: blue; "
+                                                        routerLinkActive="active">
+                                                        {{ row?.account_id }}</a>
+                                                </td>
+
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.account_name }}
+                                                    </div>
+
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.contact_no }}</div>
+
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+                                                        {{ row?.address_1.substr(0,25) }}, {{ row?.address_2.substr(0,25) }},
+                                                        {{ row?.address_3.substr(0,25) }}, {{ row?.state }},
+
+                                                        {{ row?.district.substr(0,25) }}, {{ row?.city.substr(0,25) }},
+                                                        {{row?.pincode}}
+                                                    </div>
+
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp"> {{ row?.created_at | date :'dd-MM-yyyy hh:mm:ss
+                                                        a' }}
+
+                                                    </div>
+
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp"> {{ row?.user_type }}
+
+                                                    </div>
+
+                                                </td>
+
+
+                                                <!-- <td class="text-nowrap">
+                                        <div class="td-wrapp">{{ row?.user_type }}
+
+
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp"> {{ row?.organization_name }}
+
+
+
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{row?.account_data.account_id}}
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{ row?.account_data.name }}
+
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{ row?.cancel_line_items_total_amount | number:'1.2-2' }}
+
+
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{ row?.approved_status | titlecase}}
+
+
+
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{ row?.cr_request_status | titlecase}}
+
+
+
+                                        </div>
+
+                                    </td> -->
+                                            </tr>
+                                        </ng-container>
+                                        <ng-container *ngIf="items?.length == 0">
+                                            <tr>
+                                                No Data Found
+                                            </tr>
+                                        </ng-container>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="paging">
+
+
+
+                        <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
+                            [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)"
+                            [showrecords]="showRecords"></app-pagination>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <ng-template #orderDetails let-d="dismiss">
+                <app-customer-list-popup [order]="orderInformations"></app-customer-list-popup>
+            </ng-template>
+            <!-- </section>  -->
+
+
+            <ng-template #ExcelDownload let-d="dismiss">
+                <app-report-download-popup [data]="EDownload" [count]="count" [pageName]="pageName">
+                </app-report-download-popup>
+            </ng-template>
+
+            <ng-template #customerdetails let-d="dismiss">
+                <app-customer-list-popup [data]="details" [accountname]="accountName" [accountid]="accountID">
+                </app-customer-list-popup>
+            </ng-template>

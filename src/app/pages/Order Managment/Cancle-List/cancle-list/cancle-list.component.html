@@ -1,0 +1,690 @@
+<app-submenu-list [ActiveMenu]='2'></app-submenu-list>
+<section class="main-wrapper prod-list-page">
+    <!-- <div class="l-container l-page-nav">
+        <ul class="l-page-nav__list">
+            <li class="l-page-nav__list-item"><a href="#" class="active">Order Reviews </a></li>
+            <li class="l-page-nav__list-item"><a href="#">Feedback & Queries</a></li>
+        </ul>
+    </div> -->
+
+    <!-- <app-submenu-list [ActiveMenu] = '1' ></app-submenu-list> -->
+    <div>
+        <!-- <div class="tags d-flex justify-content-end mb-4">
+            <ul class="tags__list">
+                <li *ngFor="let Filterrow of Filterarray"><a href="#">{{Filterrow.Value}} <img
+                            src="../../assets/images/tag-close.svg" /></a></li>
+             
+            </ul>
+        </div> -->
+        <div class="l-container">
+            <div class="justify-content-end mb-4  float-left">
+                <ul class="tags__list" style="margin-right: 20px;">
+                    <li *ngFor="let Filterrow of Filterarray"><a>{{Filterrow.Value}} <img (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key == 'from_date'"  src="./assets/images/tag-close.svg" /></a></li>
+                </ul>
+            </div>
+
+            <div class="search-order-id float-right">
+                <span class="material-icons"> search </span>
+                <input type="text" class="textfield" placeholder="Search by Cancel Number"
+                    (keydown)="SearchCancelNo($event)" (focusout)="showCancelNo($event)"
+                    [formControl]="AllFilters.controls['cancel_order_number']">
+                <div class="btn-filter" ngbDropdown #myDrop="ngbDropdown">
+                    <button class="btn-filter" id="filterPopup" ngbDropdownToggle><img
+                            src="./assets/images/filter.svg" alt="" /></button>
+                    <div ngbDropdownMenu aria-labelledby="filterPopup" class="filter-popup">
+                        <div class="arrow"></div>
+                        <form [formGroup]="AllFilters">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-4 border-right">
+                                        <h4>DATE</h4>
+                                        <li class="sidebar-cards__item">
+                                            <ul class="sidebar-cards__chk-list">
+                                                <li class="sidebar-cards__chk-list-item chkbox">
+                                                    <input (change)="changedatefilter('Today')" name="A" type="radio"
+                                                        id="aa">
+                                                    <label for="aa"> Today</label>
+                                                </li><br>
+                                                <li class="sidebar-cards__chk-list-item chkbox">
+                                                    <input name="A" type="radio" id="bb"
+                                                        (change)="changedatefilter('Sevenday')">
+                                                    <label for="bb"> Last 7 days</label>
+                                                </li><br>
+                                                <li class="sidebar-cards__chk-list-item chkbox">
+                                                    <input name="A" type="radio" id="cc"
+                                                        (change)="changedatefilter('thirtyDays')"
+                                                        [checked]="isThirtyDays">
+                                                    <label for="cc">Last 30 days</label>
+
+                                                </li><br>
+                                                <li class="sidebar-cards__chk-list-item chkbox">
+                                                    <input (change)="changedatefilter('Custom')" name="A" type="radio"
+                                                        id="dd" [value]="ShowCustom">
+                                                    <label for="dd">Custom</label>
+                                                </li>
+
+                                                <li class="sidebar-cards__chk-list-item" [hidden]="!ShowCustom">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="form-group m-0 calendar">
+                                                                <div class="input-group">
+                                                                    <input class="form-control"
+                                                                        [formControl]="AllFilters.controls['from_date']"
+                                                                        placeholder="yyyy-mm-dd" [readonly]="true"
+                                                                        name="dp" ngbDatepicker #d="ngbDatepicker">
+                                                                    <div class="input-group-append">
+                                                                        <button
+                                                                            class="btn btn-outline-secondary calendar"
+                                                                            (click)="d.toggle()" type="button"><span
+                                                                                class="material-icons">
+                                                                                calendar_today
+                                                                            </span></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="form-group m-0">
+                                                                <div class="input-group calendar">
+                                                                    <input class="form-control"
+                                                                        [formControl]="AllFilters.controls['to_date']"
+                                                                        placeholder="yyyy-mm-dd" [readonly]="true"
+                                                                        name="dp" ngbDatepicker #d1="ngbDatepicker">
+                                                                    <div class="input-group-append1">
+                                                                        <button
+                                                                            class="btn btn-outline-secondary calendar"
+                                                                            (click)="d1.toggle()" type="button"><span
+                                                                                class="material-icons">
+                                                                                calendar_today
+                                                                            </span></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <div class="srch-box">
+                                                <label>OTC Number</label><br />
+                                                <input [formControl]="AllFilters.controls['otc_number']" type="text"
+                                                    class="textfield " id="inputPassword">
+                                            </div>
+                                        </li>
+                                    </div>
+
+                                    <div class="col-4 border-right">
+
+                                        <li [hidden]="!isDistDrpDownVisible">
+                                            <div class="srch-box">
+                                                <label>Distributor</label><br>
+                                                <input autocomplete="off" (keyup)="Distributortype()"
+                                                    [formControl]="AllFilters.controls['org_name']"
+                                                    style="width: max-content !important;"
+                                                    placeholder="Search Distributor" class="textfield" type="text"
+                                                    matInput>
+                                            </div>
+                                            <ul class="sidebar-cards__chk-list">
+                                                <form [formGroup]="DistributorList">
+                                                    <li *ngFor="let DistLit of DistributorData ; let i=index;"
+                                                        class="form-chk-list-item chkbox">
+                                                        <input
+                                                            [formControl]="DistributorList.controls[DistLit.distributor_id]"
+                                                            (change)="dstfilteradd(DistLit,$event)" name="B"
+                                                            type="checkbox" id={{i}}>
+                                                        <label for={{i}} title="{{DistLit.distributor_name}}">
+                                                            {{DistLit.distributor_name.substr(0,25)}}</label>
+                                                    </li>
+                                                </form>
+                                            </ul>
+                                        </li>
+                                        <li *ngIf="isDivisionVisible == true">
+                                            <div class="srch-box">
+                                                <label>Division</label> <br />
+                                                <form [formGroup]="DivisionList">
+                                        <li *ngFor="let divi of Division; let j=index;"
+                                            class="form-chk-list-item chkbox">
+                                            <input type="checkbox" [formControl]="DivisionList.controls[divi.div_id]"
+                                                id="div_{{j}}" (change)="divisionfilteradd(divi,$event)">
+                                            <label for="div_{{j}}"
+                                                title="{{divi.div_name}}">{{divi.div_name.substr(0,25)}}</label>
+                                        </li>
+                        </form>
+                    </div>
+                    </li>
+                </div>
+                <div class="col-4 border-right">
+                    <li>
+                        <div class="srch-box">
+                            <label>Customer</label><br>
+                            <input autocomplete="off" (keyup)="accountType()"
+                                [formControl]="AllFilters.controls['account_name']"
+                                style="width: max-content !important;" placeholder="Search Customer" class="textfield"
+                                type="text" matInput>
+                        </div>
+                        <ul class="sidebar-cards__chk-list">
+                            <form [formGroup]="CustomerList">
+                                <li *ngFor="let CustData of Accountnamedata;let k=index;"
+                                    class="form-chk-list-item chkbox">
+                                    <input [formControl]="CustomerList.controls[CustData.account_id]"
+                                        (change)="filterMyOptionsCustname(CustData,$event)" type="checkbox" name="A"
+                                        id="cust_{{k}}">
+                                    <label for="cust_{{k}}"
+                                        title="{{CustData.account_name}}">{{CustData.account_name.substr(0,25)}}</label>
+                                </li>
+                            </form>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="srch-box">
+                            <label>Request Number</label><br />
+                            <input [formControl]="AllFilters.controls['cancel_order_number']" type="text"
+                                class="textfield" id="inputPassword">
+                        </div>
+                    </li>
+                    <button (click)="SearchAllDate()" class="btn btn-outline-primary ">Search</button>&nbsp;
+                    <button (click)="resetALl();" class="btn btn-outline-primary">Reset</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    
+</div>
+    <div class=" justify-content-end   float-left">
+
+        <ul  fxFlex="30" style="color: darkolivegreen; width: 100px;" matTooltip="Export to Excel"
+        (click)="ExportDownload();">
+          <span class='fa-stack fa-lg'>
+       <i class='fas fa-file-excel fa-pull-right fa-2x'></i>
+
+        </span>
+
+    </ul>
+     </div>
+
+    
+
+
+
+
+
+
+</div>
+
+
+
+    <!-- <ul class="l-page-nav__list--icon">
+            <li class="l-page-nav__list--icon-item"><a (click)="onClick(1)" [ngClass]="{'active': tab===1}">
+                    <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 26">
+                            <g fill="none" fill-rule="evenodd">
+                                <g fill="#d9dadf" fill-rule="nonzero">
+                                    <g>
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M12.186 0L24 5.93v13.34L12.052 25.2 0 19.27V5.93L12.186 0zM1.5 8.218v10.135L12 23.518V12.66l-.006.004L1.5 8.218zm21-.001l-9 3.81V22.82l9-4.465V8.216zM6.748 4.297L1.702 6.754l10.293 4.298 4.437-1.851-9.683-4.904zm5.427-2.64L8.42 3.485l9.76 4.987 4.137-1.726-10.14-5.089z"
+                                                    transform="translate(-43 -279) translate(29 265) translate(14 6) translate(0 8)" />
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </i>
+                    <div class="txt">
+                        100 <span>All Orders</span></div>
+                </a></li>
+            <li class="l-page-nav__list--icon-item"><a (click)="onClick(2)" [ngClass]="{'active': tab===2}">
+                    <i><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32"
+                            height="34" viewBox="0 0 32 34">
+                            <defs>
+                                <path id="gyln81heya"
+                                    d="M16 .5c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16S7.163.5 16 .5zm0 1.6C8.047 2.1 1.6 8.547 1.6 16.5S8.047 30.9 16 30.9s14.4-6.447 14.4-14.4S23.953 2.1 16 2.1z" />
+                            </defs>
+                            <g fill="none" fill-rule="evenodd">
+                                <g>
+                                    <g>
+                                        <g>
+                                            <g transform="translate(-193 -275) translate(193 274) translate(0 1.5)">
+                                                <mask id="ff6a77pzhb" fill="#fff">
+                                                    <use xlink:href="#gyln81heya" />
+                                                </mask>
+                                                <use fill="#D4D5DB" xlink:href="#gyln81heya" />
+                                                <path fill="#FFA518" stroke="#FFF" stroke-width="3"
+                                                    d="M15 17.5L25.138 0.5 15 -2.5z" mask="url(#ff6a77pzhb)" />
+                                            </g>
+                                            <path fill="#FFA518" d="M16.75 21.75v2h-1.5v-2h1.5zm0-11.75v10h-1.5V10h1.5z"
+                                                transform="translate(-193 -275) translate(193 274) translate(0 1.5)" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </i>
+                    <div class="txt">
+                        25 <span>Delayed</span> </div>
+                </a></li>
+            <li class="l-page-nav__list--icon-item"><a (click)="onClick(3)" [ngClass]="{'active': tab===3}">
+                    <i><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32"
+                            height="36" viewBox="0 0 32 36">
+                            <defs>
+                                <path id="kx4emi4jva"
+                                    d="M16 .5c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16S7.163.5 16 .5zm0 1.6C8.047 2.1 1.6 8.547 1.6 16.5S8.047 30.9 16 30.9s14.4-6.447 14.4-14.4S23.953 2.1 16 2.1z" />
+                            </defs>
+                            <g fill="none" fill-rule="evenodd">
+                                <g>
+                                    <g>
+                                        <g>
+                                            <g>
+                                                <g>
+                                                    <g
+                                                        transform="translate(-361 -274) translate(350 268) translate(11 5.5) translate(0 1) translate(0 .5) translate(0 .5)">
+                                                        <mask id="rk1oeee80b" fill="#fff">
+                                                            <use xlink:href="#kx4emi4jva" />
+                                                        </mask>
+                                                        <use fill="#D4D5DB" xlink:href="#kx4emi4jva" />
+                                                        <path fill="#F40D0D" stroke="#FFF" stroke-width="3"
+                                                            d="M15 17.5L28.473 2.1 30.4 -0.5 15 -2.5z"
+                                                            mask="url(#rk1oeee80b)" />
+                                                    </g>
+                                                </g>
+                                                <g fill="#F40D0D">
+                                                    <path
+                                                        d="M8.712.977l1.061 1.06L6.06 5.75l3.713 3.712-1.06 1.061L5 6.81l-3.712 3.713-1.061-1.06L3.94 5.75.227 2.038 1.287.977 5 4.69 8.712.977z"
+                                                        transform="translate(-361 -274) translate(350 268) translate(11 5.5) translate(0 1) translate(11 12)" />
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+
+                    </i>
+                    <div class="txt">
+                        05 <span>Cancelled</span></div>
+                </a></li>
+            <li class="l-page-nav__list--icon-item"><a (click)="onClick(4)" [ngClass]="{'active': tab===4}">
+                    <i><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32"
+                            height="35" viewBox="0 0 32 35">
+                            <defs>
+                                <path id="vyjgc20cua"
+                                    d="M16 .5c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16S7.163.5 16 .5zm0 1.6C8.047 2.1 1.6 8.547 1.6 16.5S8.047 30.9 16 30.9s14.4-6.447 14.4-14.4S23.953 2.1 16 2.1z" />
+                            </defs>
+                            <g fill="none" fill-rule="evenodd">
+                                <g>
+                                    <g>
+                                        <g>
+                                            <g
+                                                transform="translate(-524 -275) translate(524 273) translate(0 2.5) translate(0 .5)">
+                                                <mask id="a2y1157qub" fill="#fff">
+                                                    <use xlink:href="#vyjgc20cua" />
+                                                </mask>
+                                                <use fill="#D9DADF" xlink:href="#vyjgc20cua" />
+                                                <path fill="#0DC1F4" stroke="#EAEAF1" stroke-width="3"
+                                                    d="M15 17.5L39.087 4.319 15 -2.5z" mask="url(#a2y1157qub)" />
+                                            </g>
+                                            <g fill="#080C5C" fill-rule="nonzero">
+                                                <path
+                                                    d="M13.798.26c-.082-.084-.195-.13-.312-.13H.594c-.243 0-.44.197-.44.44L.169 14c0 .135.062.263.168.346l1.599 1.274c.16.128.387.128.548 0l1.32-1.054 1.32 1.054c.16.126.385.126.545 0l1.32-1.054 1.32 1.054c.079.062.176.095.275.095.108.006.215-.028.3-.095l1.32-1.054 1.32 1.054c.16.128.387.128.547 0l1.6-1.27c.114-.079.185-.208.189-.347l.075-13.42c.001-.122-.048-.24-.137-.323zm-.818 13.527l-1.162.922-1.32-1.054c-.16-.126-.385-.126-.545 0l-1.32 1.054-1.32-1.054c-.078-.061-.175-.095-.275-.094-.1 0-.195.033-.273.094l-1.32 1.054-1.32-1.054c-.16-.126-.386-.126-.546 0L2.26 14.71l-1.161-.922L1.034 1.01h12.01l-.064 12.777z"
+                                                    transform="translate(-524 -275) translate(524 273) translate(0 2.5) translate(9 9.5)" />
+                                                <path
+                                                    d="M2.024 2.974h3.124c.243 0 .44-.197.44-.44s-.197-.44-.44-.44H2.024c-.243 0-.44.197-.44.44s.197.44.44.44zM2.024 4.796h3.124c.243 0 .44-.197.44-.44s-.197-.44-.44-.44H2.024c-.243 0-.44.197-.44.44s.197.44.44.44zM8.815 4.796h3.124c.243 0 .44-.197.44-.44s-.197-.44-.44-.44H8.815c-.243 0-.44.197-.44.44s.197.44.44.44zM11.612 7.26H2.468c-.243 0-.44.197-.44.44s.197.44.44.44h9.144c.243 0 .44-.197.44-.44s-.197-.44-.44-.44zM2.468 10.01h7.652c.243 0 .44-.197.44-.44s-.197-.44-.44-.44H2.468c-.243 0-.44.197-.44.44s.197.44.44.44zM11.134 11H2.468c-.243 0-.44.197-.44.44s.197.44.44.44h8.666c.243 0 .44-.197.44-.44s-.197-.44-.44-.44z"
+                                                    transform="translate(-524 -275) translate(524 273) translate(0 2.5) translate(9 9.5)" />
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </i>
+                    <div class="txt">55 <span>Invoiced</span></div>
+                </a></li>
+            <li class="l-page-nav__list--icon-item"><a (click)="onClick(5)" [ngClass]="{'active': tab===5}">
+                    <i><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32"
+                            height="34" viewBox="0 0 32 34">
+                            <defs>
+                                <path id="0fyr6sbf3a"
+                                    d="M16 .5c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16S7.163.5 16 .5zm0 1.6C8.047 2.1 1.6 8.547 1.6 16.5S8.047 30.9 16 30.9s14.4-6.447 14.4-14.4S23.953 2.1 16 2.1z" />
+                            </defs>
+                            <g fill="none" fill-rule="evenodd">
+                                <g>
+                                    <g>
+                                        <g>
+                                            <g
+                                                transform="translate(-692 -276) translate(692 273) translate(0 3) translate(0 .5)">
+                                                <mask id="t29yanrj6b" fill="#fff">
+                                                    <use xlink:href="#0fyr6sbf3a" />
+                                                </mask>
+                                                <use fill="#D4D5DB" xlink:href="#0fyr6sbf3a" />
+                                                <path fill="#FFA518" stroke="#FFF" stroke-width="3"
+                                                    d="M15 17.5L25.138 0.5 15 -2.5z" mask="url(#t29yanrj6b)" />
+                                            </g>
+                                            <path fill="#F3953E" fill-rule="nonzero" stroke="#F3953E" stroke-width=".5"
+                                                d="M7.088 10.787v10.938c0 .262.175.438.437.438h2.494c.219.83.962 1.487 1.837 1.487s1.663-.612 1.838-1.487H20.387c.22.83.963 1.487 1.838 1.487.875 0 1.662-.612 1.837-1.487h.7c.263 0 .438-.175.438-.438V18.05c0-.088-.044-.175-.087-.262l-2.407-3.632c-.087-.131-.218-.175-.35-.175h-2.275v-3.194c0-.262-.175-.437-.437-.437H7.525c-.263 0-.438.219-.438.438zM11.9 22.776c-.569 0-1.05-.481-1.05-1.05 0-.569.481-1.05 1.05-1.05.569 0 1.05.481 1.05 1.006 0 0 0 0 0 0s0 0 0 0c-.044.613-.481 1.094-1.05 1.094zm10.369 0c-.569 0-1.05-.481-1.05-1.05 0-.569.481-1.05 1.05-1.05.569 0 1.05.481 1.05 1.05 0 .569-.482 1.05-1.05 1.05zm-.044-7.919l2.188 3.325v3.107h-.263c-.219-.832-.962-1.488-1.837-1.488s-1.663.613-1.838 1.488h-.263v-6.432h2.013zM7.962 11.225h11.332V21.288h-5.556c-.22-.832-.963-1.488-1.838-1.488-.875 0-1.662.613-1.838 1.488H8.006V11.225h-.043z"
+                                                transform="translate(-692 -276) translate(692 273) translate(0 3)" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </i>
+                    <div class="txt">10 <span>Out for Delivery</span></div>
+                </a></li>
+            <li class="l-page-nav__list--icon-item"><a (click)="onClick(6)" [ngClass]="{'active': tab===6}">
+                    <i><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32"
+                            height="34" viewBox="0 0 32 34">
+                            <defs>
+                                <path id="upoew8vo2a"
+                                    d="M16 .5c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16S7.163.5 16 .5zm0 1.6C8.047 2.1 1.6 8.547 1.6 16.5S8.047 30.9 16 30.9s14.4-6.447 14.4-14.4S23.953 2.1 16 2.1z" />
+                            </defs>
+                            <g fill="none" fill-rule="evenodd">
+                                <g>
+                                    <g>
+                                        <g>
+                                            <g transform="translate(-873 -276) translate(873 275) translate(0 1.5)">
+                                                <mask id="yzuual9ljb" fill="#fff">
+                                                    <use xlink:href="#upoew8vo2a" />
+                                                </mask>
+                                                <use fill="#D4D5DB" xlink:href="#upoew8vo2a" />
+                                                <path fill="#64A70B" stroke="#FFF" stroke-width="3"
+                                                    d="M15 17.5L39.087 4.319 15 -2.5z" mask="url(#yzuual9ljb)" />
+                                            </g>
+                                            <path fill="#64A70B" fill-rule="nonzero"
+                                                d="M14.883 21.609L22.188 14.305 20.716 12.833 14.883 18.656 11.659 15.442 10.188 16.913z"
+                                                transform="translate(-873 -276) translate(873 275) translate(0 1.5)" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </i>
+                    <div class="txt">05 <span>Delivered</span></div>
+                </a></li>
+        </ul> -->
+
+    <!-- <div>
+        <div class="tags d-flex justify-content-end mb-4">
+            <ul class="tags__list" style="margin-right: 20px;">
+                <li *ngFor="let Filterrow of Filterarray"><a style="margin-top: -59px; margin-right: 291px;">{{Filterrow.Value}} <img
+                            (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key == 'from_date'"
+                            src="../../assets/images/tag-close.svg" /></a></li>
+            </ul>
+            <ul class="tags__list" fxFlex="30" style="color: darkolivegreen; width: 100px;" matTooltip="Export to Excel"
+                (click)="ExportDownload();">
+                  <span class='fa-stack fa-lg' style="margin-top: -59px;margin-left: 78px;">
+               <i class='fas fa-file-excel fa-pull-right fa-2x'></i>
+
+                </span>
+
+            </ul>
+        </div> -->
+    <div class="l-content w-100 pl-0">
+        <div class="tbl-reports card-shadow bg-white h-100">
+            <div class="l-tbl-accordion overflow-auto">
+                <div class="w-100 border-0 p-3">
+                    <div class="table-responsive">
+                        <table class="l-tbl">
+                            <tr class="main-tr">
+
+
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center" style="width: max-content;">
+                                        <span>Cancel Number</span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Cancel Date</span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i> -->
+                                    </div>
+                                </td>
+
+
+
+
+
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>OTC Number </span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Order No.</span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i> -->
+                                    </div>
+                                </td>
+
+
+
+
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Order Date</span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i> -->
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Customer Type </span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/5-.png" alt=""></i> -->
+                                    </div>
+                                </td>
+
+                                <td [hidden]="!isDistDrpDownVisible">
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Distributor Name </span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Account ID </span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Customer Name </span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Cancel Amount </span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Dist. Approval </span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        <span>Cancellation Status </span>
+                                        <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg" alt=""></i> -->
+                                    </div>
+                                </td>
+
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+
+                            <ng-container *ngIf="items.length >0">
+                                <tr *ngFor="let row of items" class="click-tr">
+
+
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp" (click)="cancellog(row)"
+                                            style="color: blue;cursor: pointer;"> {{ row?.cancel_order_number }}
+                                        </div>
+
+                                    </td>
+
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{ row?.created_at | date :'dd-MM-yyyy hh:mm:ss a' }}
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp" (click)="details(row)"
+                                            style="color: blue;cursor: pointer;"> {{ row?.otc_order_number }}</div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp"> {{ row?.order_number }}
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp"> {{ row?.order_date | date :'dd-MM-yyyy hh:mm:ss a' }}
+
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{ row?.user_type }}
+
+
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap" [hidden]="!isDistDrpDownVisible">
+                                        <div class="td-wrapp"> {{ row?.organization_name }}
+
+
+
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{row?.account_data.account_id}}
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{ row?.account_data.name }}
+
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{ row?.cancel_line_items_total_amount |
+                                            number:'1.2-2' }}
+
+
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{ row?.approved_status | titlecase}}
+
+
+
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{ row?.cr_request_status | titlecase}}
+
+
+
+                                        </div>
+
+                                    </td>
+
+                                    <!-- <td class="text-nowrap">
+                                        <div class="td-wrapp"> {{ row?.cancel_order_number }}</div>
+
+                                    </td>
+                                     <td class="text-nowrap">
+                                        <div class="td-wrapp">  {{ row?.created_at | date :'dd-MM-yyyy hh:mm:ss a' }}</div>
+                                    </td> -->
+                                    <!-- <td class="text-nowrap">
+                                        <div class="td-wrapp"> {{ row?.otc_order_number }}</div>
+                                    </td>
+                                   
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">    {{ row?.order_number  }}</div>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">   {{ row?.order_date | date :'dd-MM-yyyy hh:mm:ss a' }}
+                                        </div>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">  {{ row?.organization_name }}
+                                        </div>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">{{row?.account_data.account_id}}
+                                        </div>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp"> {{ row?.account_data.name }}
+                                        </div>
+                                    </td>
+                                  
+                                  
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">  {{ row?.cancel_line_items_total_amount   | number:'1.2-2' }}
+                                        </div>
+
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp">   {{ row?.approved_status  | titlecase}}
+                                        </div>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <div class="td-wrapp"> {{ row?.cr_request_status  | titlecase}}
+                                        </div>
+                                    </td> -->
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="items.length == 0">
+                                <tr>
+                                    No Data Found
+                                </tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="paging" style="margin-bottom: 40px;margin-top: 20px;">
+
+
+
+            <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
+                [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)" [showrecords]="showRecords">
+            </app-pagination>
+
+
+
+        </div>
+    </div>
+    </div>
+
+
+    <!-- </section>  -->
+
+    <ng-template #orderDetails let-d="dismiss">
+        <order-details [order]="orderInformations"></order-details>
+    </ng-template>
+    <ng-template #CancelDetails let-d="dismiss3">
+        <app-cancel-list-popup [item]="CancellationInformations"></app-cancel-list-popup>
+    </ng-template>
+    <ng-template #ExcelDownload let-d="dismiss">
+        <app-report-download-popup [data]="EDownload" [count]="count" [pageName]="pageName"></app-report-download-popup>
+    </ng-template>

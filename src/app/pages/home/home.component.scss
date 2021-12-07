@@ -1,0 +1,26 @@
+.wraper {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .circle {
+    display: flex;
+    align-items: center;
+    border: 1px solid red;
+    border-radius: 50%;
+  }
+  
+  .empty-wheel-outer {
+    width: 100%;
+    height: 100%;
+  }
+  .empty-wheel-outer {
+    width: 396%;
+    height: 366%;
+  }
+  
+  .empty-wheel-inner {
+    width: 50%;
+    height: 50%;
+    margin: auto;
+  }

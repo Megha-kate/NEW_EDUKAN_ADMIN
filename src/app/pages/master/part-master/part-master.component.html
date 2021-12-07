@@ -1,0 +1,770 @@
+<app-submenu-list [ActiveMenu]='1'></app-submenu-list>
+<section class="main-wrapper prod-list-page">
+    <div class="l-container">
+        <div class="search-order-id float-right">
+            <span class="material-icons">search </span>
+            <input type="text" class="textfield" placeholder="Search by Part Number" (keydown)="SearchAccount($event)"
+                (focusout)="showAccount($event)" [formControl]="AllFilters.controls['part_number']">
+            <div class="btn-filter" ngbDropdown #myDrop="ngbDropdown">
+
+                <button class="btn-filter" id="filterPopup" ngbDropdownToggle><img src="./assets/images/filter.svg"
+                        alt="" /></button>
+
+                <div ngbDropdownMenu aria-labelledby="filterPopup" class="filter-popup">
+                    <div class="arrow"></div>
+                    <form [formGroup]="AllFilters">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-4 border-right">
+                                    <h4>DATE</h4>
+                                    <li class="sidebar-cards__item">
+                                        <ul class="sidebar-cards__chk-list">
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input (change)="changedatefilter('Today')" name="A" type="radio"
+                                                    id="aa">
+                                                <label for="aa"> Today</label>
+                                            </li><br>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input name="A" type="radio" id="bb"
+                                                    (change)="changedatefilter('Sevenday')">
+                                                <label for="bb"> Last 7 days</label>
+                                            </li><br>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input name="A" type="radio" id="cc"
+                                                    (change)="changedatefilter('thirtyDays')" [checked]="isThirtyDays">
+                                                <label for="cc">Last 30 days</label>
+
+                                            </li><br>
+                                            <li class="sidebar-cards__chk-list-item chkbox">
+                                                <input (change)="changedatefilter('Custom')" name="A" type="radio"
+                                                    id="dd" [value]="ShowCustom">
+                                                <label for="dd">Custom</label>
+                                            </li>
+
+                                            <li class="sidebar-cards__chk-list-item" [hidden]="!ShowCustom">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group m-0 calendar">
+                                                            <div class="input-group">
+                                                                <input class="form-control"
+                                                                    [formControl]="AllFilters.controls['from_date']"
+                                                                    placeholder="yyyy-mm-dd" [readonly]="true" name="dp"
+                                                                    ngbDatepicker #d="ngbDatepicker">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-outline-secondary calendar"
+                                                                        (click)="d.toggle()" type="button"><span
+                                                                            class="material-icons">
+                                                                            calendar_today
+                                                                        </span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group m-0">
+                                                            <div class="input-group calendar">
+                                                                <input class="form-control"
+                                                                    [formControl]="AllFilters.controls['to_date']"
+                                                                    placeholder="yyyy-mm-dd" [readonly]="true" name="dp"
+                                                                    ngbDatepicker #d1="ngbDatepicker">
+                                                                <div class="input-group-append1">
+                                                                    <button class="btn btn-outline-secondary calendar"
+                                                                        (click)="d1.toggle()" type="button"><span
+                                                                            class="material-icons">
+                                                                            calendar_today
+                                                                        </span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+
+                                            <label>Part Number</label><br />
+                                            <input [formControl]="AllFilters.controls['part_number']" type="text"
+                                                class="textfield " id="inputPassword">
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Description</label><br />
+                                            <input [formControl]="AllFilters.controls['large_description']" type="text"
+                                                class="textfield " id="inputPassword">
+                                        </div>
+                                    </li>
+                                    <!-- <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Discount code Cvbu</label>
+                                            <div class="srch-box">
+                                                <input [formControl]="AllFilters.controls['discount_code_cvbu']"
+                                                    type="text" class="textfield " id="inputPassword">
+                                            </div>
+                                        </div>
+                                    </li> -->
+
+
+                                </div>
+                                <div class="col-4 border-right">
+                                    <!-- <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">is Ecommerce</label><br />
+                                            <select disableRipple class="textfield"
+                                                [formControl]="AllFilters.controls['isecom']">
+                                                <option value="true">Yes</option>
+                                                <option value="false">NO</option>
+                                            </select>
+                                        </div>
+                                    </li> -->
+
+                                    <!-- <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Select Product Group</label><br />
+
+                                            <div class="srch-box">
+                                                <select class="textfield"
+                                                    [formControl]="AllFilters.controls['distributor_category']">
+                                                    <option *ngFor="let Data of CategoryMaster;">
+                                                        {{Data}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </li> -->
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Select Category Group</label><br />
+                                            <div class="srch-box">
+                                                <select class="textfield" [formControl]="AllFilters.controls['distributor_category']">
+                                                    <option hidden></option>
+
+                                                    <option *ngFor="let Data of CategoryMaster;">
+                                                        {{Data}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+
+                                            <label for="inputPassword">NSL Part</label><br />
+                                            <select disableRipple class="textfield"
+                                                [formControl]="AllFilters.controls['nls_status']">
+                                                <option value="ALL">ALL</option>
+                                                <option value="active">Active</option>
+                                                <option value="in_active">Inactive</option>
+
+                                            </select>
+                                        </div>
+                                    </li>
+                                    <!-- <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">is Assamrifile </label><br />
+                                            <select disableRipple class="textfield"
+                                                [formControl]="AllFilters.controls['isassamrifile']">
+                                                <option value="true">Yes</option>
+                                                <option value="false">NO</option>
+                                            </select>
+                                        </div>
+                                    </li> -->
+
+
+                                    <li>
+                                        <div class="srch-box">
+
+                                            <label for="inputPassword">Order Flag Status</label><br />
+                                            <select disableRipple class="textfield"
+                                                [formControl]="AllFilters.controls['order_flag_status']">
+                                                <option value="ALL">ALL</option>
+                                                <option value="active">Active</option>
+                                                <option value="in_active">Inactive</option>
+
+                                            </select>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Select Product Group</label><br />
+                                            <div class="srch-box">
+                                                <select class="textfield" [formControl]="AllFilters.controls['pg']">
+                                                    <option hidden></option>
+
+                                                    <option *ngFor="let PgData of ProductGroup;">
+                                                        {{PgData}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </div>
+                                <div class="col-4 border-right">
+                                    <!-- <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Select Product Group</label><br />
+                                            <div class="srch-box">
+                                                <select class="textfield" [formControl]="AllFilters.controls['pg']">
+                                                    <option *ngFor="let PgData of ProductGroup;">
+                                                        {{PgData}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </li> -->
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Select Group Category </label><br />
+                                            <div class="srch-box">
+                                                <select class="textfield"
+                                                    [formControl]="AllFilters.controls['group_category']">
+                                                    <option hidden></option>
+
+                                                    <option *ngFor="let type of ProductGroupCategory" [value]="type">
+                                                        {{type}}</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label for="inputPassword">Select Product Ling</label><br />
+                                            <div class="srch-box">
+                                                <select class="textfield"
+                                                    [formControl]="AllFilters.controls['pg_line']">
+                                                    <option *ngFor="let Line of GetPgLine" [value]="Line"> {{Line}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </li>
+
+
+
+
+                                    <!-- <a (click)="SearchAllDate()"
+                                        style="color: blue;padding-right: 15px;cursor: pointer;">Search</a>
+                                    <a (click)="resetALl();" style="color: red;cursor: pointer;">Reset</a> -->
+
+                                    <button class="btn btn-outline-primary"
+                                    (click)="SearchAllDate()">Search</button>&nbsp;&nbsp;
+                                <button class="btn btn-outline-primary" (click)="resetALl();">Reset</button>
+
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class=" justify-content-end float-left">
+
+                <ul  fxFlex="30" style="color: darkolivegreen; width: 100px;" matTooltip="Export to Excel"
+                (click)="ExportDownload();">
+                  <span class='fa-stack fa-lg'>
+               <i class='fas fa-file-excel fa-pull-right fa-2x'></i>
+        
+                </span>
+        
+            </ul>
+             </div>
+
+        </div>
+        <div class="float-left">
+            <button class="button float-left btn-add-new"  (click)="open(content)">
+                <span class="material-icons mr-2">
+                    file_upload
+                </span> UPDATE PART
+            </button><br><br><br>
+        </div>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="float-left" style=" padding-left: 20px;" >
+            <button class="button float-left btn-add-new"  matTooltip="Part_Update Template"
+            matTooltipClass="color:red" (click)="reportDownloadTemplate1();">
+
+
+            <span class="material-icons mr-2">
+
+
+                file_download
+            </span>Part_Update Template
+        </button>
+
+    </div>
+      
+        
+           
+      
+        <!-- <div  *ngIf= "disablebutton2 != false"  fxFlex="100"  fxFlex.gt-sm="20">
+            <button  (click)="reportDownloadTemplate1()" style="float: left;" mat-stroked-button color="primary">
+              Part_Update Template &nbsp; <mat-icon>
+                cloud_download</mat-icon> </button>
+             
+    
+          </div> -->
+
+        <div class="tags d-flex justify-content-end mb-4">
+            <!-- <ul class="tags__list" style="margin-left: 20px;">
+                <li *ngFor="let Filterrow of Filterarray"><a style="cursor:default">{{Filterrow.Value}} <img
+                            (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key !== 'from_date'"
+                            src="../../assets/images/tag-close.svg" /></a></li>
+            </ul> -->
+            &nbsp;&nbsp;&nbsp;
+
+            <ul class="tags__list" style="margin-right: 170px;">
+                <li *ngFor="let Filterrow of Filterarray"><a
+                        style="cursor: default;">{{Filterrow.Value}} <img
+                            (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key == 'from_date'"
+                            src="./assets/images/tag-close.svg" /></a></li>
+            </ul>
+
+            <!-- <ul class="tags__list" fxFlex="30" style="color: darkolivegreen; width: 100px;" matTooltip="Export to Excel"
+                (click)="ExportDownload();">
+                <span class='fa-stack fa-lg'>
+                    <i class='fas fa-file-excel fa-pull-right fa-2x'></i>
+
+                </span>
+            </ul> -->
+        </div>
+        <div class="l-content w-100 pl-0" (click)="closeModal()">
+
+
+            <ng-template #content let-modal>
+                &nbsp;
+
+                <div class="w-100 border-0 p-3 float-right" (click)="closeModal()" type="button">
+            <div (click)="closeModal()"  type="button" style="margin-left: 903px;"><i class="fa fa-times "></i></div>
+
+                    <mat-card class="user-card p-0" style="overflow: auto;">
+                        <mat-card-title>
+                            <div class="card-title-text">
+
+                                Update Part
+                                <span fxFlex></span>
+
+
+                            </div>
+                            <mat-divider></mat-divider>
+                        </mat-card-title>
+                        <mat-card-content>
+
+                            <mat-grid-list style="margin-top: -65px !important;" cols="2" rowHeight="2:1">
+
+                                <mat-grid-tile>
+                                  <div >
+                          
+                                    <b style="color: red;">Instruction:</b>
+                                    
+                                      <br />1.Please Refer below guidline before upload file .
+                                      <br />2.Change Data
+                                      <br />3.Upload the xlsx File (Accept only xlsx File)
+                          
+                          
+                                  </div>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                  <mat-card-content style="margin-top: 100px; text-align: center;">
+                                    <label>
+                          
+                                      &nbsp; &nbsp; &nbsp; &nbsp;
+                                      <input #inputFile type="file"  style="display:none" (change)="fileUploads($event)" />
+                          
+                                      <a mat-raised-button color="primary">
+                                        <mat-icon>file_upload</mat-icon>
+                                        Upload XLSX
+                                      </a>
+                          
+                                      <!-- &nbsp; &nbsp; &nbsp; &nbsp;
+                                      <a style="color: blue;" href="./assets/Samples/SamplePartUpdate.xlsx">Download Template</a> -->
+                          
+                          
+                                    </label>
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                                    <!-- <button mat-raised-button  style="width: 100px;"  color="accent" class="mr-1" (click)="BtnClick(row)">View</button> -->
+                                  </mat-card-content>
+                                </mat-grid-tile>
+                          
+                          
+                          
+
+
+                            </mat-grid-list>
+                            <mat-grid-list cols="1" rowHeight="2:1">
+                                <img src="./assets/images/GuidLine.png">
+                            </mat-grid-list>
+
+                        </mat-card-content>
+
+
+                    </mat-card>
+
+
+
+                </div>
+            </ng-template>
+
+            <!-- ===================================================
+                        # eDukaan_Admin_Users_4
+                    =================================================== -->
+
+
+
+            <div>
+                <div class="l-content w-100 pl-0">
+                    <div class="tbl-reports card-shadow bg-white h-100">
+                        <div class="l-tbl-accordion overflow-auto">
+                            <div class="w-100 border-0 p-3">
+                                <div class="table-responsive">
+                                    <table class="l-tbl">
+                                        <tr class="main-tr">
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Part Number</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Distributor Category</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+
+                                            <!-- <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Group Category</span>
+                                                    
+                                                </div>
+                                            </td> -->
+
+
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Group Category</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Description</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Advantages</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Min Qty</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Product Hierarchy</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Pg Line</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Is Home</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Created At</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Last Update ON</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Created By</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Update By </span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>Description</span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>PG
+                                                    </span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>NLS status
+                                                    </span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="td-wrapp d-flex align-items-center">
+                                                    <span>NLS Date
+
+                                                    </span>
+                                                    <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
+                                                            alt=""></i> -->
+                                                </div>
+                                            </td>
+
+
+
+
+
+
+                                        </tr>
+
+                                        <ng-container *ngIf="items?.length >0">
+
+                                            <tr *ngFor="let row of items" class="click-tr">
+
+
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp"> {{ row?.part_number}}</div>
+                                                </td>
+
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.distributor_category }}
+                                                    </div>
+                                                </td>
+
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.group_category }}
+                                                    </div>
+                                                </td>
+<!-- 
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.group_category }}
+                                                    </div>
+                                                </td> -->
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.large_description }}
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.advantages }}
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.minquantity }}
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.line_1 }}
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.line_2 }}
+                                                    </div>
+                                                </td>
+                                                <!-- <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.line_1 }}
+                                                    </div>
+                                                </td> -->
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.is_home_page == true ? 'Yes' : 'No' }}
+
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.created_dt | date :'dd-MM-yyyy' }}
+
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.last_upd | date :'dd-MM-yyyy' }}
+
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.created_by }}
+
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.updated_by }}
+
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.desc_text }}
+
+
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp"> {{ row?.pg }}
+
+
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.column_5 }}
+
+
+                                                    </div>
+                                                </td>
+
+
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">{{ row?.nls_date | date :'dd-MM-yyyy' }}
+
+
+                                                    </div>
+                                                </td>
+
+
+
+
+                                                <!-- <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+                                                        <span *ngIf="row?.isecom === true">Yes</span>
+                                                        <span *ngIf="row?.isecom === false ">No</span>
+
+                                                    </div>
+
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+                                                        <span *ngIf="row?.isassamrifile === true">Yes</span>
+                                                        <span *ngIf="row?.isassamrifile === false ">No</span>
+                                                    </div>
+
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+
+                                                        {{ row?.large_description?.substring(0, 50)}}
+
+
+                                                    </div>
+
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+
+                                                        {{ row?.minquantity }}
+
+
+                                                    </div>
+
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+                                                        <span *ngIf="row?.isactiveforecom === true">Yes</span>
+                                                        <span *ngIf="row?.isactiveforecom === false ">No</span>
+                                                    </div>
+                                                </td> -->
+
+                                                <!-- 
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+
+                                                        {{ row?.discount_code_cvbu}}
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+
+                                                        {{ row?.distributor_category}}
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <div class="td-wrapp">
+
+                                                        {{ row?.pg}}
+                                                    </div>
+                                                </td> -->
+                                            </tr>
+                                        </ng-container>
+                                        <ng-container *ngIf="items?.length == 0">
+                                            <tr>
+                                                No Data Found
+                                            </tr>
+                                        </ng-container>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="paging">
+                        <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
+                            [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)"
+                            [showrecords]="showRecords"></app-pagination>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+            <ng-template #ExcelDownload let-d="dismiss">
+                <app-report-download-popup [data]="EDownload" [count]="count" [pageName]="pageName">
+                </app-report-download-popup>
+            </ng-template>
+            <ng-template #reportDownloadTemplate let-d="dismiss">
+                <app-report-download-popup [data]="EDownloadTemplate" [count]="count" [pageName]="pageName">
+                </app-report-download-popup>
+            </ng-template>
+
+            <!-- </section> -->

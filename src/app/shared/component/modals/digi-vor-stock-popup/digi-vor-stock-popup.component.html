@@ -1,0 +1,151 @@
+<!-- <button style="float: right; background: transparent;" mat-dialog-close class="closeDel">X</button> -->
+<div  class="modal-header" style="text-align: center;">
+    <a style="font-size: large;"><b>Part Number:</b>
+      {{PartNumber}} ({{Qty}}) </a>
+  </div>
+  
+  
+  <mat-tab-group [color]="'warn'" (selectedTabChange)="TabChange($event)">
+  
+    <mat-tab label="Stock Details">
+      <div style="min-width: 700px !important ;height:80%;overflow-y: auto;" fxLayout="row wrap" >
+  
+        <div *ngFor="let user of Users1" fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+          <mat-card class="user-card p-0" style="overflow: auto;">
+            <mat-card-title>
+              <div style="background-color: lightsteelblue" class="card-title-text">
+                <!-- <a href="" class="toolbar-avatar md mr-1"><img [src]="user.photo" alt=""></a> -->
+                <span>{{user.dealer_name}}</span>
+                <span fxFlex></span>
+  
+              </div>
+              <mat-divider></mat-divider>
+            </mat-card-title>
+            <mat-card-content>
+              <!-- user detail lines-->
+              <div class="user-details">
+                <p>
+                  <mat-icon class="text-muted">keyboard_arrow_right</mat-icon><b>Dealer Id : </b>{{user.dealer_id}}
+                </p>
+  
+                <p>
+                  <mat-icon>keyboard_arrow_right</mat-icon><b>Available Quantity : </b> <a
+                    class="circle Circle ">{{user.part_count}}</a>
+                </p>
+                <!-- <p>
+                  <mat-icon class="text-muted">keyboard_arrow_right</mat-icon><b>Lat : </b>{{user.dealer_location_latitude}}
+                  &nbsp; <b>Long : </b>{{user.dealer_location_longitude}}
+                </p> -->
+  
+  
+                <p>
+                  <mat-icon class="text-muted">keyboard_arrow_right</mat-icon><b>Distance :
+                  </b>{{user.Range | number:'1.2-2'}} KM
+  
+                </p>
+                <p>
+  
+                  <a style=" text-decoration-line: underline; color: blue;" routerLinkActive="active"
+                    routerLinkActive="active" (click)="GetDivInfo(user.dealer_id)">View Details</a>
+                </p>
+  
+                <!-- <mat-card class="p-0" *ngIf="Isshow">
+                  <mat-card-title style="margin: 10px; color: #0e1068 !important;">
+                    Information :
+                  </mat-card-title>
+                  <mat-card-content>
+                    <div>
+                     
+                
+  
+                      <b>Address : </b>{{dealer_address}}<br/>
+                      <b>Dealer Code : </b> {{DivData.dealer_code}}<br/>
+                      <b>Contact No:</b> {{DivData.dealer_contact_no}}<br/>
+                      <b>Delaer Id:</b> {{DivData.dealer_id}}}}<br/>
+                      <b>Lat :</b> {{DivData.dealer_location_latitude}}<br/>
+                      <b>Long:</b> {{DivData.dealer_location_longitude}}<br/>
+                      <b>Mobile Number </b> {{DivData.dealer_mobile_number}}<br/>
+                      <b>Delaer Name</b> {{DivData.dealer_name}}<br/>
+                      
+                      <b>Billing City :</b> {{DivData.div_bill_city}}<br/>
+                      <b>City :</b> {{DivData.div_city_name}}<br/>
+                      <b>Division Name</b> {{DivData.div_common_name}}<br/>
+                      <b>Division Name :</b> {{DivData.div_name}}<br/>
+                      <b>Division Type:</b> {{DivData.div_type}}<br/>
+                      <b>DPM Number :</b> {{DivData.dpm_contact_num}}<br/>
+                      <b>DPN Name</b> {{DivData.dpm_first_name}}<br/>
+                      <b>DPM Last Name</b> {{DivData.dpm_last_name}}<br/>
+                      
+                      <b>DPM POS Name :</b> {{DivData.dpm_pos_name}}<br/>
+  
+  
+                    </div>
+                  </mat-card-content>
+                </mat-card> -->
+  
+  
+  
+  
+              </div>
+            </mat-card-content>
+  
+  
+          </mat-card>
+  
+        </div>
+  
+        <!-- <button  style="margin-bottom: 9px;
+        float: right;
+        margin-right: 9px;"  mat-raised-button  mat-dialog-close class="closeDel" color="primary">OK</button> -->
+  
+      </div>
+    </mat-tab>
+    <mat-tab label="Map view">
+      <div style="min-width: 700px !important ; min-height: 200px !important; " id="transparentScrollbarDiv">
+        <mat-card class="p-0">
+          <mat-card-title class=" m-0">
+            <div class="card-title-text">Info Window</div>
+            <mat-divider></mat-divider>
+          </mat-card-title>
+          <mat-card-content class="p-0">
+            <agm-map [ngStyle]="{height: '400px'}" [zoom]="zoom" [latitude]="mapCenter.lat" [longitude]="mapCenter.lng">
+  
+              <!-- <agm-marker  *ngFor="let data of mylocations; let i = index" [latitude]="data.lat" [longitude]="data.lng">
+  
+            </agm-marker> -->
+              <agm-marker *ngFor="let data of mylocations; let i = index" [latitude]="data.lat" [longitude]="data.lng"
+                [label]="" (markerClick)="clickedMarker(infoWindow)" >
+                <!-- <agm-info-window [disableAutoPan]="true" [isOpen]="true">
+                <p><strong>Country:</strong> Bangladesh</p>
+                <p><strong>Birth date:</strong> 16 December, 1971</p>
+              </agm-info-window> -->
+                <agm-info-window [disableAutoPan]="false" #infoWindow>
+  
+                  <!-- <div>
+                {{m.lat}}
+                {{m.lng}}
+            </div> -->
+                  <div>
+                    <a><strong>Name:</strong>{{data.Name}} </a> <br />
+                    <a><strong>Available Quantity:</strong>{{data.Quantity}} </a><br />
+                    <a><strong>Latitude:</strong>{{data.lat}} </a><br />
+                    <a><strong>Longitude:</strong>{{data.lng}} </a><br />
+                    <a><strong>Distance:</strong>{{data.Range | number:'1.2-2'}} KM </a><br />
+  
+                    <a style=" text-decoration-line: underline; color: blue;" routerLinkActive="active"
+                    routerLinkActive="active" (click)="GetDivInfo(user.division_id)">View Details</a>
+  
+                  </div>
+  
+                </agm-info-window>
+  
+              </agm-marker>
+            </agm-map>
+  
+  
+          </mat-card-content>
+        </mat-card>
+  
+      </div>
+    </mat-tab>
+  </mat-tab-group>

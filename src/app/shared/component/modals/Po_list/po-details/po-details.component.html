@@ -1,0 +1,139 @@
+<div class="modal-content" style="width: 100%;">
+    <div class="modal-header modal-title">
+        EDN PO Details
+
+        <div (click)="closeModal()" type="button"><i class="fa fa-times"></i></div>
+    </div>
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <ul class="feedback-order-series">
+                    <li>
+                        <div class="o-title"> EDN PO No</div>
+                        <div class="o-desc">{{ items?.po_number}}</div>
+                    </li>&nbsp;&nbsp;
+                    <li>
+                        <div class="o-title">Status</div>
+                        <div class="o-desc">{{ items?.order_status }}</div>
+                    </li>&nbsp;&nbsp;
+                    <li>
+                        <div class="o-title"> EDN PO Date</div>
+                        <!-- <div class="o-desc">{{ items?.order_date | date :'dd-MM-yyyy'}}</div> -->
+                    </li>&nbsp;&nbsp;
+                    <li>
+                        <div class="o-title"> OTC No </div>
+                        <div class="o-desc">{{ items?.otc_number}}</div>
+                    </li><br>
+                    <li>
+                        <span>Customer Name :</span>&nbsp;&nbsp;<br>
+                        <span>SAP Order No :</span>
+                    </li>
+                    <li>
+                        <span style="margin-right: 18px; padding-left: 217px;">Distributor Name:{{items?.organization_name}} </span>&nbsp;&nbsp;<br>
+                        <span style="margin-right: 18px; padding-left: 217px;">Divison Name:{{items?.ord_division_name}} </span>
+                    </li>
+                 </ul>
+                 </div>
+
+                 <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <h3 class="feedback-tbl-header">
+                  
+                    <div class="table-responsive" style="width: 574px;">
+                        <table class="table table-md">
+                            <thead>
+                                <tr>
+                                    <th>Parts</th>
+                                    <th>Part Number</th>
+                                    <th>Description</th>
+                                    <th>Request Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container>
+                                    <tr *ngFor="let item of order?.order_line_items; let i = index">
+                                        <td>
+                                            <div class="d-inline-flex">
+                                                <img alt="" [src]="item?.part_cover_image"
+                                                    style="width: 44px; height: 30px;">
+                                            </div>
+                                            <div class="d-inline-flex ps-2"
+                                                style="vertical-align: top; flex-direction: column;">
+                                                <div class="tbl-c-title"
+                                                    [routerLink]="['/shop/product-details/',item.part_number]">{{
+                                                    item?.part_number }}</div>
+                                                <div *ngIf="!isReturn" class="tbl-c-desc" style="cursor: pointer;"
+                                                    title="{{ (item?.part_desc == '' || item?.part_desc == null) ? '-' : item?.part_desc}}">
+                                                    {{ (item?.part_desc == " " || item?.part_desc == null) ? "-" :
+                                                    item?.part_desc?.substr(0,20)}}
+                                                </div>
+                                                <div *ngIf="isReturn" class="tbl-c-desc" style="cursor: pointer;"
+                                                    title="{{ (item?.part_desc == '' || item?.part_desc == null) ? '-' : item?.part_desc}}">
+                                                    {{ (item?.part_desc == " " || item?.part_desc == null) ? "-" :
+                                                    item?.part_desc?.substr(0,15)}}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="td-actual-mrp"> <span>{{items?.part_number}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td> {{ items?.part_description }}
+                                        </td>
+                                        <td class="text-end"> {{ row?.request_quanity }}
+                                        </td>
+                                        <!-- <a href="SearchDetails()" >View</a></td> -->
+                                       
+    
+    
+                                    </tr>
+                                </ng-container>
+                             
+                               
+
+
+            <!-- </div> -->
+            <!-- </div> -->
+    <!-- <div class="modal-body">
+    <div class="l-content w-100 pl-0">
+    <div class="l-tbl-accordion overflow-auto">
+        <div class="w-100 border-0 p-3">
+            <div class="table-responsive" >
+                <table class="l-tbl">
+                    <tr class="main-tr">
+
+                        <th>EDN PO No</th>
+                        <th>Status</th>
+                        <th>EDN Po Date</th>
+                        <th> OTC No</th>
+                  </tr>
+                  <tr>
+                    <td>
+                        <div class="td-wrapp">
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp">
+                            
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-wrapp">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</div> -->

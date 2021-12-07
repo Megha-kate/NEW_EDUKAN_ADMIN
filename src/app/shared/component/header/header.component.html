@@ -1,0 +1,174 @@
+<header class="l-header space__p-t--25">
+    <div class="l-container">
+        <a  class="logo" (click)="logo()"><img src="./assets/images/tataM-eDukaan-logo.svg" alt=""></a>
+
+        <ul class="header-top-right">
+            <a   class="logo" (click)="logo()"><img src="./assets/images/Gp2.jpg" alt="" ></a>
+
+
+            <!-- <li class="notification"><a href="#"><span class="material-icons"> notifications_none </span> <span
+                        class="indtr"></span></a></li> -->
+            <!-- <li class="user"><a href="#"><img src="https://via.placeholder.com/20x20/ff0000" alt=""></a></li> -->
+            <li>
+                <span style="color: white;">{{loginData.username}} ({{loginData.role_name}})</span>
+            </li>
+            <li><a (click)="open(logout)"><span class="material-icons">
+                        power_settings_new
+                    </span> </a></li>
+
+
+        </ul>&nbsp;&nbsp;
+        
+        
+
+        <!-- <div class="l-header__main-nav">
+            <div class="menu">
+                <ul class="menu__list">
+                    <li class="menu__icon"><a (click) = "Dashoabrd()"  class="active"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="20" viewBox="0 0 24 20">
+                                <g fill="none" fill-rule="evenodd">
+                                    <g fill="#080C5C" fill-rule="nonzero">
+                                        <g>
+                                            <path
+                                                d="M11.733 9.61c-.44 0-.875.114-1.261.333L6.145 5.518c-.289-.276-.739-.268-1.018.018-.28.285-.287.746-.018 1.042L9.436 11c-.57 1.06-.376 2.378.473 3.219.848.841 2.143.998 3.16.382 1.018-.615 1.507-1.85 1.195-3.017-.312-1.166-1.349-1.974-2.53-1.974zm0 3.865c-.453.002-.865-.268-1.053-.69-.188-.422-.116-.917.183-1.265.046-.03.085-.07.115-.117.387-.343.949-.384 1.379-.1.43.283.627.822.483 1.324-.144.503-.595.848-1.107.848zM11.733 7.375c.405 0 .734-.336.734-.75V3.458c0-.415-.329-.75-.734-.75-.405 0-.733.335-.733.75v3.167c0 .414.328.75.733.75zM20.37 11.543h-3.095c-.405 0-.733.335-.733.75 0 .414.328.75.733.75h3.095c.405 0 .733-.336.733-.75 0-.415-.328-.75-.733-.75zM6.192 11.543H3.097c-.405 0-.733.335-.733.75 0 .414.328.75.733.75h3.095c.405 0 .733-.336.733-.75 0-.415-.328-.75-.733-.75zM18.36 5.515c-.286-.292-.75-.292-1.036 0l-2.2 2.25c-.196.187-.277.469-.21.734.066.266.268.474.528.541.26.068.535-.014.718-.215l2.2-2.25c.286-.293.286-.767 0-1.06z"
+                                                transform="translate(-77 -135) translate(77 135)" />
+                                            <path
+                                                d="M11.733.215C5.257.225.01 5.592 0 12.215c-.01 2.634.836 5.196 2.405 7.285.139.186.354.295.582.295H20.48c.228 0 .443-.11.581-.295 1.569-2.088 2.415-4.65 2.406-7.283C23.459 5.593 18.21.225 11.733.215zm8.375 18.07H3.358c-1.236-1.77-1.897-3.892-1.891-6.068C1.467 8.467 3.423 5 6.6 3.124c3.177-1.875 7.09-1.875 10.267 0C20.043 5 22 8.466 22 12.217c.006 2.176-.656 4.298-1.892 6.068z"
+                                                transform="translate(-77 -135) translate(77 135)" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                            DASHBOARD</a></li>
+                    <li class="menu__icon"><a   (click) = "Report()"   ><svg version="1.1" id="Layer_1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                y="0px" viewBox="0 0 17 21" style="enable-background:new 0 0 17 21;"
+                                xml:space="preserve">
+                                <g>
+                                    <path fill="#080C5C" class="st0"
+                                        d="M16.1,3.2l-3-2.8l-11.5,0c-0.4,0-0.7,0.3-0.7,0.7v18.8c0,0.4,0.3,0.7,0.7,0.7h13.8c0.4,0,0.7-0.3,0.7-0.7V4.1
+                           V3.2z M13.5,2.9V2.8l0.2,0.2H13.5z M12.8,4.4h1.9v14.8H2.3V1.8h9.8v1.8C12.1,4.1,12.4,4.4,12.8,4.4z" />
+                                    <path fill="#080C5C"
+                                        d="M12.8,15.6H4.2c-0.4,0-0.7,0.3-0.7,0.7S3.8,17,4.2,17h8.6c0.4,0,0.7-0.3,0.7-0.7S13.2,15.6,12.8,15.6z" />
+                                    <path fill="#080C5C"
+                                        d="M12.8,12.2H4.2c-0.4,0-0.7,0.3-0.7,0.7s0.3,0.7,0.7,0.7h8.6c0.4,0,0.7-0.3,0.7-0.7S13.2,12.2,12.8,12.2z" />
+                                    <path fill="#080C5C" d="M3.5,9.2c0,0.4,0.3,0.7,0.7,0.7h8.6c0.4,0,0.7-0.3,0.7-0.7c0-0.4-0.3-0.7-0.7-0.7H4.2C3.8,8.6,3.5,8.9,3.5,9.2
+                           z" />
+                                </g>
+                            </svg>
+                            REPORTS</a></li>
+                    <li class="menu__icon"><a (click) = "User()"><svg version="1.1" id="Layer_1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                y="0px" viewBox="0 0 25 20" style="enable-background:new 0 0 25 20;"
+                                xml:space="preserve">
+                                <g>
+                                    <path fill="#080C5C" d="M24,11C24,11,24,11,24,11l0-1.5c0-0.1,0-0.2-0.1-0.2c0.1-0.1,0.2-0.3,0.2-0.5c0-0.2-0.1-0.4-0.3-0.5l-14-8
+                               c-0.2-0.1-0.4-0.1-0.6,0l-8.2,5C1,5.4,0.9,5.6,0.9,5.8c0,0.2,0.1,0.3,0.2,0.4C1,6.3,1,6.4,1,6.5v1.4C1,8,0.9,8,0.9,8
+                               C0.8,8.2,0.8,8.5,1,8.7v1.8c0,0-0.1,0.1-0.1,0.1c-0.1,0.3-0.1,0.6,0.2,0.8l14.6,8.4c0.1,0,0.2,0.1,0.3,0.1c0.1,0,0.2,0,0.3-0.1
+                               l7.5-5.3c0.3-0.2,0.3-0.5,0.1-0.8c0,0,0,0,0,0v-1.8C24.2,11.5,24.2,11.2,24,11z M17,5.7L9.9,10L7.8,8.8l7.1-4.3L17,5.7z M6.8,5.2
+                               l2.1-1.3c0.5,0.2,1.1,0.2,1.6,0l1.7,1L8.3,7.2L6.8,6.3C6.9,5.9,6.9,5.5,6.8,5.2z M13.2,4.2l-2.5-1.4c-0.2-0.1-0.4-0.1-0.6,0
+                               C9.9,3,9.4,3,9.1,2.8c-0.2-0.1-0.4-0.1-0.6,0L5.6,4.5C5.4,4.6,5.3,4.8,5.3,5c0,0.2,0.1,0.4,0.3,0.5c0.1,0,0.1,0.1,0.1,0.2
+                               c0,0.1,0,0.2-0.1,0.2C5.5,6.1,5.4,6.3,5.4,6.5c0,0.2,0.1,0.4,0.3,0.5l1.5,0.9L6.6,8.1L2.5,5.8l7.1-4.3l4.1,2.4L13.2,4.2z M9.5,11.1
+                               v3.7l-2.2-1.2V9.8L9.5,11.1z M16,13.5l-5-2.9l0.5-0.3l3.3,1.9c0.2,0.1,0.4,0.1,0.6,0c0.3-0.2,0.8-0.3,1.1-0.1
+                               c0.2,0.1,0.4,0.1,0.6,0l2.6-1.9c0.2-0.1,0.2-0.3,0.2-0.5c0-0.2-0.1-0.4-0.3-0.5c-0.1,0-0.1-0.1-0.1-0.2c0-0.1,0-0.2,0.1-0.2
+                               c0.2-0.1,0.2-0.3,0.2-0.5c0-0.2-0.1-0.4-0.3-0.5l-2.1-1.2l0.5-0.3l4.4,2.5L16,13.5z M18.6,9.6L16.7,11c-0.6-0.2-1.2-0.2-1.7,0.1
+                               l-2.4-1.4l3.8-2.3l2.1,1.2C18.4,8.9,18.4,9.3,18.6,9.6z M23,11L16,16l-5.4-3.1v-1.2l5.2,3l0,0h0c0.2,0.1,0.4,0.1,0.6-0.1L23,9.9V11
+                               z M6.2,9.2v1.2L2,8V6.8L6.2,9.2z M6.2,11.7v1.2L2,10.5V9.3L6.2,11.7z M23,13.5l-7,5l-5.4-3.1v-1.2l5.2,3c0.2,0.1,0.4,0.1,0.6,0
+                               l6.6-4.7L23,13.5C23,13.5,23,13.5,23,13.5z" />
+                                    <circle fill="#080C5C" cx="15.8" cy="9.2" r="1" />
+                                    <circle fill="#080C5C" cx="8.8" cy="5.4" r="1" />
+                                </g>
+                            </svg>
+                           USER MANAGMENT</a></li>
+                  
+                            
+                            
+                </ul>
+            </div>
+        </div>  -->
+
+
+        <div class="l-header__main-nav">
+            <div class="menu">
+                <ul class="menu__list">
+                    <li *ngFor="let row of pagedetails ; index as i" class="menu__icon"><a (click)="onClick(i,row)"
+                            [ngClass]="{'active': tab===i}"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="20" viewBox="0 0 24 20">
+                                <g fill="none" fill-rule="evenodd">
+                                    <g fill="#080C5C" fill-rule="nonzero">
+                                        <g>
+                                            <path
+                                                d="M11.733 9.61c-.44 0-.875.114-1.261.333L6.145 5.518c-.289-.276-.739-.268-1.018.018-.28.285-.287.746-.018 1.042L9.436 11c-.57 1.06-.376 2.378.473 3.219.848.841 2.143.998 3.16.382 1.018-.615 1.507-1.85 1.195-3.017-.312-1.166-1.349-1.974-2.53-1.974zm0 3.865c-.453.002-.865-.268-1.053-.69-.188-.422-.116-.917.183-1.265.046-.03.085-.07.115-.117.387-.343.949-.384 1.379-.1.43.283.627.822.483 1.324-.144.503-.595.848-1.107.848zM11.733 7.375c.405 0 .734-.336.734-.75V3.458c0-.415-.329-.75-.734-.75-.405 0-.733.335-.733.75v3.167c0 .414.328.75.733.75zM20.37 11.543h-3.095c-.405 0-.733.335-.733.75 0 .414.328.75.733.75h3.095c.405 0 .733-.336.733-.75 0-.415-.328-.75-.733-.75zM6.192 11.543H3.097c-.405 0-.733.335-.733.75 0 .414.328.75.733.75h3.095c.405 0 .733-.336.733-.75 0-.415-.328-.75-.733-.75zM18.36 5.515c-.286-.292-.75-.292-1.036 0l-2.2 2.25c-.196.187-.277.469-.21.734.066.266.268.474.528.541.26.068.535-.014.718-.215l2.2-2.25c.286-.293.286-.767 0-1.06z"
+                                                transform="translate(-77 -135) translate(77 135)" />
+                                            <path
+                                                d="M11.733.215C5.257.225.01 5.592 0 12.215c-.01 2.634.836 5.196 2.405 7.285.139.186.354.295.582.295H20.48c.228 0 .443-.11.581-.295 1.569-2.088 2.415-4.65 2.406-7.283C23.459 5.593 18.21.225 11.733.215zm8.375 18.07H3.358c-1.236-1.77-1.897-3.892-1.891-6.068C1.467 8.467 3.423 5 6.6 3.124c3.177-1.875 7.09-1.875 10.267 0C20.043 5 22 8.466 22 12.217c.006 2.176-.656 4.298-1.892 6.068z"
+                                                transform="translate(-77 -135) translate(77 135)" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                            {{row.MenuHeaderName}}</a></li>
+
+
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <ng-template #logout let-d="dismiss">
+        <div class="modal-header" style="background: #dee2e6;">
+            <h4 class="modal-title">Are you sure you want to Logout?</h4>
+        </div>
+        <div class="modal-footer" style="background: #dee2e6;">
+          
+
+            <button type="button" class="button button--btn-brdr clr-light-blue"
+                (click)="modal.close('Save click')">Cancel</button>
+            <button type="button" class="button btn-outline-dark" (click)="UserLogout()">Save</button>
+
+
+        </div>
+    </ng-template> -->
+
+
+
+    <ng-template #logout let-modal>
+        <div class="popup-add-roll">
+         
+            <!-- <div class="modal-header" style="background: #dee2e6;">
+                <h4 class="modal-title">Are you sure you want to Logout?</h4>
+            </div>
+            <div class="modal-footer" style="background: #dee2e6;">
+                <button type="button" class="button button--btn-brdr clr-light-blue"
+                    (click)="modal.close('Save click')">No</button>
+                <button type="button" class="button btn-outline-dark"
+                    (click)="savepermission()">Yes</button>
+            </div> -->
+        </div>
+
+
+        <div>
+            <div class="modal-header" style="background: #dee2e6;">
+                <h4 class="modal-title">Confirm</h4>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to Logout?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" 
+                class="btn btn-outline-dark"
+                (click)="modal.close('Save click')">Cancel</button>
+              <button type="button" 
+                class="btn btn-outline-dark"
+                (click)="Logout()">OK</button>
+            </div>
+          </div>
+    </ng-template>
+
+
+
+
+</header>

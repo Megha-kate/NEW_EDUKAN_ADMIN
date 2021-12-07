@@ -1,0 +1,78 @@
+/* .mat-dialog-content {
+  min-height: 122px;
+} */
+
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:100');
+body {
+  background: #333;
+}
+
+/** page **/
+.cssloader {
+  padding-top: calc(10vh - 30px);
+}
+
+/** loader **/
+.sh1 {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 50px 50px 0 0;
+  border-color: #007bff transparent transparent transparent;
+  margin: 0 auto;
+  animation: shk1 1s ease-in-out infinite normal;
+}
+
+.sh2 {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 50px 50px;
+  border-color: transparent  transparent #080c5c transparent ;
+  margin: -50px auto 0;
+  animation: shk2 1s ease-in-out infinite alternate;
+}
+
+/** animation starts here **/
+@keyframes shk1 {
+  0% {
+    transform: rotate(-360deg);
+  }  
+  
+  100% {
+  }
+}
+
+@keyframes shk2 {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+  }
+}
+
+.lt {
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  margin: 30px auto;
+  text-align: center;
+  font-weight: 100;
+  letter-spacing: 10px;
+}
+
+
+
+
+::ng-deep .mat-dialog-container {
+  box-shadow: 0px !important;
+  background:white !important;
+  color: black !important;
+  width: 694px;
+
+}
+
+
+::ng-deep .cdk-overlay-container, .cdk-global-overlay-wrapper {
+  background-color: rgba(0, 0, 0, 0.35);
+}
