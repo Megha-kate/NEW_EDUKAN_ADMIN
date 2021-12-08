@@ -32,6 +32,7 @@ export class FleetOwnerUploadComponent implements OnInit {
   noofrecordsperpage: number;
   totalrecord: any;
   currDiv: string;
+  showRecords: any;
   constructor(private router: Router, private FileUpService: FileUploadService, private Service: CreditServiceService, private loader: AppLoaderService,
     private confirmService: AppConfirmService, private excelService: ExcelServiceService,
     private fb: FormBuilder,
@@ -44,7 +45,9 @@ export class FleetOwnerUploadComponent implements OnInit {
 
   ngOnInit() {
     this.currDiv = "retailer";
-    this.currDiv = "fleet-owner"
+    this.currDiv = "fleet-owner";
+    this.showRecords=10;
+
     this.selectedIndexL = 0;
     this.Type = 'RT'
     this.currentPage = 1
@@ -69,7 +72,7 @@ export class FleetOwnerUploadComponent implements OnInit {
     })
   }
 
-
+  
 
 
   Type: any
@@ -85,9 +88,8 @@ export class FleetOwnerUploadComponent implements OnInit {
 
   }
 
-
   tab: any = 1;
-  onClicks(check) {
+  onClick1(check) {
     this.tab = check
     this.currentPage = 1
     // this.isThirtyDays = false;
@@ -97,10 +99,7 @@ export class FleetOwnerUploadComponent implements OnInit {
     // this.ShowCustom = false;
     //this.Filterarray = [];
     if (this.tab == 1) {
-      // this.isThirtyDays = false;
-      // this.isToday = false;
-      // this.iscustomDate = false;
-      // this.isLastsevenDay = false;
+    
       this.currDiv = "retailer"
 
       const ListInput: InputData1 = {} as InputData1;
@@ -114,12 +113,12 @@ export class FleetOwnerUploadComponent implements OnInit {
       ListInput.account_id = "";
       ListInput.distributor_code = "";
       // ListInput.size = 10;
-    
+      
       this.getList(ListInput);
     }
 
     if (this.tab == 2) {
-     
+    
       this.currDiv = "fleet-owner"
 
       const ListInput: InputData1 = {} as InputData1;
@@ -137,6 +136,7 @@ export class FleetOwnerUploadComponent implements OnInit {
       this.getList(ListInput);
     }
   }
+
 
   setPage(pageInfo) {
 
@@ -178,6 +178,7 @@ export class FleetOwnerUploadComponent implements OnInit {
 
     fileUpload.click();
   }
+ 
 
 
 
@@ -198,6 +199,7 @@ export class FleetOwnerUploadComponent implements OnInit {
           // this.page.totalElements = data.rangeInfo.total_row;
           this.itemsFleetOwner = this.temp = data.data;
           this.totalrecord = data.rangeInfo.total_row;
+          this.showRecords=data.data.length
         }
         else {
           // this.page.totalElements
@@ -375,23 +377,60 @@ export class FleetOwnerUploadComponent implements OnInit {
     this.isActiveTab = tabName;
 
   }
+ 
   pageChange(page: any) {
-
+    debugger;
     document.body.scrollTop = 0;
     this.currentPage = page;
     page = page - 1;
 
-    const ListInput: Input = {} as Input;
-    ListInput.offset = (page * 10);
+    if (this.tab == 1) {
+      this.currDiv = "retailer"
 
-    ListInput.account_type = this.Type
-    this.getList(ListInput);
+      const ListInput: InputData1 = {} as InputData1;
 
-  }
+      // if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
+
+      // if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
+
+      // if (this.distributor_id) { ListInput.distributor_code = this.distributor_id; } else { ListInput.distributor_code = ""; }
+
+      // if (this.account_id) { ListInput.account_id = this.account_id; } else { ListInput.account_id = ""; }
+
+
+      ListInput.offset = page;
+      ListInput.size = this.noofrecordsperpage
+      ListInput.account_type = "RT"
+
+      this.getList(ListInput);
+
+    }
+
+    if (this.tab == 2) {
+      this.currDiv = "fleet-owner"
+
+      const ListInput: InputData1 = {} as InputData1;
+
+      // if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
+
+      // if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
+
+      // if (this.distributor_id) { ListInput.distributor_code = this.distributor_id; } else { ListInput.distributor_code = ""; }
+
+      // if (this.account_id) { ListInput.account_id = this.account_id; } else { ListInput.account_id = ""; }
+
+      ListInput.offset = page;
+      ListInput.size = this.noofrecordsperpage
+      ListInput.account_type = "FO"
+
+      this.getList(ListInput);
+    }
+
+  
   //pleae
 
 }
-
+}
 
 export class Input {
   offset: number;

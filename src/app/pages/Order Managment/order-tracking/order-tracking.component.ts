@@ -48,6 +48,7 @@ export class OrderTrackingComponent implements OnInit {
   isLastsevenDay: boolean;
   isToday: boolean;
   isInvoicedate: boolean;
+  isAll:boolean
   invoice_from_date: string;
   invoice_to_date: string;
   isTrackingdate: any;

@@ -61,11 +61,235 @@
 
             <!-- </mat-tab> -->
         </div>
+        <ul class="l-page-nav__list--icon" *ngIf="isActiveTab == 'mapping'">
+            <li class="l-page-nav__list--icon-item"><a (click)="onClick1(1)" [ngClass]="{'active': tab===1}">
+                    <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 26">
+                            <g fill="none" fill-rule="evenodd">
+                                <g fill="#d9dadf" fill-rule="nonzero">
+                                    <g>
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M12.186 0L24 5.93v13.34L12.052 25.2 0 19.27V5.93L12.186 0zM1.5 8.218v10.135L12 23.518V12.66l-.006.004L1.5 8.218zm21-.001l-9 3.81V22.82l9-4.465V8.216zM6.748 4.297L1.702 6.754l10.293 4.298 4.437-1.851-9.683-4.904zm5.427-2.64L8.42 3.485l9.76 4.987 4.137-1.726-10.14-5.089z"
+                                                    transform="translate(-43 -279) translate(29 265) translate(14 6) translate(0 8)" />
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </i>
+                    <div class="txt">
+                     <span>Retailer</span></div>
+                </a></li>
+            <li class="l-page-nav__list--icon-item"><a (click)="onClick1(2)" [ngClass]="{'active': tab===2}">
+                    <i><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32"
+                            height="34" viewBox="0 0 32 34">
+                            <defs>
+                                <path id="gyln81heya"
+                                    d="M16 .5c8.837 0 16 7.163 16 16s-7.163 16-16 16-16-7.163-16-16S7.163.5 16 .5zm0 1.6C8.047 2.1 1.6 8.547 1.6 16.5S8.047 30.9 16 30.9s14.4-6.447 14.4-14.4S23.953 2.1 16 2.1z" />
+                            </defs>
+                            <g fill="none" fill-rule="evenodd">
+                                <g>
+                                    <g>
+                                        <g>
+                                            <g transform="translate(-193 -275) translate(193 274) translate(0 1.5)">
+                                                <mask id="ff6a77pzhb" fill="#fff">
+                                                    <use xlink:href="#gyln81heya" />
+                                                </mask>
+                                                <use fill="#D4D5DB" xlink:href="#gyln81heya" />
+                                                <path fill="#FFA518" stroke="#FFF" stroke-width="3"
+                                                    d="M15 17.5L25.138 0.5 15 -2.5z" mask="url(#ff6a77pzhb)" />
+                                            </g>
+                                            <path fill="#FFA518" d="M16.75 21.75v2h-1.5v-2h1.5zm0-11.75v10h-1.5V10h1.5z"
+                                                transform="translate(-193 -275) translate(193 274) translate(0 1.5)" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </i>
+                    <div class="txt">
+                         <span>Fleet Owner</span></div>
+                </a></li>
+        </ul>
         <div class="l-content w-100 pl-0" *ngIf="isActiveTab == 'mapping'">
+         
             <!-- ===================================================
                 # Edukan_Admin_Scheme_8
             =================================================== -->
-            <div class="tbl-reports card-shadow bg-white h-100">
+
+
+
+
+            
+        <div *ngIf="currDiv === 'retailer'">
+            <div class="tags d-flex justify-content-end mb-4">
+               <ul class="tags__list"  fxFlex="70" style="margin-right: 20px; ">
+                <li *ngFor="let Filterrow of Filterarray"><a >{{Filterrow.Value}} <img (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key == 'from_date'"
+                    src="./assets/images/tag-close.svg" /></a></li>
+               </ul>
+           </div>
+           <div class="tbl-reports card-shadow bg-white h-100" >
+            <div class="l-tbl-accordion overflow-auto">
+                <div class="w-100 border-0 p-3">
+                    <div class="table-responsive">
+                        <table class="l-tbl">
+                            <tr class="main-tr">
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center"> <span>Account ID</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center"> <span>Name </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center"> <span>Phone Number</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center"> <span>City </span> </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center "> <span>District </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center "> <span>State</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <ng-container *ngIf="itemsFleetOwner.length >0">
+
+                                <tr class="click-tr" *ngFor="let row of itemsFleetOwner">
+                                    <td>
+                                        <div class="td-wrapp">{{row?.account_data.account_id}}</div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">{{row?.account_data.name}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            {{row?.account_data.phone_number}}</div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-start flex-column">
+                                            {{row?.account_data.city}}</div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-start flex-column">
+                                            {{row?.account_data.district}}</div>
+                                    </td>
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-start flex-column">
+                                            {{row?.account_data.state}} </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                            <!-- <ng-container *ngIf="itemsFleetOwner.length >0">
+                                <tr>
+                                    No Data Found
+                                </tr>
+                            </ng-container> -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="paging" style="margin-bottom: 40px;margin-top: 20px;">
+                <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
+                    [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)" [showrecords]="showRecords"></app-pagination>
+            </div>
+        </div> 
+       </div>
+
+
+
+
+
+       <div *ngIf="currDiv === 'fleet-owner'">
+        <div class="tags d-flex justify-content-end mb-4">
+           <ul class="tags__list"  fxFlex="70" style="margin-right: 20px; padding-top: inherit;">
+            <li *ngFor="let Filterrow of Filterarray"><a >{{Filterrow.Value}} <img (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key == 'from_date'"
+                src="../../assets/images/tag-close.svg" /></a></li>
+           </ul>
+       </div>
+
+       <div class="tbl-reports card-shadow bg-white h-100" >
+        <div class="l-tbl-accordion overflow-auto">
+            <div class="w-100 border-0 p-3">
+                <div class="table-responsive">
+                    <table class="l-tbl">
+                        <tr class="main-tr">
+                            <td>
+                                <div class="td-wrapp d-flex align-items-center"> <span>Account ID</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="td-wrapp d-flex align-items-center"> <span>Name </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="td-wrapp d-flex align-items-center"> <span>Phone Number</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="td-wrapp d-flex align-items-center"> <span>City </span> </div>
+                            </td>
+                            <td>
+                                <div class="td-wrapp d-flex align-items-center "> <span>District </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="td-wrapp d-flex align-items-center "> <span>State</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <ng-container *ngIf="itemsFleetOwner.length >0">
+
+                            <tr class="click-tr" *ngFor="let row of itemsFleetOwner">
+                                <td>
+                                    <div class="td-wrapp">{{row?.account_data.account_id}}</div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">{{row?.account_data.name}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-center">
+                                        {{row?.account_data.phone_number}}</div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-start flex-column">
+                                        {{row?.account_data.city}}</div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-start flex-column">
+                                        {{row?.account_data.district}}</div>
+                                </td>
+                                <td>
+                                    <div class="td-wrapp d-flex align-items-start flex-column">
+                                        {{row?.account_data.state}} </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <!-- <ng-container *ngIf="itemsFleetOwner.length >0">
+                            <tr>
+                                No Data Found
+                            </tr>
+                        </ng-container> -->
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="paging" style="margin-bottom: 40px;margin-top: 20px;">
+            <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
+                [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)" [showrecords]="showRecords"></app-pagination>
+        </div>
+    </div> 
+   </div>
+            <!-- <div class="tbl-reports card-shadow bg-white h-100" >
                 <div class="l-tbl-accordion overflow-auto">
                     <div class="w-100 border-0 p-3">
                         <div class="table-responsive">
@@ -132,37 +356,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="paging">
-            <!-- <div class="row">
-                <div class="col-4">
-                    <div class="info">Showing 9/100 results</div>
-                </div>
-                <div class="col-4 d-flex justify-content-center">
-                    <ul class="paging__list">
-                        <li class="paging__item prev"><a href="#"> <span class="material-icons"> chevron_left </span>
-                                Prev</a></li>
-                        <li class="paging__item"><a href="#">1</a></li>
-                        <li class="paging__item"><a href="#" class="active">2</a></li>
-                        <li class="paging__item"><a href="#">3</a></li>
-                        <li class="paging__item next"><a href="#">Next <span class="material-icons"> chevron_right
-                                </span></a></li>
-                    </ul>
-                </div>
-                <div class="col-4">
-                    <div class="l-page-nav__dd float-right">
-                        <label>Items per page</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>9</option>
-                            <option value="1">8</option>
-                            <option value="2">7</option>
-                        </select>
-                    </div>
-                </div>
             </div> -->
+        </div>
+        <!-- <div class="paging">
+           
             <app-pagination [activePage]="currentPage" [totalRecords]="totalrecord" *ngIf="totalrecord>10"
                 [recordsPerPage]="noofrecordsperpage" (onPageChange)="pageChange($event)"></app-pagination>
-        </div>
+        </div> -->
     </div>
 </section>

@@ -393,9 +393,9 @@ export class PartMasterComponent implements OnInit {
    
   
 
-   if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
+  //  if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
 
-    if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
+  //   if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
 
 
 
@@ -566,7 +566,8 @@ export class PartMasterComponent implements OnInit {
     
 
     this.AllFilters.value.Size = 10;
-
+    this.AllFilters.value.to_date = this.to_date;
+    this.AllFilters.value.from_date = this.from_date;
     const ListInput: ListInput = {} as ListInput;
     
     this.part_number = this.AllFilters.value.part_number;
@@ -585,8 +586,7 @@ export class PartMasterComponent implements OnInit {
     this.order_flag_status=this.AllFilters.value.order_flag_status
     this.pg_line=this.AllFilters.value.pg_line
 
-    this.AllFilters.value.to_date = this.to_date;
-    this.AllFilters.value.from_date = this.from_date
+
 
 
 

@@ -32,16 +32,16 @@ export class UserRegistrationComponent implements OnInit {
   RoleType: any[] | undefined;
   Position: any[] | undefined;
 
-  public itemForm=new FormGroup ({
-    first_name:new FormControl('',Validators.required)
+  public itemForm = new FormGroup({
+    first_name: new FormControl('', Validators.required)
 
   });
   usenmaeLable: any = "User Name"
 
 
- 
+
   public AllFilters = new FormGroup({});
-  
+
   isDisabled: boolean;
   EmailHide: boolean = false
 
@@ -65,8 +65,8 @@ export class UserRegistrationComponent implements OnInit {
   distributor_id: string;
   distributor_name: string;
   // AllFilters: FormGroup;
-  //showlocationtype: string = "Div";
-  showlocationtype: string ;
+  showlocationtype: string = "Dis";
+ // showlocationtype: string;
   DistributorList: FormGroup;
   DivisionList: FormGroup;
   TempDistributor: any[];
@@ -139,7 +139,7 @@ export class UserRegistrationComponent implements OnInit {
   CustText: string;
   // prepareData: any;
 
-  invalid:any
+  invalid: any
   selectedDisArray: any;
   constructor(private UserService: UserManagmentServiceService, private modalService: NgbModal,
     private fb: FormBuilder, private CommonService: CommonService, private fb1: FormBuilder,
@@ -159,7 +159,7 @@ export class UserRegistrationComponent implements OnInit {
     });
   }
 
-  get firstname(){return this.itemForm.get('first_name')}
+  get firstname() { return this.itemForm.get('first_name') }
   ngOnInit(): void {
 
 
@@ -179,14 +179,14 @@ export class UserRegistrationComponent implements OnInit {
     this.DivisionList = new FormGroup({
       div_name: new FormControl()
     });
-    
+
 
 
     this.GeoDiv = true
     this.showiscontrator = "No"
     this.currentPage = 1
-   // this.totalrecord =0
-  
+    // this.totalrecord =0
+
     var RoleName = this.CommonService.getRole();
     this.Role = RoleName;
     this.isDistDrpDownVisible = true;
@@ -195,20 +195,20 @@ export class UserRegistrationComponent implements OnInit {
     }
     this.RoleName = this.CommonService.getRole();
     this.DistCode = this.CommonService.GetDistributorCode()
-  
+
     const data: InputData = {} as InputData;
 
     data.size = 5;
     data.org_search_text = "";
 
-    
+
     const ListInput: ListInput = {} as ListInput;
 
-    ListInput.offset = 0
+    ListInput.offset = 1
     ListInput.size = this.noofrecordsperpage
     this.GetList(ListInput);
     this.GetRole();
-      
+
     this.BuildForm()
     this.buildItemForm('')
 
@@ -230,19 +230,19 @@ export class UserRegistrationComponent implements OnInit {
       role_id: [''],
       positionname: [''],
       Rolename: [''],
-      organsization_name:[]
+      organsization_name: []
 
 
     });
   }
   Editpopup(content1: any, row: any) {
 
-    
 
-    
+
+
 
     this.GetRole()
-    
+
     let ngbModalOptions: NgbModalOptions = {
       backdrop: false,
       keyboard: false,
@@ -266,7 +266,7 @@ export class UserRegistrationComponent implements OnInit {
 
     this.btnupdate = true;
     this.buildItemForm(row)
-//this.buildItemForm.reset()
+    //this.buildItemForm.reset()
     let ngbModalOptions: NgbModalOptions = {
       backdrop: false,
       keyboard: false,
@@ -281,14 +281,60 @@ export class UserRegistrationComponent implements OnInit {
     //this.modalService.dismissAll();
 
   }
+  // GetList(ListInput: any) {
+
+
+  //   this.items=[];
+  //   this.items = [];
+
+
+  //   this.totalrecord = 0;
+  //   this.UserService.RegistrationList(ListInput).subscribe(
+
+  //     data => {
+
+
+
+  //       if (data.success == true) {
+
+  //         this.items = data.data;
+
+  //         this.totalrecord = data.rangeInfo.total_row;
+  //         this.showRecords = data.data.length
+  //         this.loader.close()
+
+
+  //       }
+
+
+
+  //       else {
+  //         this.totalrecord = 0;
+  //           this.items = [];
+  //          this.temp = [];
+  //         this.loader.close()
+
+
+
+  //       }
+  //     }, (err) => {
+
+  //     }
+
+  //   );
+
+
+
+
+  // }
   GetList(ListInput: any) {
 
+    // this.FilterStrings(ListInput)
 
-     // this.items=[];
-     //this.items = [];
+    // this.loader.open();
 
 
-     this.totalrecord =0;
+
     this.UserService.RegistrationList(ListInput).subscribe(
 
       data => {
@@ -297,25 +343,20 @@ export class UserRegistrationComponent implements OnInit {
 
         if (data.success == true) {
           
-        this.items = data.data;
-
+          this.items = data.data;
           this.totalrecord = data.rangeInfo.total_row;
           this.showRecords = data.data.length
-         this.loader.close()
-          
-       
+         // this.loader.close()
+
         }
 
 
 
         else {
-          this.totalrecord = 0;
-        //  this.items = [];
-          //this.temp = [];
-          this.loader.close()
+
+          //  this.loader.close()
 
 
-      
         }
       }, (err) => {
 
@@ -336,12 +377,12 @@ export class UserRegistrationComponent implements OnInit {
   }
   saveuserdata() {
     this.nextStep();
-    
+
   }
   nextStep() {
 
-    
-   
+
+
     if (this.itemForm.valid) {
       this.isRegistrationForm = false
     }
@@ -356,11 +397,11 @@ export class UserRegistrationComponent implements OnInit {
       var validemail = this.isValidMail(this.itemForm.value.username)
 
 
-      if (validemail == false) {
-        this.Valdationmessage = "In Case of Contractor registration , Username must be same as  email-id (xxx@tatamotors.com) "
-        return false
+      // if (validemail == false) {
+      //   this.Valdationmessage = "In Case of Contractor registration , Username must be same as  email-id (xxx@tatamotors.com) "
+      //   return false
 
-      }
+      // }
 
 
     }
@@ -384,7 +425,7 @@ export class UserRegistrationComponent implements OnInit {
     }
     else {
       this.Valdationmessage = ""
-     
+
     }
   }
   closeModal() {
@@ -399,7 +440,7 @@ export class UserRegistrationComponent implements OnInit {
 
     }
 
-    
+
     this.router.navigate(['pages/UserRegistrationList']);
   }
   numberOnly(event): boolean {
@@ -419,7 +460,7 @@ export class UserRegistrationComponent implements OnInit {
 
     }
 
-    
+
 
     this.router.navigate(['pages/UserRegistrationList']);
   }
@@ -508,14 +549,14 @@ export class UserRegistrationComponent implements OnInit {
 
     this.prepareData(this.itemForm.value, Divvsion, Distributors1)
     this.isRegistrationForm = true
-        
-    
+
+
 
   }
 
   prepareData(Event, Divvsion, Distributors1) {
-  
-  
+
+
     this.Finaldata = [];
 
     var divi = Divvsion[0];
@@ -558,7 +599,7 @@ export class UserRegistrationComponent implements OnInit {
         this.Finaldata.push(ListInput)
       }
       this.isRegistrationForm = true
-        
+
 
 
     }
@@ -622,8 +663,8 @@ export class UserRegistrationComponent implements OnInit {
         debugger;
         if (data.success == true) {
 
-          this.isRegistrationForm = true
-        
+        //  this.isRegistrationForm = true
+
 
           Swal.fire({
             title: 'Member Added!',
@@ -641,14 +682,15 @@ export class UserRegistrationComponent implements OnInit {
               this.content1.close();
               const ListInput: ListInput = {} as ListInput;
 
-         
+              ListInput.offset = 0
+              ListInput.size = this.noofrecordsperpage
               this.GetList(ListInput);
-              //this.content.nativeElement.click();
 
               this.router.navigate(['pages/UserRegistrationList']);
             }
             else {
-              this.router.navigate(['pages/UserRegistrationList']);            }
+              this.router.navigate(['pages/UserRegistrationList']);
+            }
           })
 
 
@@ -669,6 +711,11 @@ export class UserRegistrationComponent implements OnInit {
             cancelButtonColor: '#d33',
             confirmButtonText: 'OK'
           }).then((result) => {
+            const ListInput: ListInput = {} as ListInput;
+
+            ListInput.offset = 0
+            ListInput.size = this.noofrecordsperpage
+            this.GetList(ListInput);
 
           })
           // Swal.fire(data.error.data.msg)
@@ -678,7 +725,7 @@ export class UserRegistrationComponent implements OnInit {
       }, (err) => {
 
 
-        debugger;
+     
 
 
       }
@@ -686,9 +733,9 @@ export class UserRegistrationComponent implements OnInit {
     );
 
 
-   // this.myDrop.close();
+    // this.myDrop.close();
 
-   this.modalService.dismissAll();
+    this.modalService.dismissAll();
 
 
 
@@ -700,13 +747,13 @@ export class UserRegistrationComponent implements OnInit {
 
       this.showiscontrator = "Yes"
 
-     // this.usenmaeLable = "User Name(Email-id)"
+      // this.usenmaeLable = "User Name(Email-id)"
       //this.EmailHide = true;
 
     }
     else {
       this.showiscontrator = "No"
-    // this.EmailHide = false;
+      // this.EmailHide = false;
       //this.usenmaeLable = "User Name"
     }
 
@@ -716,7 +763,7 @@ export class UserRegistrationComponent implements OnInit {
   closeResult = '';
   open(content: any) {
 
-     this.itemForm?.reset()
+    this.itemForm?.reset()
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       // console.log('controls open function  ==  ', this.itemForm.controls)
@@ -734,7 +781,7 @@ export class UserRegistrationComponent implements OnInit {
     }
   }
   handleChange() {
-   
+
   }
 
   pageChange(page: any) {
@@ -875,8 +922,8 @@ export class UserRegistrationComponent implements OnInit {
     }
 
 
-    ListInput.offset=0
-    ListInput.size=10;
+    ListInput.offset = (page * 10);
+    //    ListInput.size = 10;
     this.GetList(ListInput);
     this.loader.close();
 
@@ -908,9 +955,9 @@ export class UserRegistrationComponent implements OnInit {
   }
   SearchAllDate() {
     debugger;
-  //  this.tableOffset = 0
+    //  this.tableOffset = 0
     const ListInput: ListInput = {} as ListInput;
-     this.currentPage = 1
+    this.currentPage = 1
 
     // this.account_type = this.AllFilters.value.account_type;
     this.status = this.AllFilters.value.status;
@@ -1032,16 +1079,17 @@ export class UserRegistrationComponent implements OnInit {
       ListInput.status = "";
     }
 
-    this.AllFilters.get('positionname').setValue(this.PositioNname);
-    this.AllFilters.get('Rolename').setValue(this.RoleName);
+    // this.AllFilters.get('positionname').setValue(this.PositioNname);
+    //this.AllFilters.get('Rolename').setValue(this.RoleName);
 
     //ListInput.offset = (page *10)
-   // ListInput.size = this.noofrecordsperpage
+    // ListInput.size = this.noofrecordsperpage
+    ListInput.offset = 0
 
     this.GetList(ListInput);
-    //this.loader.close();
+
     this.myDrop.close();
-    //this.resetALl();
+
 
 
   }
@@ -1127,11 +1175,11 @@ export class UserRegistrationComponent implements OnInit {
     this.DivisionList.reset();
     this.BuildForm();
     this.buildItemForm('')
-     this.currentPage = 1,
-     this.account_type = "",
+    this.currentPage = 1,
+      this.account_type = "",
       this.status = " ",
       this.role_name = ""
-      this.user_name = "",
+    this.user_name = "",
       this.contact_no = "",
       this.email_id = "",
       this.first_name = "",
@@ -1141,9 +1189,9 @@ export class UserRegistrationComponent implements OnInit {
       this.position_id = "",
       this.role_id = "",
       this.GetRole();
-     this.GetPosition('');
+    this.GetPosition('');
     this.GetList('')
-  
+
 
 
 
@@ -1195,10 +1243,10 @@ export class UserRegistrationComponent implements OnInit {
       this.position = "",
       this.position_id = "",
       this.role_id = ""
-      this.role_name="",
+    this.role_name = "",
       this.GetRole();
-     this.GetPosition('')
-     this.myDrop.close();
+    this.GetPosition('')
+    this.myDrop.close();
 
 
   }
@@ -1239,10 +1287,9 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   isValidMail(email) {
-    debugger
-    var mailPattern = /^[a-zA-Z0-9._-]+@tatamotors.com$/;
-    return mailPattern.test(email)
-    
+    // var mailPattern = /^[a-zA-Z0-9._-]+@tatamotors.com$/;
+    // return mailPattern.test(email)
+
   }
 
 
@@ -1268,13 +1315,13 @@ export class UserRegistrationComponent implements OnInit {
   Distributortype() {
     const data1: InputData = {} as InputData;
 
-     data1.size = 5;
+    data1.size = 5;
     data1.org_search_text = this.AllFilters.value.organsization_name;
 
     this.GetDistributor(data1);
   }
 
-  
+
   GetDistributor(Data) {
     // this.AllDataArray = [];
     // this.tempDivisionArray = [];
@@ -1302,8 +1349,8 @@ export class UserRegistrationComponent implements OnInit {
             // this.AllDataArray.push(this.DistributorData[i].distributor_id)
             data.distributor_id = this.DistributorData[i].distributor_id;
             data.div_search_text = "";
-             if (this.showDiv) {
-            this.Getdivision(data, i);
+            if (this.showDiv) {
+              this.Getdivision(data, i);
             }
 
 
@@ -1401,10 +1448,10 @@ export class UserRegistrationComponent implements OnInit {
     }
   }
 
- 
+
 
   onChangeEvent(row, event) {
-    
+
     if (event.target.checked) {
       if (this.showDiv) {
 
@@ -1430,64 +1477,64 @@ export class UserRegistrationComponent implements OnInit {
     }
   }
 
- 
+
   Add() {
 
-   debugger;
+    debugger;
 
     if (this.showDiv) {
-      
+
       this.DivisionList.reset();
       for (let i = 0; i < this.selectedDivisions.length; i++) {
         var data2 = this.selectedDivArray.filter(book => book.div_id === this.selectedDivisions[i].div_id)
         if (data2.length == 0) {
           this.selectedDivArray.push(this.selectedDivisions[i])
         }
-        this.selectedDivisions=[]
+        this.selectedDivisions = []
       }
     }
     if (this.showDist) {
       this.DistributorList.reset();
-      
+
       for (let entry1 of this.selectedDivisions) {
 
         var data2 = this.selectedDivArray.filter(book => book.div_id === entry1.div_id)
         if (data2.length == 0) {
           this.selectedDivArray.push(entry1)
-          this.selectedDivisions=[]
+          this.selectedDivisions = []
         }
-      
+
       }
     }
-    
+
   }
 
 
-//  Add(){
-//   this.DistributorList.reset();
-//   for (let i = 0; i < this.selectedDivisions.length; i++) {
-//     var data2 = this.selectedDivisions.filter(book => book.distributor_id === this.selectedDivisions[i].distributor_id)
-//     console.log('data', data2)
-//     if (data2.length == 0) {
-//       this.selectedDivisions.push(this.selectedDivisions[i])
-//     }
-//   }
+  //  Add(){
+  //   this.DistributorList.reset();
+  //   for (let i = 0; i < this.selectedDivisions.length; i++) {
+  //     var data2 = this.selectedDivisions.filter(book => book.distributor_id === this.selectedDivisions[i].distributor_id)
+  //     console.log('data', data2)
+  //     if (data2.length == 0) {
+  //       this.selectedDivisions.push(this.selectedDivisions[i])
+  //     }
+  //   }
 
-//   console.log(this.selectedDisplayDistributor)
-//   if (this.isDivisionSearch == true) {
-//     this.DivisionList.reset();
-//     for (let k = 0; k < this.selectedDivArray.length; k++) {
-//       var data3 = this.selectedDisplayDivision.filter(book => book.div_id === this.selectedDivArray[k].div_id)
-//       if (data3.length == 0) {
-//         this.selectedDisplayDivision.push(this.selectedDivArray[k])
-//       }
-//     }
-//     this.selectedDivArray = []
-//   }
-//   this.selectedDistrArray = [];
+  //   console.log(this.selectedDisplayDistributor)
+  //   if (this.isDivisionSearch == true) {
+  //     this.DivisionList.reset();
+  //     for (let k = 0; k < this.selectedDivArray.length; k++) {
+  //       var data3 = this.selectedDisplayDivision.filter(book => book.div_id === this.selectedDivArray[k].div_id)
+  //       if (data3.length == 0) {
+  //         this.selectedDisplayDivision.push(this.selectedDivArray[k])
+  //       }
+  //     }
+  //     this.selectedDivArray = []
+  //   }
+  //   this.selectedDistrArray = [];
 
-// }
- 
+  // }
+
   removeDivision(Division: any) {
     debugger;
     // this.selectedDisplayDivision.splice(this.selectedDisplayDivision.findIndex(item => item.display === Division), 1)
@@ -1503,9 +1550,9 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   ChangeType(event) {
-    
-    this.showlocationtype=event.value
-    console.log('event  ', event, this.showlocationtype)
+
+    this.showlocationtype = event.value
+    //console.log('event  ', event, this.showlocationtype)
 
     this.selectedDivArray = []
     const data: InputData = {} as InputData;
@@ -1526,7 +1573,7 @@ export class UserRegistrationComponent implements OnInit {
 
   }
   changeSearch(row, event) {
-    
+
     if (row == 'Dis') {
       this.confirmService.confirm({ title: this.CustTitle, message: this.CustText })
 
@@ -1592,7 +1639,7 @@ export class UserRegistrationComponent implements OnInit {
     return verifyKeyPressed === true;
   }
 
- 
+
 
   back() {
     this.isRegistrationForm = true;

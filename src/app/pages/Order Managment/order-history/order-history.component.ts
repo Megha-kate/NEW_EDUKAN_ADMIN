@@ -175,6 +175,7 @@ export class OrderHistoryComponent implements OnInit {
     this.AllFilters = this.fb.group({
       otc_number: [''],
       status: [''],
+      state_code:[''],
       state: [''],
       district: [''],
       city: [],
@@ -270,11 +271,6 @@ export class OrderHistoryComponent implements OnInit {
       ListInput2.distributor_id = "";
       ListInput2.division_id = "";
       ListInput2.order_number = "";
-      ListInput2.shipping_state = "";
-      ListInput2.shiping_district = "";
-      ListInput2.shipping_taluka = "";
-      ListInput2.shipping_city = "";
-      ListInput2.shipping_pincode = "";
       ListInput2.account_name = "";
       ListInput2.division_name = "";
       ListInput2.organization_name = "";

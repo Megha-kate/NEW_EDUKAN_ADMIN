@@ -403,6 +403,7 @@ export class OrderDetailsComponent implements OnInit {
     closeModal() {
 
         this.modalService.dismissAll();
+        //this.etapopup.dismiss();
     }
 
     etadata: any;

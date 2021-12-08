@@ -143,7 +143,7 @@
                                                 <div class="srch-box">
                                                     <label>Status</label><br />
                                                     <select class="textfield"
-                                                        [formControl]="AllFilters.controls['status']">
+                                                        [formControl]="AllFilters.controls['is_active']">
                                                         <option value="True">Publish</option>
                                                         <option value="False">Un-Publish</option>
                                                     </select>
@@ -420,8 +420,8 @@
                                                 Quantity Wise Discount</label></li>
                                         <li class="sidebar-cards__chk-list-item chkbox text-nowrap"
                                             *ngIf="Role=='Distributor'" style="margin-left: 386px ;margin-top: -34px;">
-                                            <input type="checkbox" id="mm" [checked]="isCashDiscount"
-                                                (change)="searchDiscountType('cashdiscount',$event)"><label for="mm">
+                                            <input type="checkbox" id="m" [checked]="isCashDiscount"
+                                                (change)="searchDiscountType('cashdiscount',$event)"><label for="m">
                                                 cash Discount</label>
                                         </li>
                                     </ul>
@@ -1292,13 +1292,13 @@
                                         {{SKUPartQty.length}}  products selected</h5> 
 
                                     </div>
-                                    <div *ngIf="isPartWise==true">
+                                    <!-- <div *ngIf="isPartWise==true">
                                         <h5 class="text-right note" *ngIf="selectedPGLineArray.length>0"style="padding-right:16px ;">
                                             {{SKUPartQty.length}} part selected</h5> 
                                     <h5 class="text-right note" *ngIf="selectedPGLineArray.length == 0" style="padding-right:16px ;">
                                             {{SKUPartQty.length}}  products selected</h5> 
     
-                                        </div>
+                                        </div> -->
                             </div>
                             <div class="modal-footer" style="margin-top: 20px;">
                                 <button type="button" class="button button--btn-brdr clr-light-blue"
@@ -1640,7 +1640,7 @@
                                                     <input type="text"
                                                         [formControl]="AllFilters.controls['division_name']"
                                                         (keyup)="Divisiontype()"
-                                                        placeholder="Search by productline, part name, part number…"
+                                                        placeholder="Search by Division…"
                                                         class="textfield">
                                                     <div class="btn-filter"> </div>
                                                 </div>
@@ -1648,7 +1648,7 @@
                                                     <form [formGroup]="DivisionList">
                                                         <li class="scheme-drags__product-selection-products-nav-list-item ttl"
                                                             *ngFor="let divi of Division ; let i=index;">
-                                                            <label for="divi_{{j}}"><input type="checkbox" id=divi_{{j}}
+                                                            <label for="divi_{{i}}"><input type="checkbox" id=divi_{{j}}
                                                                     (change)="SelectedDivision(divi,$event)"
                                                                     [formControl]="DivisionList1.controls[divi.div_id]">{{divi.div_name}}</label>
                                                         </li>

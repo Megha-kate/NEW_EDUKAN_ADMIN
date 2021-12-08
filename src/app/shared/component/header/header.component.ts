@@ -78,7 +78,8 @@ export class HeaderComponent implements OnInit {
 
   }
   logo(){
-    //this.router.navigate(['pages/Dashboard']);
+     this.router.navigate(['pages/Dashboard']);
+     this.tab=0;
   }
 
   Logout()

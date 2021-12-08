@@ -240,8 +240,8 @@ export class AdminRolemasterComponent implements OnInit {
   }
 
   GetList(input: any) {
-   // this.items = [];
-     //console.log(this.items,"array")
+    this.items = [];
+     console.log(this.items,"array")
     // this.loader.open();
      this.totalrecord=0;
 
@@ -436,20 +436,18 @@ export class AdminRolemasterComponent implements OnInit {
 
 
 
+ 
   save() {
 
-    debugger;
+
     if (this.exampleForm?.invalid) {
       return;
     }
 
     const Final: Updateinfo = {} as Updateinfo;
-   Final.role_id = this.exampleForm?.value.role_id;
-    //Final.role_name = this.exampleForm!.value.role_name;
-
-   Final.position_id = "";
-  Final.position_name = this.exampleForm?.value.position_name;
-  
+    Final.role_id = this.exampleForm?.value.role_id;
+    Final.position_id = "";
+    Final.position_name = this.exampleForm?.value.position_name;
     Final.status = "insert";
 
     this.insertupdatePosition(Final);
@@ -567,11 +565,10 @@ export class AdminRolemasterComponent implements OnInit {
 
 
         else {
-          //alert(data.data.msg);
-        Swal.fire("Data save Successfully");
+          Swal.fire(data.data.msg);
         }
       }, (err: any) => {
-        alert('Exception Occured!');
+        Swal.fire('Exception Occured!');
 
       }
 

@@ -318,7 +318,7 @@
             <ul class="tags__list" style="margin-right: 170px;">
                 <li *ngFor="let Filterrow of Filterarray"><a
                         style="cursor: default;">{{Filterrow.Value}} <img
-                            (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key == 'from_date'"
+                            (click)="onRemoveFilter(Filterrow)"
                             src="./assets/images/tag-close.svg" /></a></li>
             </ul>
 
@@ -421,7 +421,7 @@
 
             <div>
                 <div class="l-content w-100 pl-0">
-                    <div class="tbl-reports card-shadow bg-white h-100">
+                    <div class="tbl-reports card-shadow bg-white h-100" style="margin-top: -33px;">
                         <div class="l-tbl-accordion overflow-auto">
                             <div class="w-100 border-0 p-3">
                                 <div class="table-responsive">
@@ -657,7 +657,7 @@
 
                                                     </div>
                                                 </td>
-                                                <td class="text-nowrap">
+                                                <td class="text-nowrap" style="text-transform: capitalize;">
                                                     <div class="td-wrapp">{{ row?.column_5 }}
 
 

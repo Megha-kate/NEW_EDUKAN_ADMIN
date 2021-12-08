@@ -117,6 +117,9 @@ export class DiscountMasterComponent implements OnInit {
   isCashDiscount: any;
   FileUploadService: any;
   DocumentFile: any;
+  is_active: any;
+  ismin_percentage: boolean;
+  min_percentage: boolean;
 
   constructor(private modalService: NgbModal,
     private OrderListService: OrderserviceService,
@@ -1373,31 +1376,33 @@ export class DiscountMasterComponent implements OnInit {
 
 
     if (this.tabchange == 1) {
+    //   if(this.min_percentage==true)
+    // if (this.AllFilters.value.min_percentage == null || this.AllFilters.value.min_percentage == "" && this.AllFilters.value.min_percentage !== null) {
+    //    Swal.fire('Select Min percentage');
+    //     const ListInput: ListInput = {} as ListInput;
 
+    //     ListInput.min_percentage = ""
+    //     ListInput.offset = 0;
+      
+    //     ListInput.owner = 'TML';
+    //     this.GetList(ListInput)
+    //     this.loader.close()
+    //     return
+    //   }
+    //   else if (this.AllFilters.value.min_percentage !== null && this.AllFilters.value.max_percentage == null || this.AllFilters.value.max_percentage == "") {
+    //     Swal.fire('Select Max percentage');
+    //     const ListInput: ListInput = {} as ListInput;
 
-
-
-
-
-      if (this.AllFilters.value.min_percentage == null || this.AllFilters.value.min_percentage == "" && this.AllFilters.value.min_percentage !== null) {
-        Swal.fire('Select Min percentage');
-        const ListInput: ListInput = {} as ListInput;
-
-        ListInput.min_percentage = ""
-        this.GetList(ListInput)
-        this.loader.close()
-        return
-      }
-      else if (this.AllFilters.value.min_percentage !== null && this.AllFilters.value.max_percentage == null || this.AllFilters.value.max_percentage == "") {
-        Swal.fire('Select Max percentage');
-        const ListInput: ListInput = {} as ListInput;
-
-        ListInput.max_percentage = ""
-
-        this.GetList(ListInput)
-        this.loader.close()
-        return
-      }
+    //     ListInput.max_percentage = ""
+    //     ListInput.offset = 0;
+     
+    //     ListInput.owner = 'TML';
+    //     this.GetList(ListInput)
+    //     this.loader.close()
+    //     return
+    //   }
+    
+  
       if (this.iscustomDate == true) {
 
         if (this.AllFilters.value.from_date == null || this.AllFilters.value.from_date == "" && this.AllFilters.value.to_date !== null) {
@@ -1471,7 +1476,7 @@ export class DiscountMasterComponent implements OnInit {
       this.creatdBy = this.AllFilters.value.created_by;
       this.minPercentage = this.AllFilters.value.min_percentage;
       this.maxPercentage = this.AllFilters.value.max_percentage;
-      this.status = this.AllFilters.value.status;
+      this.is_active = this.AllFilters.value.is_active;
 
       const ListInput2: ListInput = {} as ListInput;
 
@@ -1489,8 +1494,13 @@ export class DiscountMasterComponent implements OnInit {
 
       if (this.maxPercentage) { ListInput2.max_percentage = this.maxPercentage; } else { ListInput2.max_percentage = ""; }
 
-      if (this.status) { ListInput2.is_active = this.status; } else { ListInput2.is_active = ""; }
-      console.log(this.status);
+      
+    if (this.is_active) {
+      ListInput2.is_active = this.is_active;
+    } else {
+      ListInput2.is_active = "";
+    }
+     // console.log(this.status);
 
       ListInput2.offset = 0;
       ListInput2.size = this.noofrecordsperpage;
@@ -1506,25 +1516,31 @@ export class DiscountMasterComponent implements OnInit {
 
 
 
-      if (this.AllFilters.value.min_percentage == null || this.AllFilters.value.min_percentage == "" && this.AllFilters.value.min_percentage !== null) {
-        Swal.fire('Select Min percentage');
-        const ListInput: ListInput = {} as ListInput;
+      // if (this.AllFilters.value.min_percentage == null || this.AllFilters.value.min_percentage == "" && this.AllFilters.value.min_percentage !== null) {
+      //   Swal.fire('Select Min percentage');
+      //   const ListInput: ListInput = {} as ListInput;
 
-        ListInput.min_percentage = ""
-        this.GetList(ListInput)
-        this.loader.close()
-        return
-      }
-      else if (this.AllFilters.value.min_percentage !== null && this.AllFilters.value.max_percentage == null || this.AllFilters.value.max_percentage == "") {
-        Swal.fire('Select Max percentage');
-        const ListInput: ListInput = {} as ListInput;
+      //   ListInput.min_percentage = ""
+      //   this.isActiveTab = "Distributor";
+    
+      //   ListInput.owner = 'TML';
+      //   ListInput.offset = 0;
+      //   this.GetList(ListInput);
+      //   this.loader.close()
+      //   return
+      // }
+      // else if (this.AllFilters.value.min_percentage !== null && this.AllFilters.value.max_percentage == null || this.AllFilters.value.max_percentage == "") {
+      //   Swal.fire('Select Max percentage');
+      //   const ListInput: ListInput = {} as ListInput;
 
-        ListInput.max_percentage = ""
-
-        this.GetList(ListInput)
-        this.loader.close()
-        return
-      }
+      //   ListInput.max_percentage = ""
+      //   this.isActiveTab = "Distributor";
+     
+      // ListInput.owner = 'DLR';
+      // ListInput.offset = 0;
+      // this.GetList(ListInput);
+      //   return
+      // }
       if (this.iscustomDate == true) {
         // this.from_date = this.AllFilters.value.from_date;
         // this.to_date = this.AllFilters.value.to_date;
@@ -1967,16 +1983,16 @@ export class DiscountMasterComponent implements OnInit {
         this.isBulk = false;
         this.selectedPartArray = [];
         this.selectedSKUDisplay = [];
-        this.productTypeDisplay = [];
-        this.selectedPGLineArray = [];
+        //this.productTypeDisplay = [];
+       // this.selectedPGLineArray = [];
       }
       else {
         this.isBulk = false;
         this.isIndividual = true;
         this.selectedPartArray = [];
-        this.selectedSKUDisplay = [];
-        this.productTypeDisplay = [];
-        this.selectedPGLineArray = [];
+       // this.selectedSKUDisplay = [];
+       // this.productTypeDisplay = [];
+        //this.selectedPGLineArray = [];
       }
     }
     else if (row == 'bulk') {
@@ -4998,6 +5014,7 @@ export class ListInput {
   created_by_name: string;
   discount_name: string
   is_active: string
+  status: string;
 }
 
 export class InputofferDetail {

@@ -351,15 +351,7 @@
 
                                                 <ul class="scheme-drags__product-selection-products-nav-list"
                                                     *ngIf="showDist">
-                                                    <!-- <li class="scheme-drags__product-selection-products-nav-list-item main"
-                                                    *ngFor="let DistLit of DistributorData ; let i=index;">
-                                                        <a href="javascript:void(0)" id="products-nav-click-a" class="products-nav-click"
-                                                            (click)="toggle_vehicle_list(DistLit, 'products-nav-click-a')">
-                                                            <span class="material-icons"> arrow_right </span>
-                                                        </a>
-                                                        <label for="a-m-2">
-                                                            {{DistLit.distributor_name}}
-                                                        </label> -->
+                                                  
                                                     <ul id=y>
                                                         <form [formGroup]="DistributorList">
                                                             <li *ngFor="let DistLit of DistributorData ; let i=index;"
@@ -367,7 +359,7 @@
                                                                 <label for="DistLit_{{j}}">
                                                                     <input type="checkbox"
                                                                         [formControl]="DistributorList.controls[DistLit.distributor_id]"
-                                                                        id="DistLit_{{j}}"
+                                                                        id="DistLit_{{i}}"
                                                                         (change)="onChangeEvent(DistLit,$event)">
                                                                     {{DistLit.distributor_name}}</label>
                                                             </li>

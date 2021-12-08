@@ -2369,7 +2369,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <ng-container *ngIf="row.length >0">
+                                    <ng-container *ngIf="orderrow.length >0">
 
                                         <tr *ngFor="let row of orderrow" class="click-tr">
                                             <td class="text-nowrap">
@@ -2454,7 +2454,7 @@
                                             </td>
                                         </tr>
                                     </ng-container>
-                                    <ng-container *ngIf="items.length == 0">
+                                    <ng-container *ngIf="orderrow.length == 0">
                                         <tr>
                                             No Data Found
 
