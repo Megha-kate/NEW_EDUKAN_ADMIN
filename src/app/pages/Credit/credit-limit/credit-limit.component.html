@@ -4,7 +4,7 @@
     <div class="l-container">
         <div class="search-order-id float-right">
             <span class="material-icons"> search </span>
-            <input type="text" class="textfield" placeholder="Search by account id" (keydown)="SearchAccount($event)" (focusout)="showAccount($event)" [formControl]="AllFilters.controls['account_id_search']" maxlength="8" minlength="8" pattern="[A-Z-0-9]+" >
+            <input type="text" class="textfield" placeholder="Search by Account Id" (keydown)="SearchAccount($event)" (focusout)="showAccount($event)" [formControl]="AllFilters.controls['account_id_search']" maxlength="8" minlength="8" pattern="[A-Z-0-9]+" >
             <div class="btn-filter" ngbDropdown #myDrop="ngbDropdown" >
                 <button class="btn-filter" id="filterPopup" ngbDropdownToggle><img src="./assets/images/filter.svg"
                         alt="" /></button>
@@ -379,7 +379,7 @@
 
                                        <td class="text-nowrap">
                                            <div class="td-wrapp d-flex align-items-center">
-                                               <span>Account  Name</span>
+                                               <span>Customer Name</span>
                                                <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
                                                        alt=""></i> -->
                                            </div>
@@ -540,7 +540,7 @@
 
                                    <td class="text-nowrap">
                                        <div class="td-wrapp d-flex align-items-center">
-                                           <span>Account  Name</span>
+                                           <span>Customer  Name</span>
                                            <!-- <i class="icon-sort ml-1"><img src="../../assets/images/sort.svg"
                                                    alt=""></i> -->
                                        </div>

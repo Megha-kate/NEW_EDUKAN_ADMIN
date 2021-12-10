@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-order-popup',
@@ -8,12 +9,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class OrderPopupComponent implements OnInit {
   @Input() items: any;
   @Output() closemodal = new EventEmitter<any>();
-  constructor() { }
+  constructor(private modalService: NgbModal,) { }
 
   ngOnInit(): void {
   }
-
   closeModal() {
-    this.closemodal.emit();
-}
+    this.modalService.dismissAll();
+  }
 }

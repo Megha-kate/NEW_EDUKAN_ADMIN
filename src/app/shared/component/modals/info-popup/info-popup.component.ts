@@ -84,4 +84,7 @@ export class InfoPopupComponent implements OnInit {
 export class Input1 {
 
   invoice_no: number
+  position_id: string;
+  position_name: string;
+  role_id: string;
 }

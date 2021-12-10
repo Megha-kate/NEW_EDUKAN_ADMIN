@@ -204,8 +204,8 @@ export class UserRegistrationComponent implements OnInit {
 
     const ListInput: ListInput = {} as ListInput;
 
-    ListInput.offset = 1
-    ListInput.size = this.noofrecordsperpage
+    ListInput.offset = 0
+    //ListInput.size = 10;
     this.GetList(ListInput);
     this.GetRole();
 
@@ -714,7 +714,7 @@ export class UserRegistrationComponent implements OnInit {
             const ListInput: ListInput = {} as ListInput;
 
             ListInput.offset = 0
-            ListInput.size = this.noofrecordsperpage
+            //ListInput.size = this.noofrecordsperpage
             this.GetList(ListInput);
 
           })
@@ -793,7 +793,7 @@ export class UserRegistrationComponent implements OnInit {
 
     const ListInput: ListInput = {} as ListInput;
 
-    ListInput.offset = (page * 10);
+    ListInput.offset = (page *1);
 
 
     this.status = this.AllFilters.value.status;
@@ -922,7 +922,7 @@ export class UserRegistrationComponent implements OnInit {
     }
 
 
-    ListInput.offset = (page * 10);
+    //ListInput.offset = (page *10);
     //    ListInput.size = 10;
     this.GetList(ListInput);
     this.loader.close();

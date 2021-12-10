@@ -8,18 +8,17 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <ul class="feedback-order-series">
+                <ul class="feedback-order-series" >
                     <li>
                         <div class="o-title"> EDN PO No</div>
                         <div class="o-desc">{{ items?.po_number}}</div>
-                    </li>&nbsp;&nbsp;
+                       </li>&nbsp;&nbsp;
                     <li>
                         <div class="o-title">Status</div>
                         <div class="o-desc">{{ items?.order_status }}</div>
                     </li>&nbsp;&nbsp;
                     <li>
                         <div class="o-title"> EDN PO Date</div>
-                        <!-- <div class="o-desc">{{ items?.order_date | date :'dd-MM-yyyy'}}</div> -->
                     </li>&nbsp;&nbsp;
                     <li>
                         <div class="o-title"> OTC No </div>
@@ -51,7 +50,7 @@
                             </thead>
                             <tbody>
                                 <ng-container>
-                                    <tr *ngFor="let item of order?.order_line_items; let i = index">
+                                    <tr *ngFor="let item of items?.order_line_items; let i = index">
                                         <td>
                                             <div class="d-inline-flex">
                                                 <img alt="" [src]="item?.part_cover_image"
@@ -75,65 +74,19 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="td-actual-mrp"> <span>{{items?.part_number}}
+                                            <div class="td-actual-mrp"> <span>{{item?.part_number}}
                                                 </span>
                                             </div>
                                         </td>
-                                        <td> {{ items?.part_description }}
+                                        <td> {{ item?.part_description }}
                                         </td>
-                                        <td class="text-end"> {{ row?.request_quanity }}
+                                        <td class="text-end"> {{ item?.request_quanity }}
                                         </td>
-                                        <!-- <a href="SearchDetails()" >View</a></td> -->
-                                       
-    
-    
                                     </tr>
                                 </ng-container>
                              
                                
 
 
-            <!-- </div> -->
-            <!-- </div> -->
-    <!-- <div class="modal-body">
-    <div class="l-content w-100 pl-0">
-    <div class="l-tbl-accordion overflow-auto">
-        <div class="w-100 border-0 p-3">
-            <div class="table-responsive" >
-                <table class="l-tbl">
-                    <tr class="main-tr">
-
-                        <th>EDN PO No</th>
-                        <th>Status</th>
-                        <th>EDN Po Date</th>
-                        <th> OTC No</th>
-                  </tr>
-                  <tr>
-                    <td>
-                        <div class="td-wrapp">
-
-                        </div>
-                    </td>
-                    <td>
-                        <div class="td-wrapp">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="td-wrapp">
-                            
-                        </div>
-                    </td>
-                    <td>
-                        <div class="td-wrapp">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="td-wrapp">
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</div>
-</div> -->
+      
+   

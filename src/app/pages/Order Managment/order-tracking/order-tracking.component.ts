@@ -1753,7 +1753,7 @@ export class OrderTrackingComponent implements OnInit {
       this.List(listinput)
 
     }
-
+    this.myDrop.close();
 
     // for (let item in this.AllFilters.controls) {
 
@@ -1769,7 +1769,7 @@ export class OrderTrackingComponent implements OnInit {
     // this.Filterarray = this.Filterarray.filter(book => book.Key !== 'size');
     // this.Filterarray = this.Filterarray.filter(book => book.Key !== 'order_status_array');
     // this.Filterarray = this.Filterarray.filter(book => book.Key !== 'offset');
-    this.myDrop.close();
+    
 
   }
 
@@ -1988,6 +1988,21 @@ export class OrderTrackingComponent implements OnInit {
     }
 
     else if (this.tab == 5) {
+    //   this.orderDate = false;
+    //   this.trackingDate = true;
+    //   this.invoiceDate = false;
+    //   this.isThirtyDays = true;
+    //   this.currDiv = "out for delivery";
+
+    //   const listinput: InputOther = {} as InputOther;
+    //   listinput.tracking_from_date = this.from_date
+    //   listinput.tracking_to_date = this.to_date
+    //   listinput.invoice_status = "out for delivery";
+    //  listinput.offset = 0;
+    //   listinput.size = this.noofrecordsperpage
+    //   this.List(listinput)
+
+
       this.orderDate = false;
       this.trackingDate = true;
       this.invoiceDate = false;
@@ -2541,7 +2556,6 @@ export class OrderTrackingComponent implements OnInit {
     document.body.scrollTop = 0;
     this.currentPage = page;
     page = page - 1;
-
     if (this.tab == 1) {
       debugger
       if (this.order_from_date == undefined && this.order_to_date == undefined && this.invoice_from_date == undefined && this.invoice_to_date == undefined && this.tracking_from_date == undefined && this.tracking_to_date == undefined) {
@@ -2602,6 +2616,8 @@ export class OrderTrackingComponent implements OnInit {
         if (this.account_name) { AllFilters.account_name = this.account_name; } else { AllFilters.account_name = ""; }
         AllFilters.offset = (page * 10);
         AllFilters.size = this.noofrecordsperpage
+       // AllFilters.size = 10;
+
         AllFilters.divison_id = ""
         AllFilters.invoice_status = this.invoice_status
         AllFilters.order_status_array = ["Confirmed", "Cancelled", "Partially Confirmed"]
@@ -3322,11 +3338,11 @@ export class OrderTrackingComponent implements OnInit {
       ListInput1.tracking_from_date = ""; //this.FromDate;
       ListInput1.tracking_to_date = "";// this.ToDate;
       ListInput1.divison_id = "";
-      //ListInput1.offset = 0;
+      ListInput1.offset = 0;
       ListInput1.org_name = "";
 
-     // ListInput1.size = 10;
-      this.selectedItemsList = [];
+      ListInput1.size = this.noofrecordsperpage     
+       this.selectedItemsList = [];
       this.Filterarray = [];
       this.resetFilterFeild();
       this.AllFilters.get("otc_no_search").setValue("")

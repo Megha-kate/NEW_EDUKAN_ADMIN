@@ -88,10 +88,8 @@ export class AdminRolemasterComponent implements OnInit {
       ListInput.role_id = "2"
     }
 
-    // const ListInput: ListInput = {} as ListInput;
-
-    ListInput.offset = 0;
-    // this.GetList(ListInput);
+   
+   
     this.GetList(ListInput)
   }
 

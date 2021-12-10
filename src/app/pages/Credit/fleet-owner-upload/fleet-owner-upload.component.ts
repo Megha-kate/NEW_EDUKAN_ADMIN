@@ -306,11 +306,11 @@ export class FleetOwnerUploadComponent implements OnInit {
             }).then((result) => {
               if (result.value) {
 
-                this.excelService.exportAsExcelFile(data.records_not_inserted, 'Bulk Upload Status file');
+                this.excelService.exportAsExcelFile(data.records_not_inserted, 'Account Mapping Status file');
 
               }
               else {
-                this.excelService.exportAsExcelFile(data.records_not_inserted, 'Bulk Upload Status file');
+                this.excelService.exportAsExcelFile(data.records_not_inserted, 'Account Mapping Status file');
               }
             })
 

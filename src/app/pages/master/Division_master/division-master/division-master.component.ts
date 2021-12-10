@@ -97,7 +97,7 @@ export class DivisionMasterComponent implements OnInit {
     
     const ListInput: ListInput1 = {} as ListInput1;
     
-    ListInput.offset = 0;
+    ListInput.offset = 1;
     ListInput.limit = 10;
     
 
@@ -232,9 +232,11 @@ export class DivisionMasterComponent implements OnInit {
 
     // this.List(this.AllFilters)
 
+    ListInput.offset = (page * 10)
 
-    ListInput.offset = 0
-    ListInput.limit = this.noofrecordsperpage;
+     ListInput.limit = this.noofrecordsperpage;
+    // ListInput.offset = 10;
+    // ListInput.limit = this.noofrecordsperpage;
 
 
     ///pageSizeOptions = [5, 10, 25, 100];
@@ -307,12 +309,13 @@ export class DivisionMasterComponent implements OnInit {
     this.from_date = this.datepipe.transform(d1, 'yyyy-MM-dd')
     this.to_date = this.datepipe.transform(new Date(), 'yyyy-MM-dd')
     const ListInput: Listinput5 = {} as Listinput5;
-    ListInput.from_date = this.from_date
-    ListInput.to_date = this.to_date
+    // ListInput.from_date = this.from_date
+    // ListInput.to_date = this.to_date
+    ListInput.offset = 0;
     ListInput.limit = 10;
 
-    this.DivisionMaster(Listinput5)
-       this.myDrop.close()
+    this.DivisionMaster(ListInput)
+    this.myDrop.close();
 
   }
   SearchAllDate() {

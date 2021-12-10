@@ -729,7 +729,7 @@
                                                             (Change)="SelectedPartWise(item,$event)"
                                                             *ngFor="let item of individualParts;let k=index;"
                                                             [value]="item.part_number">
-                                                            {{item.part_number}}_{{item.desc_text}}
+                                                            {{item.part_number}}
                                                         </mat-option>
                                                     </mat-autocomplete>
                                                 </mat-form-field>
@@ -744,7 +744,7 @@
                                    
 
                                        
-                                        <div class="col-4">
+                                        <div class="col-4" >
                                             <span class="sidebar-cards__chk-list-item chkbox text-nowrap"
                                                 style="padding-left: 61px;"><input type="checkbox" id="k"
                                                     [checked]="isBulk" (change)="searchParts('bulk',$event)"><label
@@ -931,9 +931,9 @@
                                                     </li>
                                                 </ul>
                                              
-                                                <ul class="tags blue" *ngIf="selectedSKUDisplay.length > 0">
-                                                    <h5>Part Lines:</h5>
-                                                    <li class="tags__list" *ngFor="let item of selectedSKUDisplay">
+                                                <ul class="tags blue" *ngIf="selectedSKUDisplay.length > 0" >
+                                                    <h5 >Part Lines:</h5>
+                                                    <li class="tags__list" *ngFor="let item of selectedSKUDisplay" >
                                                         <a>{{item.display}}_{{part_description}}
                                                             <span class="material-icons"
                                                                 (click)="removePart(item.part_number)"> close </span>
@@ -947,9 +947,26 @@
                                                        
                                                     </li>
                                                 </ul>
+                                                
+                                                <ul class="tags blue" *ngIf="selectedSKUDisplay.length > 0">
+                                                    <h5>Part Lines:</h5>
+                                                    <li class="tags__list" *ngFor="let item of selectedSKUDisplay">
+                                                        <a>{{item.part_number}}_{{part_description}}
+                                                            <span class="material-icons"
+                                                                (click)="removePart(item.part_number)"> close </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="tags blue" *ngIf="selectedSKUDisplay.length == 0">
+                                                    <h5 >Part Lines:</h5>
+                                                    <li class="tags__list">
+                                                        <a>All</a>
+                                                       
+                                                    </li>
+                                                </ul>
                                             </div>
-                                            <!-- <h5 class="text-right note">{{productTypeDisplay.length}} product lines and
-                                                {{selectedSKUDisplay.length}} part added</h5> -->
+                                            <h5 class="text-right note" *ngIf="isPart==true">{{productTypeDisplay.length}} product lines and
+                                                {{selectedSKUDisplay.length}} part added</h5>
                                         </div>
                                     </div>
                                  
@@ -1182,6 +1199,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div *ngIf="isPartWise==true">
+                                    <h5 class="text-right note" *ngIf="selectedPGLineArray.length>0"style="padding-right:16px ;">
+                                        {{SKUPartQty.length}} part selected</h5> 
+                                <h5 class="text-right note" *ngIf="selectedPGLineArray.length == 0" style="padding-right:16px ;">
+                                        {{SKUPartQty.length}}  products selected</h5> 
+
+                                    </div> 
                             </div>
                             <div>
                                 <div class="scheme-drags__offer-details" *ngIf="isCashDiscount==false">
@@ -1285,13 +1309,13 @@
                                     </div>
 
                                 </div>
-                                <div *ngIf="isPgLine==false">
+                                <!-- <div *ngIf="isPgLine==false">
                                     <h5 class="text-right note" *ngIf="selectedPGLineArray.length>0"style="padding-right:16px ;">
                                         {{SKUPartQty.length}} part selected</h5> 
                                 <h5 class="text-right note" *ngIf="selectedPGLineArray.length == 0" style="padding-right:16px ;">
                                         {{SKUPartQty.length}}  products selected</h5> 
 
-                                    </div>
+                                    </div> -->
                                     <!-- <div *ngIf="isPartWise==true">
                                         <h5 class="text-right note" *ngIf="selectedPGLineArray.length>0"style="padding-right:16px ;">
                                             {{SKUPartQty.length}} part selected</h5> 
@@ -1887,10 +1911,10 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="td-wrapp d-flex align-items-center "> <span>Action</span> </div>
+                                        <div class="td-wrapp d-flex align-items-center "> <span>Status</span> </div>
                                     </td>
                                     <td>
-                                        <div class="td-wrapp d-flex align-items-center "> <span>Status</span> </div>
+                                        <div class="td-wrapp d-flex align-items-center "> <span>Action</span> </div>
                                     </td>
                                 </tr>
                                 <ng-container *ngIf="items.length >0">

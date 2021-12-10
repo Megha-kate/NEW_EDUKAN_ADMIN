@@ -303,7 +303,7 @@ export class PoListComponent implements OnInit {
     //  this.dataPass.setPoDetails(data);
   //  this.CommonService.PoDetailCheck.next('show');
     // this.router.navigate(['pages/PoOrderDetails']);
-    debugger
+    
     this.loader.open();
     const ListInput1: InputOrderDetail = {} as InputOrderDetail;
     ListInput1.po_row_id = data
@@ -311,7 +311,7 @@ export class PoListComponent implements OnInit {
     this.OrderListService.PoList1(ListInput1).subscribe(
 
       data => {
-      
+        debugger
 
         if (data.success == true) {
           this.loader.close();

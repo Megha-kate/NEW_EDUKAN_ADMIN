@@ -165,7 +165,7 @@ export class PartMasterComponent implements OnInit {
       minquantity: [''],
       distributor_category: [''],
       pg: [''],
-      large_description: [''],
+      desc_text: [''],
       isassamrifile: [''],
       isactiveforecom: [''],
       nls_status:[''],
@@ -553,8 +553,8 @@ export class PartMasterComponent implements OnInit {
       this.to_date = this.datepipe.transform(toDate, 'yyyy-MM-dd')
     }
     else if (this.isThirtyDays == true) {
-      this.from_date = this.datepipe.transform(this.from_date, 'yyyy-MM-dd')
-      this.to_date = this.datepipe.transform(this.to_date, 'yyyy-MM-dd')
+      this.from_date = this.datepipe.transform(fromDate, 'yyyy-MM-dd')
+      this.to_date = this.datepipe.transform(toDate, 'yyyy-MM-dd')
     }
     
     if (this.from_date) {
@@ -565,7 +565,7 @@ export class PartMasterComponent implements OnInit {
     }
     
 
-    this.AllFilters.value.Size = 10;
+    //this.AllFilters.value.Size = 10;
     this.AllFilters.value.to_date = this.to_date;
     this.AllFilters.value.from_date = this.from_date;
     const ListInput: ListInput = {} as ListInput;
@@ -592,9 +592,9 @@ export class PartMasterComponent implements OnInit {
 
 
 
-  if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
+  // if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
 
-  if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
+  // if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
 
   
     if (this.part_number) { ListInput.part_number = this.part_number; } else { ListInput.part_number = ""; }

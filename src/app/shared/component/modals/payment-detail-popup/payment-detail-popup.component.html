@@ -23,25 +23,26 @@
                                     <tr>
                                         <td>
                                             <div class="td-wrapp">
-
+                                                <div class="o-desc">{{payment?.TYPE_s}} </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="td-wrapp">
+                                                {{payment?.TYPE_s}}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="td-wrapp">
-                                                
+                                                {{payment?.PAYMENT_TYPE_s}}
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="td-wrapp">
-                                            </div>
+                                            <div class="o-desc">{{payment?.order_transaction[0]?.dec_amount | currencyFormat:'INR' ||
+                                                0}} </div>
+                                      
                                         </td>
                                         <td>
-                                            <div class="td-wrapp">
-                                            </div>
+                                            <div class="o-desc">{{ payment?.LAST_UPD_dt  | date :'dd-MM-yyyy' }}  </div>
                                         </td>
                                     </tr>
                                 </table>

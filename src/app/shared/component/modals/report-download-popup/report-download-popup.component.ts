@@ -247,7 +247,7 @@ export class ReportDownloadPopupComponent implements OnInit {
               ListInput.OTC_Number = entry.otc_order_number
               ListInput.Order_No = entry.order_number
               ListInput.Order_Date = this.datepipe.transform(entry.order_date, 'dd-MM-yyyy hh:mm:ss a')
-              ListInput.cr_request_type = "order_return"
+              ListInput.Customer_Type = "order_return"
 
               if (this.isdistributor == false) {
 
@@ -260,8 +260,8 @@ export class ReportDownloadPopupComponent implements OnInit {
               ListInput.Customer_Name = entry.account_data.name
              ListInput.Returned_Amount = Number(entry.cancel_line_items_total_amount)
 
-              ListInput.Dist_Approval = entry.approved_status
-              ListInput.Retruned_Status = entry.cr_request_status
+              ListInput.Dist_Approval = entry.approved_status;
+              ListInput.Return_Status = entry.cr_request_status
 
 
 
@@ -1001,9 +1001,9 @@ export class ReportDownloadPopupComponent implements OnInit {
                   Output = (Number(WaitHours) / 24).toFixed(0) + ' Days'
 
                 }
-                ExportArrayInput1.Pending_Since = Output
+               // ExportArrayInput1.Pending_Since = Output
               }
-              ExportArrayInput1.Order_Tracking_Status = entry1.invoice_status
+              ExportArrayInput1.Status = entry1.invoice_status
               // ExportArrayInput1.Order_Tracking_Status = this.titlecasePipe.transform(entry1.invoice_status)
 
               this.pendingcount = this.TemparrayALL.length;
@@ -1090,9 +1090,9 @@ export class ReportDownloadPopupComponent implements OnInit {
                     Output = (Number(WaitHours) / 24).toFixed(0) + ' Days'
 
                   }
-                  ExportArrayInput1.Pending_Since = Output
+                  //ExportArrayInput1.Pending_Since = Output
                 }
-                ExportArrayInput1.Order_Tracking_Status = entry1.invoice_status
+                ExportArrayInput1.Status = entry1.invoice_status
                 // ExportArrayInput1.Order_Tracking_Status = this.titlecasePipe.transform(entry1.invoice_status)
 
                 //    this.TemparrayALL.push(ExportArrayInput1)
@@ -1185,7 +1185,7 @@ export class ReportDownloadPopupComponent implements OnInit {
             }
            
             else {
-              ExportArrayInput.Cancelled_Date = this.datepipe.transform(entry1.tracking_date, 'dd-MM-yyyy hh:mm:ss a')
+              ExportArrayInput.Out_For_Delivery_Date = this.datepipe.transform(entry1.tracking_date, 'dd-MM-yyyy hh:mm:ss a')
             }
 
             ExportArrayInput.Order_amount = Math.round(entry1.order_amount)
@@ -1306,6 +1306,14 @@ export class ReportDownloadPopupComponent implements OnInit {
                 ExportArrayInput.Pending_Since = Output;
               }
 
+
+
+
+             if (entry1.payment_method == 'COD') { ExportArrayInput.Payment_Mode = 'On Credit' }
+            else if (entry1.payment_method == 'COD_LOYALTY') { ExportArrayInput.Payment_Mode = 'On Credit & Loyalty' }
+            else if (entry1.payment_method == 'WIRE_TRANSFER') { ExportArrayInput.Payment_Mode = 'Online Transfer' }
+            else if (entry1.payment_method == 'WIRE_TRANSFER_LOYALTY') { ExportArrayInput.Payment_Mode = 'Online Transfer & Loyalty' }
+            else { ExportArrayInput.Payment_Mode = entry1.payment_method }
               // ExportArrayInput.Status = this.titlecasePipe.transform(entry1.invoice_status)
               ExportArrayInput.Status = entry1.invoice_status
 
@@ -2302,8 +2310,8 @@ export class ReportDownloadPopupComponent implements OnInit {
               ListInput.Contact_No = entry.contact_no
 
 
-              ListInput.Address_1 = entry.address_1
-
+              ListInput.Customer_Location = entry.address_1
+              ListInput.Created_Date = this.datepipe.transform(entry.created_at, 'dd-MM-yyyy hh:mm:ss a')
               ListInput.Customer_Type = entry.user_type
 
              // ListInput.Cancel_Amount = Number(entry.cancel_line_items_total_amount)
@@ -2313,7 +2321,7 @@ export class ReportDownloadPopupComponent implements OnInit {
 
               //ListInput.OTC_Number = entry.otc_order_number
               //  ListInput.Order_No = entry.order_number
-              ListInput.Created_Date = this.datepipe.transform(entry.created_at, 'dd-MM-yyyy hh:mm:ss a')
+             
 
               // if (this.isdistributor == false) {
               //   ListInput.Distibutor_Name = entry.organization_name
@@ -2880,6 +2888,7 @@ export class ExportData {
 }
 
 export interface ExportArrayALL {
+  Status: any;
   Account_Id: any;
   Payment_Mode: any;
   Order_No: string
@@ -2899,6 +2908,7 @@ export interface ExportArrayALL {
 }
 
 export interface ExportArray {
+  Out_For_Delivery_Date: string;
   Payment_Mode: string;
   Invoice_Date: string;
   Account_Id: any;
@@ -3095,6 +3105,7 @@ export class Canceldata {
   Cancel_Number: any;
   Cancel_Date: string;
   Distributor_Name: any;
+  Customer_Location: any;
 }
 
 export class Listinputs {
@@ -3205,4 +3216,5 @@ export class ExpotInputdata {
   Returned_Amount: number;
   Retruned_Status: any;
   cr_request_type: string;
+  Return_Status: any;
 }

@@ -388,7 +388,7 @@
         <order-details [order]="orderInformations"></order-details>
     </ng-template>
     <ng-template #PoDetails let-d="dismiss3">
-        <app-po-details [item]="PoListInformations"></app-po-details>
+        <app-po-details [items]="PoListInformations"></app-po-details>
     </ng-template>
     <ng-template #ExcelDownload let-d="dismiss">
         <app-report-download-popup [data]="EDownload" [count]="count" [pageName]="pageName">

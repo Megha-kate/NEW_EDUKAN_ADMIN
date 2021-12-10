@@ -185,13 +185,14 @@
                         <div class="srch-box">
                             <label>State</label><br />
                             <select class="textfield"
-                            [formControl]="AllFilters.controls['state_code']"
+                            [formControl]="AllFilters.controls['shipping_state']"
                             (change)="onChange($event.target.value)">
                             <option hidden></option>
 
                             <option *ngFor="let SateData of statenamedata;">
                                 {{SateData.state_name}}</option>
                         </select>
+
                         </div>
                     </li>
                     <li>

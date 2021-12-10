@@ -77,6 +77,8 @@ export class OrderHistoryComponent implements OnInit {
   Days: string;
   selected: any;
   state_code: string;
+  dealer_state: any;
+  shipping_state: any;
 
   constructor(
     private OrderListService: OrderserviceService,
@@ -541,7 +543,7 @@ export class OrderHistoryComponent implements OnInit {
           this.orderrow = [];
           //.loader.close()
           // this.toastrService.error(data1.data.msg)
-          this.toastrService.error("Data Not Found")
+          //this.toastrService.error("Data Not Found")
         }
       }, (err) => {
         this.loader.close();
@@ -595,7 +597,7 @@ export class OrderHistoryComponent implements OnInit {
       if (this.otc_number) { ListInput2.otc_number = this.otc_number; } else { ListInput2.otc_number = ""; }
       if (this.status) { ListInput2.order_status = this.status; } else { ListInput2.order_status = ""; }
       if (this.region) { ListInput2.dealer_region = this.region; } else { ListInput2.dealer_region = ""; }
-      if (this.state_code) { ListInput2.state_code = this.state_code; } else { ListInput2.state_code = ""; }
+      if (this.state_name) { ListInput2.state_name = this.state_name; } else { ListInput2.state_name = ""; }
       if (this.district) { ListInput2.shiping_district = this.district; } else { ListInput2.shiping_district = ""; }
       if (this.city) { ListInput2.shipping_city = this.city; } else { ListInput2.shipping_city = ""; }
 
@@ -1192,7 +1194,7 @@ export class OrderHistoryComponent implements OnInit {
       this.otc_number = this.AllFilters.value.otc_number;
       this.status = this.AllFilters.value.status;
       this.region = this.AllFilters.value.region;
-      this.state_code = this.AllFilters.value.state_code;
+      this.shipping_state = this.AllFilters.value.shipping_state;
       this.district = this.AllFilters.value.district;
       this.city = this.AllFilters.value.city;
 
@@ -1295,7 +1297,7 @@ export class OrderHistoryComponent implements OnInit {
       if (this.otc_number) { ListInput2.otc_number = this.otc_number; } else { ListInput2.otc_number = ""; }
       if (this.status) { ListInput2.order_status = this.status; } else { ListInput2.order_status = ""; }
       if (this.region) { ListInput2.dealer_region = this.region; } else { ListInput2.dealer_region = ""; }
-      if (this.state_code) { ListInput2.shipping_state = this.state_code; } else { ListInput2.shipping_state = ""; }
+      if (this.shipping_state) { ListInput2.shipping_state = this.shipping_state; } else { ListInput2.shipping_state = ""; }
       if (this.district) { ListInput2.shiping_district = this.district; } else { ListInput2.shiping_district = ""; }
       if (this.city) { ListInput2.shipping_city = this.city; } else { ListInput2.shipping_city = ""; }
 
@@ -1791,6 +1793,16 @@ export class OrderHistoryComponent implements OnInit {
     });
   }
 
+  StateName: any;
+  filterMyOptionsstte(event: any, name) {
+
+
+    if (event.isUserInput) {
+
+      this.StateName = name;
+    }
+
+  }
   resetALl() {
     debugger;
     this.isDivisionVisible = false;
@@ -2606,6 +2618,7 @@ export class InputOrder {
   dealer_state: string;
   dealer_region: string;
   state_code: string;
+  state_name: any;
 }
 
 export class InputData {

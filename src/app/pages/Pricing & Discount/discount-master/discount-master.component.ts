@@ -1997,15 +1997,15 @@ export class DiscountMasterComponent implements OnInit {
     }
     else if (row == 'bulk') {
       if (event.target.checked == true) {
-        this.isBulk = false;
-        this.isIndividual = true;
+        this.isBulk = true;
+        this.isIndividual = false;
         this.selectedPartArray = [];
         this.selectedSKUDisplay = [];
       //  this.productTypeDisplay = [];
        // this.selectedPGLineArray = [];
       }
       else {
-        this.isBulk = true;
+        this.isBulk = false;
         this.isIndividual = false;
         this.selectedPartArray = [];
         this.selectedSKUDisplay = [];
@@ -4275,64 +4275,64 @@ export class DiscountMasterComponent implements OnInit {
   individualParts = [];
   ShowDiscountType: any = "default_discount";
 
-  // searchPartWise(row, event) {
-  //   if (row == 'individual') {
-  //     if (event.target.checked == true) {
-  //       this.isIndividual = true;
-  //       this.isBulk = false;
-  //       this.selectedPartArray = [];
-  //       this.selectedSKUDisplay = [];
-  //     }
-  //     else {
-  //       this.isIndividual = false;
-  //       this.isBulk = true;
-  //       this.selectedPartArray = [];
-  //       this.selectedSKUDisplay = [];
-  //     }
-  //   }
-  //   else if (row == 'bulk') {
-  //     if (event.target.checked == true) {
-  //       this.isIndividual = false;
-  //       this.isBulk = true;
-  //       this.selectedPartArray = [];
-  //       this.selectedSKUDisplay = [];
-  //     }
-  //     else {
-  //       this.isIndividual = true;
-  //       this.isBulk = false;
-  //       this.selectedPartArray = [];
-  //       this.selectedSKUDisplay = [];
-  //     }
-  //   }
-  //   else if (row == 'bulk') {
-  //     if (event.target.checked == true) {
-  //       this.isIndividual = false;
-  //       this.isBulk = true;
-  //       this.selectedPartArray = [];
-  //       this.selectedSKUDisplay = [];
-  //     }
-  //     else {
-  //       this.isIndividual = true;
-  //       this.isBulk = false;
-  //       this.selectedPartArray = [];
-  //       this.selectedSKUDisplay = [];
-  //     }
-  //   }
-  //   else if (row == 'single') {
-  //     if (event.target.checked == true) {
-  //       this.isIndividual = false;
-  //       this.isBulk = true;
-  //       this.selectedPartArray = [];
-  //       this.selectedSKUDisplay = [];
-  //     }
-  //     else {
-  //       this.isIndividual = true;
-  //       this.isBulk = false;
-  //       this.selectedPartArray = [];
-  //       this.selectedSKUDisplay = [];
-  //     }
-  //   }
-  // }
+  searchPartWise(row, event) {
+    if (row == 'individual') {
+      if (event.target.checked == true) {
+        this.isIndividual = true;
+        this.isBulk = false;
+        this.selectedPartArray = [];
+        this.selectedSKUDisplay = [];
+      }
+      else {
+        this.isIndividual = false;
+        this.isBulk = true;
+        this.selectedPartArray = [];
+        this.selectedSKUDisplay = [];
+      }
+    }
+    else if (row == 'bulk') {
+      if (event.target.checked == true) {
+        this.isIndividual = false;
+        this.isBulk = true;
+        this.selectedPartArray = [];
+        this.selectedSKUDisplay = [];
+      }
+      else {
+        this.isIndividual = true;
+        this.isBulk = false;
+        this.selectedPartArray = [];
+        this.selectedSKUDisplay = [];
+      }
+    }
+    // else if (row == 'bulk') {
+    //   if (event.target.checked == true) {
+    //     this.isIndividual = false;
+    //     this.isBulk = true;
+    //     this.selectedPartArray = [];
+    //     this.selectedSKUDisplay = [];
+    //   }
+    //   else {
+    //     this.isIndividual = false;
+    //     this.isBulk = true;
+    //     this.selectedPartArray = [];
+    //     this.selectedSKUDisplay = [];
+    //   }
+    // }
+    // else if (row == 'single') {
+    //   if (event.target.checked == true) {
+    //     this.isIndividual = false;
+    //     this.isBulk = true;
+    //     this.selectedPartArray = [];
+    //     this.selectedSKUDisplay = [];
+    //   }
+    //   else {
+    //     this.isIndividual = true;
+    //     this.isBulk = false;
+    //     this.selectedPartArray = [];
+    //     this.selectedSKUDisplay = [];
+    //   }
+    // }
+  }
 
 
   searchDiscountType(row, event) {
@@ -4341,11 +4341,13 @@ export class DiscountMasterComponent implements OnInit {
       if (event.target.checked == true) {
         this.isDefault = true;
         this.isPartWise = false;
+        this.isCashDiscount = false;
         this.ShowDiscountType = 'default_discount'
       }
       else {
         this.isDefault = false;
         this.isPartWise = true;
+
         this.ShowDiscountType = 'quantity_discount'
       }
     }
@@ -4353,6 +4355,7 @@ export class DiscountMasterComponent implements OnInit {
       if (event.target.checked == true) {
         this.isDefault = false;
         this.isPartWise = true;
+        this.isCashDiscount = false;
         this.ShowDiscountType = 'quantity_discount'
         var jsonn2 = { search_text: "", size: 5 };
         this.getSKUItemSingle(jsonn2);
@@ -4373,7 +4376,7 @@ export class DiscountMasterComponent implements OnInit {
         this.getSKUItemSingle(jsonn2);
       }
       else {
-        this.isDefault = true;
+        this.isDefault = false;
         this.isPartWise = false;
         this.isCashDiscount = true;
         this.ShowDiscountType = 'cash_discount'
