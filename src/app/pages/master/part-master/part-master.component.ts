@@ -123,7 +123,6 @@ export class PartMasterComponent implements OnInit {
     this.noofrecordsperpage = 10;
     this.searchList = [];
     this.showRecords = 10;
-
     this.From_date = localStorage.getItem("FromDate");
     this.To_date = localStorage.getItem("ToDate");
 
@@ -166,6 +165,7 @@ export class PartMasterComponent implements OnInit {
       distributor_category: [''],
       pg: [''],
       large_description: [''],
+      desc_text: [''],
       isassamrifile: [''],
       isactiveforecom: [''],
       nls_status:[''],
@@ -553,8 +553,8 @@ export class PartMasterComponent implements OnInit {
       this.to_date = this.datepipe.transform(toDate, 'yyyy-MM-dd')
     }
     else if (this.isThirtyDays == true) {
-      this.from_date = this.datepipe.transform(this.from_date, 'yyyy-MM-dd')
-      this.to_date = this.datepipe.transform(this.to_date, 'yyyy-MM-dd')
+      this.from_date = this.datepipe.transform(fromDate, 'yyyy-MM-dd')
+      this.to_date = this.datepipe.transform(toDate, 'yyyy-MM-dd')
     }
     
     if (this.from_date) {
@@ -564,7 +564,7 @@ export class PartMasterComponent implements OnInit {
       this.AllFilters.get('to_date').setValue(this.to_date);
     }
     
-
+    debugger
     this.AllFilters.value.Size = 10;
     this.AllFilters.value.to_date = this.to_date;
     this.AllFilters.value.from_date = this.from_date;
