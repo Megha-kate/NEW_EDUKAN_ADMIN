@@ -129,7 +129,7 @@ export class OrderHistoryComponent implements OnInit {
    
    const data4: InputData3 = {} as InputData3;
   
-   this.Getstatecode(data4)
+   this.GetStateData();
 
     const ListInput2: InputOrder = {} as InputOrder;
 
@@ -714,72 +714,43 @@ export class OrderHistoryComponent implements OnInit {
 
   }
 
-  // StateData: any;
-  // GetStateData() {
-  //   this.StateData = []
+  StateData: any;
+  GetStateData() {
+    this.StateData = []
 
-  //   var Json = {
-  //     "dropdown_type": "state",
-  //     "multi_district": [],
-  //     "multi_taluka": [],
-  //     "multi_city": [],
-  //     "offset": 0,
-  //     "limit": 10000
-  //   }
+    var Json = {
+      "dropdown_type": "state",
+      "multi_district": [],
+      "multi_taluka": [],
+      "multi_city": [],
+      "offset": 0,
+      "limit": 10000
+    }
 
-  //   this.CommonService.GetstateNew(Json).subscribe(
-  //     data => {
-  //       if (data.success == true) {
-  //         for (let entry of data.data.States) {
-
-  //           if (entry.state_code != undefined) {
-  //             this.StateData.push(entry)
-  //           }
-  //         }
-  //       }
-  //       else {
-  //       }
-  //     }, (err) => {
-
-  //     }
-  //   );
-  // }
-  statenamedata: any[]
-  Getstatecode(Data1) {
-    this.statenamedata = [];
-
-
-    this.CommonService.Getstatecode(Data1).subscribe(
+    this.CommonService.GetstateNew(Json).subscribe(
       data => {
         if (data.success == true) {
-          this.statenamedata = data.data.result
+          for (let entry of data.data.States) {
 
-          console.log(this.statenamedata)
-
-          this.StateLists = new FormGroup({})
-          for (let formModule of this.statenamedata) {
-            this.StateLists.addControl(formModule.state_code, new FormControl(false))
+            if (entry.state_code != undefined) {
+              this.StateData.push(entry)
+            }
           }
         }
         else {
-
-          this.loader.close();
-
         }
       }, (err) => {
-        // this.loader.close();
+
       }
     );
-
-
   }
 
-  onChange(deviceValue) {
-    console.log(deviceValue);
-    const data2: InputData2 = {} as InputData2;
-    var jsonn = { "multi_zone": this.selected, "multi_state": [deviceValue], "size": 100 }
-    this.DistrictList(jsonn)
-  }
+  // onChange(deviceValue) {
+  //   console.log(deviceValue);
+  //   const data2: InputData2 = {} as InputData2;
+  //   var jsonn = { "multi_zone": this.selected, "multi_state": [deviceValue], "size": 100 }
+  //   this.DistrictList(jsonn)
+  // }
   GetDistributor(Data) {
     this.DistributorData = []
     this.CommonService.DistributorList(Data).subscribe(

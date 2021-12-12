@@ -2292,7 +2292,7 @@
                                                     </span></div>
                                         </td>
                                         <td>
-                                            <div class="td-wrapp d-flex align-items-center"> <span>part Desc
+                                            <div class="td-wrapp d-flex align-items-center"> <span>Part Desc
                                                     </span></div>
                                         </td>
                                         <td>
@@ -2542,31 +2542,31 @@
                                         <div class="td-wrapp">{{row?.rate}}</div>
                                          </td>
                                          <td>
-                                            <div class="td-wrapp">{{row?.base_discount}}</div>
+                                            <div class="td-wrapp">{{row?.base_discount}}{{row.base_discount==="" ? '' : '%' }}</div>
                                             </td>
                                          <td>
                                         <div class="td-wrapp">{{row?.base_discount}}</div>
                                         </td>
                                         <td>
-                                        <div class="td-wrapp">{{row?.dealer_rule_discount}}</div>
+                                        <div class="td-wrapp">{{row?.dealer_rule_discount}}{{row.dealer_rule_discount==="" ? '' : '%' }}</div>
                                       </td>
                                       <td>
                                         <div class="td-wrapp">{{row?.dealer_rule_discount_amount}}</div>
                                       </td>
                                       <td>
-                                        <div class="td-wrapp">{{row?.tml_rule_discount}}</div>
+                                        <div class="td-wrapp">{{row?.tml_rule_discount}}{{row.tml_rule_discount_amount==="" ? '' : '%' }}</div>
                                       </td>
                                       <td>
                                         <div class="td-wrapp">{{row?.tml_rule_discount_amount}}</div>
                                       </td>
                                       <td>
-                                        <div class="td-wrapp">{{row?.scheme_discount}}</div>
+                                        <div class="td-wrapp">{{row?.scheme_discount}} {{row.scheme_discount==="" ? '' : '%' }}</div>
                                       </td>
                                       <td>
                                         <div class="td-wrapp">{{row?.scheme_discount_amount}}</div>
                                       </td>
                                       <td>
-                                        <div class="td-wrapp">{{row?.cash_discount_per}}</div>
+                                        <div class="td-wrapp">{{row?.cash_discount_per}}{{row.cash_discount_per==="" ? '' : '%' }}</div>
                                       </td>
                                       <td>
                                         <div class="td-wrapp">{{row?.cash_discount_amount}}</div>

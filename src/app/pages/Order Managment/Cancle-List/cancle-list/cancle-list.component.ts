@@ -69,6 +69,10 @@ export class CancleListComponent implements OnInit {
   isDivisionVisible:boolean;
   showRecords:number;
   Days: string;
+  fromDate: any;
+  toDate: any;
+  FromDate: any;
+  ToDate: any;
 
   constructor(
     private OrderListService: OrderserviceService,
@@ -192,6 +196,8 @@ export class CancleListComponent implements OnInit {
       cancel_order_number: [''],
       to_date: [''],
       from_date: [''],
+      fromDate:[''],
+      toDate:[''],
       account_name: [''],
       org_name: [''],
       div_id: [''],
@@ -260,8 +266,8 @@ export class CancleListComponent implements OnInit {
       this.isThirtyDays = false;
       this.isToday = false;
       this.isLastsevenDay = false;
-      this.from_date = "";
-      this.to_date = "";
+      //this.from_date = "";
+      //this.to_date = "";
       this.AllFilters.patchValue({
         Today: false,
         Custom: true,
@@ -539,29 +545,31 @@ export class CancleListComponent implements OnInit {
   SearchAllDate() {
     debugger;
    
-    
-
+      
+    // let fromDate =this.datepipe.transform(this.fromDate, 'yyyy-MM-dd');
+    // let toDate =this.datepipe.transform(this.toDate, 'yyyy-MM-dd');
     let fromDate = localStorage.getItem("FromDate");
     let toDate = localStorage.getItem("ToDate");
     this.currentPage = 1
     this.Filterarray = [];
     var a = this.DistributorList.valid;
-
+    console.log(this.from_date,this.to_date,"frome date gggg")
     if (this.iscustomDate == true) {
       if (this.AllFilters.value.from_date == null || this.AllFilters.value.from_date == "" && this.AllFilters.value.to_date !== null) {
-        Swal.fire('Select From Date');
+        ///Swal.fire('Select From Date');
+        console.log(this.from_date,this.to_date,"frome date gggg")
         const ListInput: ListInput1 = {} as ListInput1;
-        ListInput.from_date = localStorage.getItem("FromDate");
-        ListInput.to_date = localStorage.getItem("ToDate");
+        ListInput.from_date =this.datepipe.transform(this.from_date, 'yyyy-MM-dd');
+        ListInput.to_date = this.datepipe.transform(this.toDate, 'yyyy-MM-dd');
         ListInput.cr_request_type = "order_cancellation"
         this.CancleList(ListInput)
         return
       }
       else if (this.AllFilters.value.from_date !== null && this.AllFilters.value.to_date == null || this.AllFilters.value.to_date == "") {
-        Swal.fire('Select To Date');
+      //  Swal.fire('Select To Date');
         const ListInput: ListInput1 = {} as ListInput1;
-        ListInput.from_date = localStorage.getItem("FromDate");
-        ListInput.to_date = localStorage.getItem("ToDate");
+         ListInput.from_date =this.datepipe.transform(this.fromDate, 'yyyy-MM-dd');
+        ListInput.to_date = this.datepipe.transform(this.toDate, 'yyyy-MM-dd');
         ListInput.cr_request_type = "order_cancellation"
         this.CancleList(ListInput)
         return
@@ -706,7 +714,6 @@ export class CancleListComponent implements OnInit {
           
         if (data.success == true) {
 
-          //console.log(data)
           this.loader.close()
            
           this.items = data.data.result;

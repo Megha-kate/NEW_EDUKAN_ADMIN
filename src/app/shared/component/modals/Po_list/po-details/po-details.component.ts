@@ -16,14 +16,13 @@ import Swal from 'sweetalert2';
 export class PoDetailsComponent implements OnInit {
   @Input() items: any;
   @Output() closemodal = new EventEmitter<any>();
-  dialog: any;
   constructor(private modalService: NgbModal,private OrderListService: OrderserviceService, private dataPass: DataPassServiceService,) { }
 
   ngOnInit(): void {
     console.log(this.items);
-    const ListInput1: InputOrderDetail = {} as InputOrderDetail;
-    ListInput1.po_row_id =""
-    this.viewPodetails(ListInput1)
+    // const ListInput1: InputOrderDetail = {} as InputOrderDetail;
+    // ListInput1.po_row_id =""
+    // this.viewPodetails(ListInput1)
     
   }
 
@@ -31,71 +30,48 @@ export class PoDetailsComponent implements OnInit {
   closeModal() {
     this.modalService.dismissAll();
 }
-
-viewPodetails (data: any, isNew?) {
-
-
-  // debugger
-  // if (data.otc_number == null) {
-  //   Swal.fire('Please Check Details After Some Time')
-  //   return false
-  // }
-
-
-  
-
-  //  this.dataPass.setPoDetails(data);
-//  this.CommonService.PoDetailCheck.next('show');
-  // this.router.navigate(['pages/PoOrderDetails']);
-  
-  //this.loader.open();
-  const ListInput1: InputOrderDetail = {} as InputOrderDetail;
-  ListInput1.po_row_id = data
-
-  this.OrderListService.PoList1(ListInput1).subscribe(
-
-    data => {
-      debugger
-
-      if (data.success == true) {
-        //this.loader.close();
-
-       // console.log(data.data);
-
-        // if (data.data.result.line_items[0].length > 0) {
-          var TempDAta = data.data.result;
-          this.dataPass.setOrderListData(TempDAta);
-          let title = '';
-          // po_row_id = '';
-          let dialogRef: MatDialogRef<any> = this.dialog.open(PoDetailsComponent, {
-            panelClass: 'my-class',
-            disableClose: false,
-            data: { title: title, }
-
-          })
-         // this.loader.close();
-        // }
-        // else {
-        //   Swal.fire('Please Check Details After Some Time');
-        //   this.loader.close();
-        // }
-      }
-      else {
-        Swal.fire('Please Check Details After Some Time');
-        //this.loader.close();
-      }
-    }, (err) => {
-      Swal.fire('Please Check Details After Some Time');
-      //this.loader.close();
-
-    }
-
-  );
-
 }
-}
-export class InputOrderDetail {
-  otc_order_no: string
-  otc_number: any;
-  po_row_id: any;
-}
+
+// viewPodetails (data: any, isNew?) {
+
+
+//   const ListInput1: InputOrderDetail = {} as InputOrderDetail;
+//   ListInput1.po_row_id = data
+
+//   this.OrderListService.PoList1(ListInput1).subscribe(
+
+//     data => {
+//       debugger
+
+//       if (data.success == true) {
+      
+//           var TempDAta = data.data.result;
+//           this.dataPass.setOrderListData(TempDAta);
+//           let title = '';
+//           let dialogRef: MatDialogRef<any> = this.dialog.open(PoDetailsComponent, {
+//             panelClass: 'my-class',
+//             disableClose: false,
+//             data: { title: title, }
+
+//           })
+      
+//       }
+//       else {
+//         Swal.fire('Please Check Details After Some Time');
+    
+//       }
+//     }, (err) => {
+//       Swal.fire('Please Check Details After Some Time');
+     
+
+//     }
+
+//   );
+
+// }
+// }
+// export class InputOrderDetail {
+//   otc_order_no: string
+//   otc_number: any;
+//   po_row_id: any;
+// }

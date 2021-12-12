@@ -1,4 +1,4 @@
-<div class="modal-content" style="width: 100%;">
+ <div class="modal-content" style="width: 100%;">
     <div class="modal-header modal-title">
         EDN PO Details
 
@@ -50,8 +50,8 @@
                             </thead>
                             <tbody>
                                 <ng-container>
-                                    <tr *ngFor="let item of items?.order_line_items; let i = index">
-                                        <td>
+                                    <tr *ngFor="let row of items">
+                                        <!-- <td>
                                             <div class="d-inline-flex">
                                                 <img alt="" [src]="item?.part_cover_image"
                                                     style="width: 44px; height: 30px;">
@@ -72,18 +72,21 @@
                                                     item?.part_desc?.substr(0,15)}}
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td> -->
                                         <td>
-                                            <div class="td-actual-mrp"> <span>{{item?.part_number}}
+                                            <div class="td-actual-mrp"> <span>{{row?.part_number}}
                                                 </span>
                                             </div>
                                         </td>
-                                        <td> {{ item?.part_description }}
+                                        <td> {{ row?.part_description }}
                                         </td>
-                                        <td class="text-end"> {{ item?.request_quanity }}
+                                        <td class="text-end"> {{ row?.request_quanity }}
                                         </td>
                                     </tr>
-                                </ng-container>
+                                </ng-container> 
+
+
+                              
                              
                                
 

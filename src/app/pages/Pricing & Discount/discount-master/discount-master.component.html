@@ -107,7 +107,7 @@
                                                             <div class="input-group">
                                                                 <input class="form-control"
                                                                     [formControl]="AllFilters.controls['from_date']"
-                                                                    placeholder="yyyy-mm-dd" [readonly]="true" name="dp"
+                                                                    placeholder="YYYY-MM-DD" [readonly]="true" name="dp"
                                                                     ngbDatepicker #d="ngbDatepicker">
                                                                 <div class="input-group-append">
                                                                     <button class="btn btn-outline-secondary calendar"
@@ -124,7 +124,7 @@
                                                             <div class="input-group calendar">
                                                                 <input class="form-control"
                                                                     [formControl]="AllFilters.controls['to_date']"
-                                                                    placeholder="yyyy-mm-dd" [readonly]="true" name="dp"
+                                                                    placeholder="YYYY-MM-DD"  [readonly]="true" name="dp"
                                                                     ngbDatepicker #d1="ngbDatepicker">
                                                                 <div class="input-group-append1">
                                                                     <button class="btn btn-outline-secondary calendar"
@@ -444,7 +444,7 @@
                                             <label for="">Start date<span class="mandatory">*</span></label>
                                             <div class="form-group m-0 calendar">
                                                 <div class="input-group">
-                                                    <input class="form-control" placeholder="dd-MM-yyyy" name="dp"
+                                                    <input class="form-control" placeholder="YYYY-MM-DD" name="dp"
                                                         [minDate]="minDate" [readonly]="true" ngbDatepicker
                                                         #d="ngbDatepicker"
                                                         [formControl]="itemForm.controls['from_date']" readonly>
@@ -462,7 +462,7 @@
                                             <div class="form-group m-0 ">
                                                 <label for="">End date<span class="mandatory">*</span></label>
                                                 <div class="input-group calendar">
-                                                    <input class="form-control" placeholder="dd-MM-yyyy" name="dp"
+                                                    <input class="form-control" placeholder="YYYY-MM-DD" name="dp"
                                                         [minDate]="minDate" ngbDatepicker #d1="ngbDatepicker"
                                                         [formControl]="itemForm.controls['to_date']" readonly>
                                                     <div class="input-group-append">
@@ -720,10 +720,10 @@
                                                         (change)="searchParts('Individual',$event)" ><label
                                                         for="j">Single Part</label></span>
                                                         
-                                                <mat-form-field appearance="outline"  *ngIf="isBulk==false">
+                                                <mat-form-field appearance="outline" *ngIf="isPart==false" >
                                                     <input type="text" placeholder="Search By Single  Part"
                                                         aria-label="Number" matInput [formControl]="myControl"
-                                                        [matAutocomplete]="auto">
+                                                        [matAutocomplete]="auto" *ngIf="isBulk==false">
                                                     <mat-autocomplete #auto="matAutocomplete" hidden>
                                                         <mat-option stymat-autocompletele=""
                                                             (Change)="SelectedPartWise(item,$event)"
@@ -736,15 +736,7 @@
 
                                               </div>
 
-                                          
-
-
-
-                                      
-                                   
-
-                                       
-                                        <div class="col-4" >
+                                          <div class="col-4" >
                                             <span class="sidebar-cards__chk-list-item chkbox text-nowrap"
                                                 style="padding-left: 61px;"><input type="checkbox" id="k"
                                                     [checked]="isBulk" (change)="searchParts('bulk',$event)"><label
@@ -772,10 +764,7 @@
                                                                 style="color: red; cursor: context-menu;" fxFlex="100"
                                                                 fxFlex.gt-sm="100">
                                                                 <b>*Maximum 1000 parts can be uploaded</b>
-                                                                <!-- <a style="color: blue;" href="./assets/Samples/validate_part_number.xlsx">Download Template</a>
-
-                                                                <br><a style="color: red; font-size: small;">*Maximum 150 parts can be uploaded</a>
-                                                 -->
+                                                               
                                                             </div>
                                                         </div>
                                                         <div class="text-nowrap"
@@ -783,9 +772,180 @@
                                                             fxFlex.gt-sm="100">
 
                                                         </div>
+                                                        <!-- <div class="scheme-drags__product-selection-btns" >
+                                                            <button class="button button--btn-brdr" (click)="addProduct()">ADD</button>
+                                                            <a href="#"><span class="material-icons"> east </span></a>
+                                                        </div> -->
+                                                      
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="scheme-drags__product-selection d-flex">
+                                            <div class="row">
+                                                <div class="scheme-drags__product-selection-products-nav" >
+                                                    <h4 style="padding-left: 16px;"> Single Part</h4>
+                                                    <div class="scheme-drags__product-selection-products-nav-list-wrapp" >
+                                                        <div class="search-order-id">
+                                                            <span class="material-icons"> search </span>
+                                                            <input type="text"
+                                                                placeholder="Search by  Single part Number…"
+                                                                class="textfield">
+                                                            <div class="btn-filter"> </div>
+                                                        </div>
+                                                        <ul class="scheme-drags__product-selection-products-nav-list">
+                                                         
+        
+                                                            <li class="scheme-drags__product-selection-products-nav-list-item main"
+                                                                *ngFor="let item of Type;let k=index;">
+                                                                <a href="javascript:void(0)" id="products-nav-el"
+                                                                    class="products-nav-click"
+                                                                    (click)="toggle_Part_list(item.LINE_2_s,'products-nav-el')">
+                                                                    <span class="material-icons"> arrow_right </span>
+                                                                </a>
+                                                                <label for="a-m-2">
+                                                                    <input type="checkbox" id="a-m"
+                                                                        (change)="SelectedPGLine(item,$event)"
+                                                                        [formControl]="ProductLineList.controls[item.LINE_2_s]">
+                                                                    {{item.LINE_2_s}}
+                                                                </label>
+                                                                <ul class="scheme-drags__product-selection-products-nav-sublist"
+                                                                    id={{item.LINE_2_s}}>
+                                                                    <li *ngFor="let part of SKU[item.LINE_2_s]; let j=index;"
+                                                                        class="scheme-drags__product-selection-products-nav-sublist-item">
+                                                                        <label for="part_{{j}}">
+                                                                            <input type="checkbox" id="part_{{j}}"
+                                                                                (change)="SelectedPartLine(part,$event)">
+                                                                            {{part.desc_text}}</label>
+                                                                    </li>
+                                                               
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <h5 class="text-right note" *ngIf="isBulk==false">{{selectedPGLineArray.length}} products and
+                                                        {{selectedPartArray.length}} part selected</h5>
+                                                </div>
+                                                <div class="scheme-drags__product-selection-btns">
+                                                    <button class="button button--btn-brdr" (click)="addProduct()">ADD</button>
+                                                    <a href="#"><span class="material-icons"> east </span></a>
+                                                </div>
+                                                <div class="scheme-drags__product-selection-blocks"  *ngIf="isIndividual==true" >
+                                                    <h4>Selected Product Lines/Products</h4>
+                                                    <div class="scheme-drags__product-selection-blocks-inside">
+                                                        <ul class="tags dark-blue" *ngIf="productTypeDisplay.length>0">
+                                                            <h5>Product Lines:</h5>
+                                                            <li class="tags__list" *ngFor="let item of productTypeDisplay">
+                                                                <a>{{item.LINE_2_s}}<span class="material-icons"
+                                                                        (click)="removeLine(item.LINE_2_s)"> close
+                                                                    </span> </a>
+                                                            </li>
+                                                        </ul>
+                                                        <ul class="tags dark-blue" *ngIf="productTypeDisplay.length == 0">
+                                                            <h5>Product Lines:</h5>
+                                                            <li class="tags__list">
+                                                                <a>All</a>
+                                                            </li>
+                                                        </ul>
+                                                     
+                                                        <ul class="tags blue" *ngIf="selectedSKUDisplay.length > 0" >
+                                                            <h5 >Part Lines:</h5>
+                                                            <li class="tags__list" *ngFor="let item of selectedSKUDisplay" >
+                                                                <a>{{item.part_number}}_{{part_description}}
+                                                                    <span class="material-icons"
+                                                                        (click)="removePart(item.part_number)"> close </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <ul class="tags blue" *ngIf="selectedSKUDisplay.length == 0">
+                                                            <h5>Part Lines:</h5>
+                                                            <li class="tags__list">
+                                                                <a>All</a>
+                                                               
+                                                            </li>
+                                                        </ul>
+                                                        
+                                                        <!-- <ul class="tags blue" *ngIf="selectedSKUDisplay.length > 0">
+                                                            <h5>Part Lines:</h5>
+                                                            <li class="tags__list" *ngFor="let item of selectedSKUDisplay">
+                                                                <a>{{item.part_number}}_{{part_description}}
+                                                                    <span class="material-icons"
+                                                                        (click)="removePart(item.part_number)"> close </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul> -->
+                                                        <!-- <ul class="tags blue" *ngIf="selectedSKUDisplay.length == 0">
+                                                            <h5 >Part Lines:</h5>
+                                                            <li class="tags__list">
+                                                                <a>All</a>
+                                                               
+                                                            </li>
+                                                        </ul> -->
+                                                    </div>
+                                                    <h5 class="text-right note" *ngIf="isPart==true">{{productTypeDisplay.length}} product lines and
+                                                        {{selectedSKUDisplay.length}} part added</h5>
+                                                </div>
+                                               
+                                                <div class="scheme-drags__product-selection-blocks"  *ngIf="isBulk==true">
+                                                    <h4>Selected Product Lines/Products</h4>
+                                                    <div class="scheme-drags__product-selection-blocks-inside">
+                                                        <ul class="tags dark-blue" *ngIf="productTypeDisplay.length>0">
+                                                            <h5>Product Lines:</h5>
+                                                            <li class="tags__list" *ngFor="let item of productTypeDisplay">
+                                                                <a>{{item.LINE_2_s}}<span class="material-icons"
+                                                                        (click)="removeLine(item.LINE_2_s)"> close
+                                                                    </span> </a>
+                                                            </li>
+                                                        </ul>
+                                                        <ul class="tags dark-blue" *ngIf="productTypeDisplay.length == 0">
+                                                            <h5>Product Lines:</h5>
+                                                            <li class="tags__list">
+                                                                <a>All</a>
+                                                            </li>
+                                                        </ul>
+                                                     
+                                                        <ul class="tags blue" *ngIf="selectedSKUDisplay.length > 0" >
+                                                            <h5 >Part Lines:</h5>
+                                                            <li class="tags__list" *ngFor="let item of selectedSKUDisplay" >
+                                                                <a>{{item.display}}_{{part_description}}
+                                                                    <span class="material-icons"
+                                                                        (click)="removePart(item.part_number)"> close </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <ul class="tags blue" *ngIf="selectedSKUDisplay.length == 0">
+                                                            <h5>Part Lines:</h5>
+                                                            <li class="tags__list">
+                                                                <a>All</a>
+                                                               
+                                                            </li>
+                                                        </ul>
+                                                        
+                                                        <!-- <ul class="tags blue" *ngIf="selectedSKUDisplay.length > 0">
+                                                            <h5>Part Lines:</h5>
+                                                            <li class="tags__list" *ngFor="let item of selectedSKUDisplay">
+                                                                <a>{{item.part_number}}_{{part_description}}
+                                                                    <span class="material-icons"
+                                                                        (click)="removePart(item.part_number)"> close </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul> -->
+                                                        <!-- <ul class="tags blue" *ngIf="selectedSKUDisplay.length == 0">
+                                                            <h5 >Part Lines:</h5>
+                                                            <li class="tags__list">
+                                                                <a>All</a>
+                                                               
+                                                            </li>
+                                                        </ul> -->
+                                                    </div>
+                                                    <h5 class="text-right note" *ngIf="isPart==true">{{productTypeDisplay.length}} product lines and
+                                                        {{selectedSKUDisplay.length}} part added</h5>
+                                                </div>
+        
+        
+                                            </div>
+                                          
+        
                                         </div>
                                     </div>
                                     <div class="row" *ngIf="isPartWise == true" style="width: 950px;">
@@ -805,6 +965,7 @@
 
                                 <div class="scheme-drags__product-selection d-flex" *ngIf="isPgLine == true">
                                     <div class="row">
+                                        
                                         <div class="scheme-drags__product-selection-products-nav">
                                             <h4>All Products</h4>
                                             <div class="scheme-drags__product-selection-products-nav-list-wrapp">
@@ -861,12 +1022,12 @@
                                     </div>
                                 </div>
 
-                                <div class="scheme-drags__product-selection d-flex" *ngIf="isPart == true"
+                                <!-- <div class="scheme-drags__product-selection d-flex" *ngIf="isPart == true"
                                     style="margin-bottom: 10px;">
 
                                     <div class="row" *ngIf="isDefault == true">
                                      <div class="scheme-drags__product-selection-products-nav" >
-                                            <h4>All Products</h4>
+                                            <h4>Single Part</h4>
                                             <div class="scheme-drags__product-selection-products-nav-list-wrapp">
                                                 <div class="search-order-id">
                                                     <span class="material-icons"> search </span>
@@ -900,14 +1061,13 @@
                                                                         (change)="SelectedPartLine(part,$event)">
                                                                     {{part.desc_text}}</label>
                                                             </li>
-                                                            <!-- <li>abc</li>
-                                                        <li>abc</li> -->
+                                                       
                                                         </ul>
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <!-- <h5 class="text-right note">{{selectedPGLineArray.length}} products and
-                                                {{selectedPartArray.length}} part selected</h5> -->
+                                            <h5 class="text-right note">{{selectedPGLineArray.length}} products and
+                                                {{selectedPartArray.length}} part selected</h5>
                                         </div>
                                         <div class="scheme-drags__product-selection-btns">
                                             <button class="button button--btn-brdr" (click)="addProduct()">ADD</button>
@@ -970,7 +1130,7 @@
                                         </div>
                                     </div>
                                  
-                                </div>
+                                </div>  -->
                             </div>
 
                             <div *ngIf="isPartWise == true">

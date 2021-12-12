@@ -448,14 +448,14 @@ export class CustomerDetailsComponent implements OnInit {
     this.CustomerList.reset();
     this.BuildForm();
     const data: InputData1 = {} as InputData1
-   // data.size = 5;
+     data.size = 5;
     data.account_name = "";
     this.GetAccount(data);
     const ListInput: ListInput = {} as ListInput;
     ListInput.size = 10;
 
     this.GetList(ListInput);
-
+    this.myDrop.close()
 
 
 
@@ -608,7 +608,7 @@ export class CustomerDetailsComponent implements OnInit {
         }
       });
 
-    console.log(this.AccountDataPrepareArray);
+    //console.log(this.AccountDataPrepareArray);
     this.details = this.AccountDataPrepareArray;
     this.accountID = row.account_id;
     this.accountName = row.account_name;

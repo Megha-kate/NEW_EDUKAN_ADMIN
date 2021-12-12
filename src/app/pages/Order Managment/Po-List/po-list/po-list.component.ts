@@ -287,22 +287,42 @@ export class PoListComponent implements OnInit {
 
     });
   }
-  
+  // viewPodetails(data){
+
+  //   this.TempDAta = [];
+
+  //   const ListInput1: InputOrderDetail = {} as InputOrderDetail;
+  //     ListInput1.po_row_id = data
+  //    this.OrderListService.PoList1(ListInput1).subscribe(
+         
+  //     data => {
+  //       if (data.success == true) {
+  //         this.loader.close()
+  //         if (data.data.length > 0) {
+  //           this.TempDAta = data.data;
+  //           this.PoListInformations = this.TempDAta
+  //           let ngbModalOptions: NgbModalOptions = {
+  //             backdrop: true,
+  //             keyboard: true
+  //           };
+  //           this.modalService.open(this.PoListInformations, ngbModalOptions).result.then((result) => {
+  //             this.closeResult = `Closed with: ${result}`;
+  //           }, (reason: any) => {
+  //             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  //           });
+  //         }
+        
+  //       }
+  //       else {
+  //         this.loader.close()
+  //       }
+  //     }, (err) => {
+  //     }
+  //   );
+  // }
   viewPodetails (data: any, isNew?) {
 
 
-    // debugger
-    // if (data.otc_number == null) {
-    //   Swal.fire('Please Check Details After Some Time')
-    //   return false
-    // }
-
-
-    
-
-    //  this.dataPass.setPoDetails(data);
-  //  this.CommonService.PoDetailCheck.next('show');
-    // this.router.navigate(['pages/PoOrderDetails']);
     
     this.loader.open();
     const ListInput1: InputOrderDetail = {} as InputOrderDetail;
@@ -316,13 +336,10 @@ export class PoListComponent implements OnInit {
         if (data.success == true) {
           this.loader.close();
 
-         // console.log(data.data);
-
-          // if (data.data.result.line_items[0].length > 0) {
+       
             var TempDAta = data.data.result;
             this.dataPass.setOrderListData(TempDAta);
             let title = '';
-            // po_row_id = '';
             let dialogRef: MatDialogRef<any> = this.dialog.open(PoDetailsComponent, {
               panelClass: 'my-class',
               disableClose: false,
@@ -330,11 +347,7 @@ export class PoListComponent implements OnInit {
 
             })
             this.loader.close();
-          // }
-          // else {
-          //   Swal.fire('Please Check Details After Some Time');
-          //   this.loader.close();
-          // }
+         
         }
         else {
           Swal.fire('Please Check Details After Some Time');

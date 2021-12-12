@@ -3400,6 +3400,14 @@ export class DiscountMasterComponent implements OnInit {
       this.Valdationmessage = "* marked fields are mandatory"
       return;
     }
+    var d1 = Date.parse(this.itemForm.value.from_date);
+    var d2 = Date.parse(this.itemForm.value.to_date);
+    if (d1 > d2) {
+      //this.loader.close();
+      Swal.fire('From-Date Should be Less Than To-Date.');
+      this.Valdationmessage = "Start-Date Should be Less Than or Equal To Expiry-Date."
+      return;
+    }
 
     if (this.selectedState.length > 0 || this.selectedDistict.length > 0 || this.selected.length > 0) {
       if (this.selectedDisplayDivision.length == 0 && this.selectedDisplayDistributor.length == 0) {
@@ -3882,9 +3890,16 @@ export class DiscountMasterComponent implements OnInit {
 
     const ListInput1: FinalDataFor = {} as FinalDataFor;
     ListInput1.discount_name = Event.discount_name;
+  
 
-    ListInput1.from_date = moment(Event.from_date).format("YYYY-MM-DD");
-    ListInput1.to_date = moment(Event.to_date).format("YYYY-MM-DD");
+    // this.from_date = this.datepipe.transform(this.from_date, 'yyyy-MM-dd')
+    // this.to_date = this.datepipe.transform(this.from_date, 'yyyy-MM-dd')
+    // ListInput1.from_date = moment(Event.from_date).format("yyyy-dd-mm");
+    // ListInput1.to_date = moment(Event.to_date).format("yyyy-dd-mm");
+   // ListInput1.from_date = moment(this.from_date).format("DD-MM-YYYY")
+    //ListInput1.to_date = moment(this.from_date).format("DD-MM-YYYY")
+    ListInput1.from_date = moment(this.from_date).format("YYYY-MM-DD")
+    ListInput1.to_date = moment(this.from_date).format("YYYY-MM-DD")
     ListInput1.percentage = Number(Event.percentage);
     ListInput1.discount_details = this.FinalDataForInsert;
     ListInput1.discount_type = this.ShowDiscountType;

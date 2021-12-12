@@ -323,12 +323,15 @@ export class DivisionMasterComponent implements OnInit {
     this.currentPage = 1
     let fromDate = localStorage.getItem("FromDate");
     let todate = localStorage.getItem("ToDate");
-
+     
     if (this.iscustomDate == true) {
+
       this.from_date = this.AllFilters.value.from_date;
       this.to_date = this.AllFilters.value.to_date
-      this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-      this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+     
+      this.from_date = moment(this.from_date).subtract(1, 'months').format('"yyyy-mm-dd')
+      this.to_date = moment(this.to_date).subtract(1, 'months').format('"yyyy-mm-dd')
+    
     }
     else if (this.isLastsevenDay == true) {
       this.from_date = moment(todate).subtract(7, 'days').format('yyyy-MM-DD')

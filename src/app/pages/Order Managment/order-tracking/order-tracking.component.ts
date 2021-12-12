@@ -48,7 +48,7 @@ export class OrderTrackingComponent implements OnInit {
   isLastsevenDay: boolean;
   isToday: boolean;
   isInvoicedate: boolean;
-  isAll:boolean
+  isAll: boolean
   invoice_from_date: string;
   invoice_to_date: string;
   isTrackingdate: any;
@@ -204,7 +204,7 @@ export class OrderTrackingComponent implements OnInit {
     ListInput1.offset = 0;
     ListInput1.org_name = "";
     ListInput1.account_name = "";
-  
+
     ListInput1.size = 10;
     this.AllorderList(ListInput1);
     //this.noofrecordsperpage = 10
@@ -986,7 +986,7 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-//          this.to_date = this.AllFilters.value.tracking_to_date;
+          //          this.to_date = this.AllFilters.value.tracking_to_date;
           this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
           this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
         }
@@ -1430,8 +1430,8 @@ export class OrderTrackingComponent implements OnInit {
             ListInput1.order_from_date = localStorage.getItem("FromDate");
             ListInput1.order_to_date = localStorage.getItem("ToDate");
             ListInput1.offset = 0;
-            ListInput1.size = 10;
-            this.AllorderList(ListInput1);
+            ListInput1.limit = 10;
+            this.List(ListInput1);
             return
           }
           else if (this.AllFilters.value.order_from_date !== null && this.AllFilters.value.order_to_date == null || this.AllFilters.value.order_to_date == "") {
@@ -1477,8 +1477,8 @@ export class OrderTrackingComponent implements OnInit {
             ListInput1.tracking_from_date = localStorage.getItem("FromDate");
             ListInput1.tracking_to_date = localStorage.getItem("ToDate");
             ListInput1.offset = 0;
-            ListInput1.size = 10;
-            this.AllorderList(ListInput1);
+            ListInput1.limit = 10;
+            this.List(ListInput1);
             return
           }
           else if (this.AllFilters.value.tracking_from_date !== null && this.AllFilters.value.tracking_to_date == null || this.AllFilters.value.tracking_to_date == "") {
@@ -1580,7 +1580,7 @@ export class OrderTrackingComponent implements OnInit {
       listinput.invoice_status = "out for delivery";
 
       listinput.offset = 0
-      listinput.size = this.noofrecordsperpage
+      listinput.limit = this.noofrecordsperpage
       this.List(listinput)
     }
 
@@ -1769,7 +1769,7 @@ export class OrderTrackingComponent implements OnInit {
     // this.Filterarray = this.Filterarray.filter(book => book.Key !== 'size');
     // this.Filterarray = this.Filterarray.filter(book => book.Key !== 'order_status_array');
     // this.Filterarray = this.Filterarray.filter(book => book.Key !== 'offset');
-    
+
 
   }
 
@@ -1843,7 +1843,7 @@ export class OrderTrackingComponent implements OnInit {
     this.BuildForm();
     this.Filterarray = [];
     this.division_name = "",
-     this.account_id = "",
+      this.account_id = "",
       this.invoice_status = "";
     this.invoice_no = "";
     this.otc_number = "";
@@ -1909,16 +1909,16 @@ export class OrderTrackingComponent implements OnInit {
     //   this.myDrop.close();
 
     // }
-     if (this.tab == 1) {
+    if (this.tab == 1) {
       this.orderDate = true;
       this.trackingDate = false;
       this.invoiceDate = false;
       this.isThirtyDays = true;
-     this.currDiv = "All"
+      this.currDiv = "All"
 
       const ListInput1: AllInput = {} as AllInput;
-     ListInput1.order_status_array = ["Confirmed", "Cancelled", "Partially Confirmed"] //this.Allorder_status;
-     ListInput1.invoice_status = ""
+      ListInput1.order_status_array = ["Confirmed", "Cancelled", "Partially Confirmed"] //this.Allorder_status;
+      ListInput1.invoice_status = ""
       ListInput1.invoice_no = "";
       ListInput1.otc_number = "";
       ListInput1.order_from_date = this.from_date
@@ -1988,34 +1988,34 @@ export class OrderTrackingComponent implements OnInit {
     }
 
     else if (this.tab == 5) {
-    //   this.orderDate = false;
-    //   this.trackingDate = true;
-    //   this.invoiceDate = false;
-    //   this.isThirtyDays = true;
-    //   this.currDiv = "out for delivery";
+        this.orderDate = false;
+        this.trackingDate = true;
+        this.invoiceDate = false;
+        this.isThirtyDays = true;
+        this.currDiv = "OutforDelivery";
 
-    //   const listinput: InputOther = {} as InputOther;
-    //   listinput.tracking_from_date = this.from_date
-    //   listinput.tracking_to_date = this.to_date
-    //   listinput.invoice_status = "out for delivery";
-    //  listinput.offset = 0;
-    //   listinput.size = this.noofrecordsperpage
-    //   this.List(listinput)
+        const listinput: InputOther = {} as InputOther;
+        listinput.tracking_from_date = this.from_date
+        listinput.tracking_to_date = this.to_date
+        listinput.invoice_status = "out for delivery";
+        listinput.offset = 0;
+       listinput.limit = this.noofrecordsperpage;
+        this.List(listinput)
 
 
-      this.orderDate = false;
-      this.trackingDate = true;
-      this.invoiceDate = false;
-      this.isThirtyDays = true;
-      this.currDiv = "out for delivery"
+      // this.orderDate = false;
+      // this.trackingDate = true;
+      // this.invoiceDate = false;
+      // this.isThirtyDays = true;
+      // this.currDiv = "out for delivery"
 
-      const listinput: InputOther = {} as InputOther;
-      listinput.tracking_from_date = this.from_date
-      listinput.tracking_to_date = this.to_date
-      listinput.invoice_status = "out for delivery";
-      listinput.offset = 0;
-      listinput.size = this.noofrecordsperpage
-      this.List(listinput)
+      // const listinput: InputOther = {} as InputOther;
+      // listinput.tracking_from_date = this.from_date
+      // listinput.tracking_to_date = this.to_date
+      // listinput.invoice_status = "out for delivery";
+      // listinput.offset = 0;
+      // listinput.size = this.noofrecordsperpage
+      // this.List(listinput)
     }
 
     else if (this.tab == 6) {
@@ -2211,7 +2211,7 @@ export class OrderTrackingComponent implements OnInit {
   //   if (this.tab == 1) {
   //     debugger
   //     if (this.order_from_date == undefined || this.order_to_date == undefined || this.order_from_date == "" || this.order_to_date == "") {
-        
+
   //       const ListInput1: AllInput = {} as AllInput;
   //       ListInput1.order_status_array = ["Confirmed", "Cancelled", "Partially Confirmed"] 
   //       ListInput1.invoice_status = "";
@@ -2547,7 +2547,7 @@ export class OrderTrackingComponent implements OnInit {
 
 
 
-    
+
 
 
   // }
@@ -2566,8 +2566,10 @@ export class OrderTrackingComponent implements OnInit {
         ListInput1.otc_number = "";
         ListInput1.order_from_date = localStorage.getItem("FromDate");
         ListInput1.order_to_date = localStorage.getItem("ToDate");
-        ListInput1.tracking_from_date = ""; //this.FromDate;
-        ListInput1.tracking_to_date = "";// this.ToDate;
+        ListInput1.tracking_from_date = localStorage.getItem("FromDate");
+        ListInput1.tracking_to_date = localStorage.getItem("ToDate");
+        // ListInput1.tracking_from_date = ""; //this.FromDate;
+        // ListInput1.tracking_to_date = "";// this.ToDate;
         ListInput1.divison_id = "";
         ListInput1.offset = (page * 10);
         ListInput1.org_name = "";
@@ -2616,7 +2618,7 @@ export class OrderTrackingComponent implements OnInit {
         if (this.account_name) { AllFilters.account_name = this.account_name; } else { AllFilters.account_name = ""; }
         AllFilters.offset = (page * 10);
         AllFilters.size = this.noofrecordsperpage
-       // AllFilters.size = 10;
+        // AllFilters.size = 10;
 
         AllFilters.divison_id = ""
         AllFilters.invoice_status = this.invoice_status
@@ -2936,7 +2938,7 @@ export class OrderTrackingComponent implements OnInit {
   closeResult: string;
   TempDAta: any;
   orderInformations: any;
-  closemodel:any
+  closemodel: any
   details(row) {
     this.loader.open()
 
@@ -2945,8 +2947,8 @@ export class OrderTrackingComponent implements OnInit {
 
 
     const ListInput1: InputOrderDetail = {} as InputOrderDetail;
-   // ListInput1.otc_number = row.otc_number;
-    ListInput1.otc_number= row.otc_order_number
+    // ListInput1.otc_number = row.otc_number;
+    ListInput1.otc_number = row.otc_order_number
     console.log(row);
     this.OrderListService.OtcOrderDetails(ListInput1).subscribe(
       data => {
@@ -2962,7 +2964,7 @@ export class OrderTrackingComponent implements OnInit {
               backdrop: true,
               keyboard: true
             };
-           this.closemodel=this.modalService.open(this.orderDetails, ngbModalOptions).result.then((result) => {
+            this.closemodel = this.modalService.open(this.orderDetails, ngbModalOptions).result.then((result) => {
               this.closeResult = `Closed with: ${result}`;
             }, (reason: any) => {
               this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -2985,7 +2987,7 @@ export class OrderTrackingComponent implements OnInit {
 
 
   }
-  closeModal(){
+  closeModal() {
     this.closemodel.hide()
   }
 
@@ -2998,8 +3000,8 @@ export class OrderTrackingComponent implements OnInit {
 
 
     const ListInput1: InputOrderDetail = {} as InputOrderDetail;
-   // ListInput1.otc_number = row.otc_number;
-    ListInput1.otc_number= row.otc_number
+    // ListInput1.otc_number = row.otc_number;
+    ListInput1.otc_number = row.otc_number
     console.log(row);
     this.OrderListService.OtcOrderDetails(ListInput1).subscribe(
       data => {
@@ -3305,15 +3307,15 @@ export class OrderTrackingComponent implements OnInit {
   tab: any = 1;
   rows = []
   onClick(check) {
-     debugger
-     console.log(this.rows)
+    debugger
+    console.log(this.rows)
 
     this.selectedItemsList = [];
     this.tab = check
 
 
     if (this.tab == 1) {
-      
+
       this.currDiv = "All"
       this.orderDate = true;
       this.trackingDate = false;
@@ -3335,14 +3337,16 @@ export class OrderTrackingComponent implements OnInit {
       ListInput1.otc_number = "";
       ListInput1.order_from_date = localStorage.getItem("FromDate");
       ListInput1.order_to_date = localStorage.getItem("ToDate");
-      ListInput1.tracking_from_date = ""; //this.FromDate;
-      ListInput1.tracking_to_date = "";// this.ToDate;
+      // ListInput1.tracking_from_date = localStorage.getItem("FromDate");
+      // ListInput1.tracking_to_date = localStorage.getItem("ToDate");
+      ListInput1.tracking_from_date = ""; 
+      ListInput1.tracking_to_date = "";
       ListInput1.divison_id = "";
       ListInput1.offset = 0;
       ListInput1.org_name = "";
 
-      ListInput1.size = this.noofrecordsperpage     
-       this.selectedItemsList = [];
+      ListInput1.size = this.noofrecordsperpage
+      this.selectedItemsList = [];
       this.Filterarray = [];
       this.resetFilterFeild();
       this.AllFilters.get("otc_no_search").setValue("")
@@ -3395,7 +3399,7 @@ export class OrderTrackingComponent implements OnInit {
       // this.tracking_to_date = localStorage.getItem("ToDate");
       const ListInput: Input = {} as Input;
 
-     
+
       ListInput.otc_order_number = "";
       ListInput.invoice_no = "";
       ListInput.order_from_date = "";
@@ -3455,7 +3459,7 @@ export class OrderTrackingComponent implements OnInit {
       this.currentPage = 1;
       const ListInput: Input = {} as Input;
 
-     
+
       ListInput.otc_order_number = "";
       ListInput.invoice_no = "";
       ListInput.order_from_date = "";
@@ -3559,12 +3563,12 @@ export class OrderTrackingComponent implements OnInit {
 
         // this.totalrecord = data.rangeInfo.total_row;
         if (data.success == true) {
-        
+
           this.totalrecord = data.total_result;
           this.showRecords = data.data.length
-         // this.loader.close()
+          // this.loader.close()
           this.rows = data.data;
-         //console.log(this.rows ,"ffff");
+          //console.log(this.rows ,"ffff");
 
 
 
@@ -3622,7 +3626,7 @@ export class OrderTrackingComponent implements OnInit {
           if (this.tab == 6) {
             this.deliveryCount = 0
           }
-         // this.toastrService.error(data.data.msg);
+          // this.toastrService.error(data.data.msg);
           this.rows = [];
 
 
@@ -3737,7 +3741,7 @@ export class OrderTrackingComponent implements OnInit {
 
           if (this.tab == 1) {
             this.allCount = data.rangeInfo.total_row;
-           // console.log(this.allCount)
+            // console.log(this.allCount)
             //console.log(data.rangeInfo.total_row)
           }
           if (this.tab == 2) {
@@ -3752,7 +3756,7 @@ export class OrderTrackingComponent implements OnInit {
         else {
           if (this.tab == 1) {
             this.allCount = 0;
-           // console.log(this.allCount)
+            // console.log(this.allCount)
             // console.log(data.rangeInfo.total_row)
           }
           if (this.tab == 2) {
@@ -4055,148 +4059,148 @@ export class OrderTrackingComponent implements OnInit {
     //   }
     //   else {
 
-        if (this.totalrecord == 0) {
-          Swal.fire("No Data For downloding.....");
-        } else {
-          const ListInput1: AllReport = {} as AllReport;
-          var fileType = "";
-          if (this.tab == 1) {
-            fileType = "ALL";
+    if (this.totalrecord == 0) {
+      Swal.fire("No Data For downloding.....");
+    } else {
+      const ListInput1: AllReport = {} as AllReport;
+      var fileType = "";
+      if (this.tab == 1) {
+        fileType = "ALL";
 
-            ListInput1.invoice_status = this.invoice_status;
-            ListInput1.invoice_no = this.invoice_no;
-            ListInput1.otc_number = this.otc_number;
-            ListInput1.order_from_date = this.from_date;
-            ListInput1.order_to_date = this.to_date;
-            ListInput1.tracking_from_date = this.tracking_from_date; //this.FromDate;
-            ListInput1.tracking_to_date = this.tracking_to_date;// this.ToDate;
-            ListInput1.divison_id = this.div_id;
-            ListInput1.offset = 0
-            ListInput1.size = this.totalrecord;
-            ListInput1.org_name = this.distributor_name;
-            ListInput1.account_name = this.account_name
-            // ListInput1.order_status = "Confirmed";
-            ListInput1.order_status_array = ["Confirmed", "Cancelled", "Partially Confirmed"]
-            ListInput1.invoice_from_date = this.invoice_from_date
-            ListInput1.invoice_to_date = this.invoice_to_date
-          }
-          else if (this.tab == 2) {
-            fileType = "Delayed";
-
-            //const ListInput1: AllInput = {} as AllInput;
-            //ListInput1.order_status = "Confirmed";
-            ListInput1.order_status_array = ["Confirmed"]
-            ListInput1.invoice_status = "order_without_invoice";
-            ListInput1.invoice_no = this.invoice_no;
-            ListInput1.otc_number = this.otc_number;
-            ListInput1.order_from_date = this.order_from_date;
-            ListInput1.order_to_date = this.order_to_date;
-            ListInput1.tracking_from_date = this.tracking_from_date; //this.FromDate;
-            ListInput1.tracking_to_date = this.tracking_to_date;// this.ToDate;
-            ListInput1.divison_id = this.division_id;
-            ListInput1.account_name = this.account_name
-            ListInput1.org_name = this.distributor_name;
-            ListInput1.offset = 0
-            ListInput1.size = this.totalrecord;
-          }
-
-
-          this.allOrderReport = ListInput1;
-          this.count = this.totalrecord;
-          this.pageName = "tracking-All";
-          this.fileTypeName = fileType
-          let ngbModalOptions: NgbModalOptions = {
-            backdrop: false,
-            keyboard: false,
-          };
-          this.modalService.open(this.reportAllDownload, ngbModalOptions).result.then((result) => {
-            this.closeResult = `Closed with: ${result}`;
-          }, (reason: any) => {
-            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-          });
-        }
+        ListInput1.invoice_status = this.invoice_status;
+        ListInput1.invoice_no = this.invoice_no;
+        ListInput1.otc_number = this.otc_number;
+        ListInput1.order_from_date = this.from_date;
+        ListInput1.order_to_date = this.to_date;
+        ListInput1.tracking_from_date = this.tracking_from_date; //this.FromDate;
+        ListInput1.tracking_to_date = this.tracking_to_date;// this.ToDate;
+        ListInput1.divison_id = this.div_id;
+        ListInput1.offset = 0
+        ListInput1.size = this.totalrecord;
+        ListInput1.org_name = this.distributor_name;
+        ListInput1.account_name = this.account_name
+        // ListInput1.order_status = "Confirmed";
+        ListInput1.order_status_array = ["Confirmed", "Cancelled", "Partially Confirmed"]
+        ListInput1.invoice_from_date = this.invoice_from_date
+        ListInput1.invoice_to_date = this.invoice_to_date
       }
-    // }
+      else if (this.tab == 2) {
+        fileType = "Delayed";
+
+        //const ListInput1: AllInput = {} as AllInput;
+        //ListInput1.order_status = "Confirmed";
+        ListInput1.order_status_array = ["Confirmed"]
+        ListInput1.invoice_status = "order_without_invoice";
+        ListInput1.invoice_no = this.invoice_no;
+        ListInput1.otc_number = this.otc_number;
+        ListInput1.order_from_date = this.order_from_date;
+        ListInput1.order_to_date = this.order_to_date;
+        ListInput1.tracking_from_date = this.tracking_from_date; //this.FromDate;
+        ListInput1.tracking_to_date = this.tracking_to_date;// this.ToDate;
+        ListInput1.divison_id = this.division_id;
+        ListInput1.account_name = this.account_name
+        ListInput1.org_name = this.distributor_name;
+        ListInput1.offset = 0
+        ListInput1.size = this.totalrecord;
+      }
+
+
+      this.allOrderReport = ListInput1;
+      this.count = this.totalrecord;
+      this.pageName = "tracking-All";
+      this.fileTypeName = fileType
+      let ngbModalOptions: NgbModalOptions = {
+        backdrop: false,
+        keyboard: false,
+      };
+      this.modalService.open(this.reportAllDownload, ngbModalOptions).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason: any) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
+  }
+  // }
   // }
   OrderReport: any;
   ReportDownload(event) {
-   debugger;
+    debugger;
 
     // if (event.target.value == " ") {
     //   Swal.fire('Please select download type')
     // }
     // else if (event.target.value == "Excel") {
-      if (this.totalrecord == 0) {
-        Swal.fire("No Data For downloding");
-      }
-      else {
-        const ListInput: Report = {} as Report;
-
-       
-
-        //ListInput.tracking_from_date = this.tracking_from_date; //this.FromDate;
-       // ListInput.tracking_to_date = this.tracking_to_date
-
-        if (this.invoice_no) { ListInput.invoice_no = this.invoice_no; } else { ListInput.invoice_no = ""; }
-
-        if (this.otc_number) { ListInput.otc_number = this.otc_number; } else { ListInput.otc_number = ""; }
-
-        if (this.from_date) { ListInput.tracking_from_date = this.from_date; } else { ListInput.tracking_from_date = ""; }
-
-        if (this.to_date) { ListInput.tracking_to_date = this.to_date; } else { ListInput.tracking_to_date = ""; }
-
-        if (this.OrderFromDate) { ListInput.order_from_date = this.OrderFromDate; } else { ListInput.order_from_date = "" };
-        if (this.OrderToDate) { ListInput.order_to_date = this.OrderToDate; } else { ListInput.order_to_date = ""; }
-        if (this.divison_id) { ListInput.div_id = this.divison_id; } else { ListInput.div_id = ""; }
-
-        if (this.org_name) { ListInput.org_name = this.org_name; } else { ListInput.org_name = "" }
-
-
-        if (this.account_id) { ListInput.account_id = this.account_id; } else { ListInput.account_id = "" }
-
-        
-        
-        
-        if (this.tab == 4) {
-
-          ListInput.invoice_status = "invoiced";
-
-        }
-        if (this.tab == 5) {
-
-          ListInput.invoice_status = "out for delivery";
-
-        }
-        if (this.tab == 6) {
-
-          ListInput.invoice_status = "Delivered";
-
-        }
-        if (this.tab == 3) {
-
-          ListInput.invoice_status = "Cancelled";
-
-        }
-
-        ListInput.limit = this.totalrecord;
-        ListInput.offset = 0;
-        this.OrderReport = ListInput;
-      
-      
-        this.count = this.totalrecord;
-        this.pageName = "tracking";
-        let ngbModalOptions: NgbModalOptions = {
-          backdrop: false,
-          keyboard: false,
-        };
-        this.modalService.open(this.reportDownload, ngbModalOptions).result.then((result) => {
-          this.closeResult = `Closed with: ${result}`;
-        }, (reason: any) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        });
-      }
+    if (this.totalrecord == 0) {
+      Swal.fire("No Data For downloding");
     }
- 
+    else {
+      const ListInput: Report = {} as Report;
+
+
+
+      //ListInput.tracking_from_date = this.tracking_from_date; //this.FromDate;
+      // ListInput.tracking_to_date = this.tracking_to_date
+
+      if (this.invoice_no) { ListInput.invoice_no = this.invoice_no; } else { ListInput.invoice_no = ""; }
+
+      if (this.otc_number) { ListInput.otc_number = this.otc_number; } else { ListInput.otc_number = ""; }
+
+      if (this.from_date) { ListInput.tracking_from_date = this.from_date; } else { ListInput.tracking_from_date = ""; }
+
+      if (this.to_date) { ListInput.tracking_to_date = this.to_date; } else { ListInput.tracking_to_date = ""; }
+
+      if (this.OrderFromDate) { ListInput.order_from_date = this.OrderFromDate; } else { ListInput.order_from_date = "" };
+      if (this.OrderToDate) { ListInput.order_to_date = this.OrderToDate; } else { ListInput.order_to_date = ""; }
+      if (this.divison_id) { ListInput.div_id = this.divison_id; } else { ListInput.div_id = ""; }
+
+      if (this.org_name) { ListInput.org_name = this.org_name; } else { ListInput.org_name = "" }
+
+
+      if (this.account_id) { ListInput.account_id = this.account_id; } else { ListInput.account_id = "" }
+
+
+
+
+      if (this.tab == 4) {
+
+        ListInput.invoice_status = "invoiced";
+
+      }
+      if (this.tab == 5) {
+
+        ListInput.invoice_status = "out for delivery";
+
+      }
+      if (this.tab == 6) {
+
+        ListInput.invoice_status = "Delivered";
+
+      }
+      if (this.tab == 3) {
+
+        ListInput.invoice_status = "Cancelled";
+
+      }
+
+      ListInput.limit = this.totalrecord;
+      ListInput.offset = 0;
+      this.OrderReport = ListInput;
+
+
+      this.count = this.totalrecord;
+      this.pageName = "tracking";
+      let ngbModalOptions: NgbModalOptions = {
+        backdrop: false,
+        keyboard: false,
+      };
+      this.modalService.open(this.reportDownload, ngbModalOptions).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason: any) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
+  }
+
 
 
   ReportDownloadDelivery(event) {
@@ -4205,66 +4209,66 @@ export class OrderTrackingComponent implements OnInit {
     //   Swal.fire('Please select download type')
     // }
     // else if (event.target.value == "Excel") {
-      if (this.totalrecord == 0) {
-        Swal.fire("No Data For downloding");
-      } else {
+    if (this.totalrecord == 0) {
+      Swal.fire("No Data For downloding");
+    } else {
 
-        const ListInput: Input = {} as Input;
-
-
-        if (this.invoice_no) { ListInput.invoice_no = this.invoice_no; } else { ListInput.invoice_no = ""; }
-
-        if (this.otc_number) { ListInput.otc_number = this.otc_number; } else { ListInput.otc_number = ""; }
-
-        if (this.from_date) { ListInput.tracking_from_date = this.from_date; } else { ListInput.tracking_from_date = ""; }
-
-        if (this.to_date) { ListInput.tracking_to_date = this.to_date; } else { ListInput.tracking_to_date = ""; }
-
-        if (this.OrderFromDate) { ListInput.order_from_date = this.OrderFromDate; } else { ListInput.order_from_date = "" };
-        if (this.OrderToDate) { ListInput.order_to_date = this.OrderToDate; } else { ListInput.order_to_date = ""; }
+      const ListInput: Input = {} as Input;
 
 
-        if (this.divison_id) { ListInput.div_id = this.divison_id; } else { ListInput.div_id = ""; }
+      if (this.invoice_no) { ListInput.invoice_no = this.invoice_no; } else { ListInput.invoice_no = ""; }
 
-        if (this.distributor_name) { ListInput.org_name = this.distributor_name; } else { ListInput.org_name = "" }
+      if (this.otc_number) { ListInput.otc_number = this.otc_number; } else { ListInput.otc_number = ""; }
+
+      if (this.from_date) { ListInput.tracking_from_date = this.from_date; } else { ListInput.tracking_from_date = ""; }
+
+      if (this.to_date) { ListInput.tracking_to_date = this.to_date; } else { ListInput.tracking_to_date = ""; }
+
+      if (this.OrderFromDate) { ListInput.order_from_date = this.OrderFromDate; } else { ListInput.order_from_date = "" };
+      if (this.OrderToDate) { ListInput.order_to_date = this.OrderToDate; } else { ListInput.order_to_date = ""; }
 
 
-        if (this.account_id) { ListInput.account_name = this.account_id; } else { ListInput.account_name = "" }
+      if (this.divison_id) { ListInput.div_id = this.divison_id; } else { ListInput.div_id = ""; }
+
+      if (this.distributor_name) { ListInput.org_name = this.distributor_name; } else { ListInput.org_name = "" }
+
+
+      if (this.account_id) { ListInput.account_name = this.account_id; } else { ListInput.account_name = "" }
 
 
 
-        
-        if (this.curenttab == 4) {
 
-          ListInput.invoice_status = "delivered";
+      if (this.curenttab == 4) {
 
-        }
-        if (this.curenttab == 3) {
-
-          ListInput.invoice_status = "Cancelled";
-
-        }
-
-        ListInput.invoice_status = "delivered"
-        ListInput.offset = 0;
-
-        ListInput.size = this.totalrecord;
-
-        this.OrderReport = ListInput;
-        this.count = this.totalrecord;
-        this.pageName = "deliverytracking";
-        let ngbModalOptions: NgbModalOptions = {
-          backdrop: false,
-          keyboard: false,
-        };
-        this.modalService.open(this.reportDownload, ngbModalOptions).result.then((result) => {
-          this.closeResult = `Closed with: ${result}`;
-        }, (reason: any) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        });
+        ListInput.invoice_status = "delivered";
 
       }
+      if (this.curenttab == 3) {
+
+        ListInput.invoice_status = "Cancelled";
+
+      }
+
+      ListInput.invoice_status = "delivered"
+      ListInput.offset = 0;
+
+      ListInput.size = this.totalrecord;
+
+      this.OrderReport = ListInput;
+      this.count = this.totalrecord;
+      this.pageName = "deliverytracking";
+      let ngbModalOptions: NgbModalOptions = {
+        backdrop: false,
+        keyboard: false,
+      };
+      this.modalService.open(this.reportDownload, ngbModalOptions).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason: any) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+
     }
+  }
 
   // }
 
@@ -4494,6 +4498,7 @@ export class OrderTrackingComponent implements OnInit {
 }
 
 export interface AllInput {
+  limit: number;
   to_date: string;
   from_date: string;
   status: string;

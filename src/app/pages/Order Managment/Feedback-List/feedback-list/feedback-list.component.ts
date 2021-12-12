@@ -496,6 +496,10 @@ export class FeedbackListComponent implements OnInit {
         this.FeedbackList(ListInput)
         return
       }
+
+      var new_fromdate= this.onDateSelect(this.AllFilters.value.from_date)
+      var new_todate= this.onDateSelect(this.AllFilters.value.to_date)
+
       var d1 = moment(this.AllFilters.value.from_date).format('yyyy-MM-DD')
       var d2 = moment(this.AllFilters.value.to_date).format('yyyy-MM-DD')
       var days = this.calculateDate1(d1, d2);
@@ -614,8 +618,13 @@ export class FeedbackListComponent implements OnInit {
 
 
 
-
-
+  onDateSelect(event) {
+    
+    let year = event.year;
+    let month = event.month <= 9 ? '0' + event.month : event.month;;
+    let day = event.day <= 9 ? '0' + event.day : event.day;;
+    let finalDate = year + "-" + month + "-" + day;
+   }
 
   FilterStrings(ListInput) {
     this.Filterarray = [];

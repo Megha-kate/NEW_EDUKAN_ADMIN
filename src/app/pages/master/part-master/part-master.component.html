@@ -318,7 +318,7 @@
             <ul class="tags__list" style="margin-right: 170px;">
                 <li *ngFor="let Filterrow of Filterarray"><a
                         style="cursor: default;">{{Filterrow.Value}} <img
-                            (click)="onRemoveFilter(Filterrow)"
+                            (click)="onRemoveFilter(Filterrow)" [hidden]="Filterrow.Key == 'from_date'"
                             src="./assets/images/tag-close.svg" /></a></li>
             </ul>
 

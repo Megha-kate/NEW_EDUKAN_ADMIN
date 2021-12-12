@@ -184,15 +184,10 @@
                     <li>
                         <div class="srch-box">
                             <label>State</label><br />
-                            <select class="textfield"
-                            [formControl]="AllFilters.controls['shipping_state']"
-                            (change)="onChange($event.target.value)">
-                            <option hidden></option>
-
-                            <option *ngFor="let SateData of statenamedata;">
-                                {{SateData.state_name}}</option>
-                        </select>
-
+                            <select class="textfield" [formControl]="AllFilters.controls['state']">
+                                <option *ngFor="let state of StateData;" [value]="state.state_code">
+                                    {{state.state_name}}</option>
+                            </select>
                         </div>
                     </li>
                     <li>
