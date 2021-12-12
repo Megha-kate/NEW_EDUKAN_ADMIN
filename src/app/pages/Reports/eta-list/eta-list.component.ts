@@ -462,6 +462,24 @@ export class EtaListComponent implements OnInit {
     this.AllorderList(ListInput);
 
   }
+  onDateSelect(event) {
+    
+    let year = event.year;
+    let month = event.month <= 9 ? '0' + event.month : event.month;;
+    let day = event.day <= 9 ? '0' + event.day : event.day;;
+    let finalDate = year + "-" + month + "-" + day;
+    return finalDate
+   }
+   calculateDate1(Date1,date2){
+    debugger
+      Date1 = new Date(Date1);
+      date2 = new Date(date2);
+      var diffc = Date1.getTime() - date2.getTime();
+     
+      var days = Math.round(Math.abs(diffc / (1000 * 60 * 60 * 24)));
+      
+      return days;
+    }
   Search() {
    this.Filterarray = [];
     this.currentPage = 1
@@ -585,10 +603,49 @@ export class EtaListComponent implements OnInit {
     let todate = localStorage.getItem("ToDate");
 
     if (this.iscustomDate == true) {
-      this.from_date = this.itemForm.value.from_date;
-      this.to_date = this.itemForm.value.to_date
-      this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-      this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+      if (this.itemForm.value.from_date == null || this.itemForm.value.from_date == "" && this.itemForm.value.to_date !== null) {
+        Swal.fire('Select From Date');
+        const ListInput: Input = {} as Input;
+        ListInput.from_date = localStorage.getItem("FromDate");
+        ListInput.to_date = localStorage.getItem("ToDate");
+
+        this.AllorderList(ListInput)
+        return
+      }
+      else if (this.itemForm.value.from_date !== null && this.itemForm.value.to_date == null || this.itemForm.value.to_date == "") {
+        Swal.fire('Select To Date');
+        const ListInput: Input = {} as Input;
+        ListInput.from_date = localStorage.getItem("FromDate");
+        ListInput.to_date = localStorage.getItem("ToDate");
+        this.AllorderList(ListInput)
+        return
+      }
+      var d1 = moment(this.from_date).format('yyyy-MM-DD')
+      var d2 = moment(this.to_date).format('yyyy-MM-DD')
+      var days = this.calculateDate1(d1,d2);
+      if (d1 > d2) {
+        Swal.fire('From-Date Should be Less Than To-Date.');
+        const ListInput: Input = {} as Input;
+        ListInput.from_date = localStorage.getItem("FromDate");
+        ListInput.to_date = localStorage.getItem("ToDate");
+
+        this.AllorderList(ListInput)
+        return
+        
+      }
+      else if(days >= 95){
+        Swal.fire(' Allow to get Only 95 Days Data');
+        const ListInput: Input = {} as Input;
+        ListInput.from_date = localStorage.getItem("FromDate");
+        ListInput.to_date = localStorage.getItem("ToDate");
+
+        this.AllorderList(ListInput)
+        return
+      }
+      let customfromdate = this.itemForm.value.from_date;
+      let customtodate = this.itemForm.value.to_date
+      this.from_date = this.onDateSelect(customfromdate)
+      this.to_date = this.onDateSelect(customtodate)
     }
     else if (this.isLastsevenDay == true) {
       this.from_date = moment(todate).subtract(7, 'days').format('yyyy-MM-DD')

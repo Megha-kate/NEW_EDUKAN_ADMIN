@@ -1144,7 +1144,14 @@ export class OrderHistoryComponent implements OnInit {
 
     });
   }
- 
+  onDateSelect(event) {
+    
+    let year = event.year;
+    let month = event.month <= 9 ? '0' + event.month : event.month;;
+    let day = event.day <= 9 ? '0' + event.day : event.day;;
+    let finalDate = year + "-" + month + "-" + day;
+    return finalDate
+   }
   
   state_name: any;
   otc_number: any;
@@ -1188,8 +1195,8 @@ export class OrderHistoryComponent implements OnInit {
           this.GetOrderList(ListInput)
           return
         }
-        var d1 = moment(this.AllFilters.value.from_date).format('yyyy-MM-DD')
-        var d2 = moment(this.AllFilters.value.to_date).format('yyyy-MM-DD')
+        var d1 = moment(this.from_date).format('yyyy-MM-DD')
+        var d2 = moment(this.to_date).format('yyyy-MM-DD')
         var days = this.calculateDate1(d1,d2);
         if (d1 > d2) {
           Swal.fire('From-Date Should be Less Than To-Date.');
@@ -1215,10 +1222,14 @@ export class OrderHistoryComponent implements OnInit {
          
         }
 
-        this.from_date = this.AllFilters.value.from_date;
-        this.to_date = this.AllFilters.value.to_date;
-        this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-        this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+        let customfromdate = this.AllFilters.value.from_date;
+        let customtodate = this.AllFilters.value.to_date
+        this.from_date = this.onDateSelect(customfromdate)
+        this.to_date = this.onDateSelect(customtodate)
+        // this.from_date = this.AllFilters.value.from_date;
+        // this.to_date = this.AllFilters.value.to_date;
+        // this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+        // this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
       }
       else if (this.isLastsevenDay == true) {
         this.from_date = moment(this.to_date).subtract(7, 'days').format('yyyy-MM-DD')
@@ -1331,8 +1342,8 @@ export class OrderHistoryComponent implements OnInit {
           this.GetOrderList(ListInput)
           return
         }
-        var d1 = moment(this.AllFilters.value.from_date).format('yyyy-MM-DD')
-        var d2 = moment(this.AllFilters.value.to_date).format('yyyy-MM-DD')
+        var d1 = moment(this.from_date).format('yyyy-MM-DD')
+        var d2 = moment(this.to_date).format('yyyy-MM-DD')
         var days = this.calculateDate1(d1,d2);
         if (d1 > d2) {
           Swal.fire('From-Date Should be Less Than To-Date.');
@@ -1353,10 +1364,14 @@ export class OrderHistoryComponent implements OnInit {
           this.GetOrderList(ListInput)
           return
         }
-        this.from_date = this.AllFilters.value.from_date;
-        this.to_date = this.AllFilters.value.to_date;
-        this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-        this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+        let customfromdate = this.AllFilters.value.from_date;
+        let customtodate = this.AllFilters.value.to_date
+        this.from_date = this.onDateSelect(customfromdate)
+        this.to_date = this.onDateSelect(customtodate)
+        // this.from_date = this.AllFilters.value.from_date;
+        // this.to_date = this.AllFilters.value.to_date;
+        // this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+        // this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
       }
       else if (this.isLastsevenDay == true) {
         this.from_date = moment(this.to_date).subtract(7, 'days').format('yyyy-MM-DD')
@@ -1466,8 +1481,8 @@ export class OrderHistoryComponent implements OnInit {
           this.GetOrderList(ListInput)
           return
         }
-        var d1 = moment(this.AllFilters.value.from_date).format('yyyy-MM-DD')
-        var d2 = moment(this.AllFilters.value.to_date).format('yyyy-MM-DD')
+        var d1 = moment(this.from_date).format('yyyy-MM-DD')
+        var d2 = moment(this.to_date).format('yyyy-MM-DD')
         var days = this.calculateDate1(d1,d2);
         if (d1 > d2) {
           Swal.fire('From-Date Should be Less Than To-Date.');
@@ -1488,10 +1503,14 @@ export class OrderHistoryComponent implements OnInit {
           this.GetOrderList(ListInput)
           return
         }
-        this.from_date = this.AllFilters.value.from_date;
-        this.to_date = this.AllFilters.value.to_date;
-        this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-        this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+        let customfromdate = this.AllFilters.value.from_date;
+        let customtodate = this.AllFilters.value.to_date
+        this.from_date = this.onDateSelect(customfromdate)
+        this.to_date = this.onDateSelect(customtodate)
+        // this.from_date = this.AllFilters.value.from_date;
+        // this.to_date = this.AllFilters.value.to_date;
+        // this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+        // this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
       }
       else if (this.isLastsevenDay == true) {
         this.from_date = moment(this.to_date).subtract(7, 'days').format('yyyy-MM-DD')
@@ -1594,8 +1613,8 @@ export class OrderHistoryComponent implements OnInit {
           this.GetOrderList(ListInput)
           return
         }
-        var d1 = moment(this.AllFilters.value.from_date).format('yyyy-MM-DD')
-        var d2 = moment(this.AllFilters.value.to_date).format('yyyy-MM-DD')
+        var d1 = moment(this.from_date).format('yyyy-MM-DD')
+        var d2 = moment(this.to_date).format('yyyy-MM-DD')
         var days = this.calculateDate1(d1,d2);
         if (d1 > d2) {
           Swal.fire('From-Date Should be Less Than To-Date.');
@@ -1616,10 +1635,14 @@ export class OrderHistoryComponent implements OnInit {
           this.GetOrderList(ListInput)
           return
         }
-        this.from_date = this.AllFilters.value.from_date;
-        this.to_date = this.AllFilters.value.to_date;
-        this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-        this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+        let customfromdate = this.AllFilters.value.from_date;
+        let customtodate = this.AllFilters.value.to_date
+        this.from_date = this.onDateSelect(customfromdate)
+        this.to_date = this.onDateSelect(customtodate)
+        // this.from_date = this.AllFilters.value.from_date;
+        // this.to_date = this.AllFilters.value.to_date;
+        // this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+        // this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
       }
       else if (this.isLastsevenDay == true) {
         this.from_date = moment(this.to_date).subtract(7, 'days').format('yyyy-MM-DD')

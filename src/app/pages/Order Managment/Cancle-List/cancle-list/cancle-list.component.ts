@@ -541,77 +541,187 @@ export class CancleListComponent implements OnInit {
       
       return days;
     }
-
+    onDateSelect(event) {
+      debugger
+      let year = event.year;
+      let month = event.month <= 9 ? '0' + event.month : event.month;
+      let day = event.day <= 9 ? '0' + event.day : event.day;
+      let finalDate = year + "-" + month + "-" + day;
+      return finalDate
+     }
   SearchAllDate() {
     debugger;
    
       
-    // let fromDate =this.datepipe.transform(this.fromDate, 'yyyy-MM-dd');
-    // let toDate =this.datepipe.transform(this.toDate, 'yyyy-MM-dd');
-    let fromDate = localStorage.getItem("FromDate");
-    let toDate = localStorage.getItem("ToDate");
+   
+    // let fromDate = localStorage.getItem("FromDate");
+    // let toDate = localStorage.getItem("ToDate");
     this.currentPage = 1
     this.Filterarray = [];
     var a = this.DistributorList.valid;
-    console.log(this.from_date,this.to_date,"frome date gggg")
+  
+     
+    // if (this.iscustomDate == true) {
+
+    //   let customfromdate = this.AllFilters.value.from_date;
+    //   let customtodate = this.AllFilters.value.to_date
+    //   this.from_date = this.onDateSelect(customfromdate)
+    //   this.to_date = this.onDateSelect(customtodate)
+     
+    //   this.from_date = moment(this.from_date).subtract(1, 'months').format('"yyyy-mm-dd')
+    //   this.to_date = moment(this.to_date).subtract(1, 'months').format('"yyyy-mm-dd')
+    
+    // }
+
+    // if (this.iscustomDate == true) {
+    //   if (this.AllFilters.value.from_date == null || this.AllFilters.value.from_date == "" && this.AllFilters.value.to_date !== null) {
+    //     Swal.fire('Select From Date');
+    //     console.log(this.from_date,this.to_date,"frome date gggg")
+    //     const ListInput: ListInput1 = {} as ListInput1;
+    //     ListInput.from_date =this.datepipe.transform(this.from_date, 'yyyy-MM-dd');
+    //     ListInput.to_date = this.datepipe.transform(this.toDate, 'yyyy-MM-dd');
+    //     ListInput.cr_request_type = "order_cancellation"
+    //     this.CancleList(ListInput)
+    //     return
+    //   }
+    //   else if (this.AllFilters.value.from_date !== null && this.AllFilters.value.to_date == null || this.AllFilters.value.to_date == "") {
+    //    Swal.fire('Select To Date');
+    //     const ListInput: ListInput1 = {} as ListInput1;
+    //      ListInput.from_date =this.datepipe.transform(this.fromDate, 'yyyy-MM-dd');
+    //     ListInput.to_date = this.datepipe.transform(this.toDate, 'yyyy-MM-dd');
+    //     ListInput.cr_request_type = "order_cancellation"
+    //     this.CancleList(ListInput)
+    //     return
+    //   }
+    //   var d1 = moment(this.AllFilters.value.from_date).format('yyyy-MM-DD')
+    //   var d2 = moment(this.AllFilters.value.to_date).format('yyyy-MM-DD')
+    //   var days = this.calculateDate1(d1,d2);
+    //   if (d1 > d2) {
+    //     Swal.fire('From-Date Should be Less Than To-Date.');
+    //     const ListInput: ListInput1 = {} as ListInput1;
+    //     ListInput.from_date = localStorage.getItem("FromDate");
+    //     ListInput.to_date = localStorage.getItem("ToDate");
+    //     ListInput.cr_request_type = "order_cancellation"
+    //     this.CancleList(ListInput)
+    //     return
+        
+    //   }
+    //   else if(days >= 95){
+    //     Swal.fire(' Please select the date range up to 95 days ');
+    //     const ListInput: ListInput1 = {} as ListInput1;
+    //     ListInput.from_date = localStorage.getItem("FromDate");
+    //     ListInput.to_date = localStorage.getItem("ToDate");
+    //     ListInput.cr_request_type = "order_cancellation"
+    //     this.CancleList(ListInput)
+    //     return
+    //   }
+    
+
+    //     let customfromdate = this.AllFilters.value.from_date;
+    //     let customtodate = this.AllFilters.value.to_date
+    //     this.from_date = this.onDateSelect(customfromdate)
+    //     this.to_date = this.onDateSelect(customtodate)
+       
+    //     // this.from_date = moment(this.from_date).subtract(1, 'months').format('"yyyy-mm-dd')
+    //     // this.to_date = moment(this.to_date).subtract(1, 'months').format('"yyyy-mm-dd')
+      
+   
+    //   // this.from_date = this.AllFilters.value.from_date;
+    //   // this.to_date = this.AllFilters.value.to_date
+    //   // this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+    //   // this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+    // }
+    // else if (this.isLastsevenDay == true) {
+    //   this.from_date = moment(toDate).subtract(7, 'days').format('yyyy-MM-DD')
+    //   this.to_date = this.datepipe.transform(toDate, 'yyyy-MM-dd')
+    // }
+    // else if (this.isToday == true) {
+    //   this.from_date = moment(toDate).format('yyyy-MM-DD')
+    //   this.to_date = this.datepipe.transform(toDate, 'yyyy-MM-dd')
+    // }
+    // else if (this.isThirtyDays == true) {
+    //   this.from_date = this.datepipe.transform(this.from_date, 'yyyy-MM-dd')
+    //   this.to_date = this.datepipe.transform(this.to_date, 'yyyy-MM-dd')
+    // }
+
+    let fromDate = localStorage.getItem("FromDate");
+    let todate = localStorage.getItem("ToDate");
+     
+    // if (this.iscustomDate == true) {
+
+    //  let customfromdate = this.AllFilters.value.from_date;
+    
+    //  let customtodate = this.AllFilters.value.to_date
+    //   this.fromDate = this.onDateSelect(customfromdate)
+    //   this.toDate = this.onDateSelect(customtodate)
+     
+      
+    
+    // }
     if (this.iscustomDate == true) {
       if (this.AllFilters.value.from_date == null || this.AllFilters.value.from_date == "" && this.AllFilters.value.to_date !== null) {
-        ///Swal.fire('Select From Date');
-        console.log(this.from_date,this.to_date,"frome date gggg")
+        Swal.fire('Select From Date');
         const ListInput: ListInput1 = {} as ListInput1;
-        ListInput.from_date =this.datepipe.transform(this.from_date, 'yyyy-MM-dd');
-        ListInput.to_date = this.datepipe.transform(this.toDate, 'yyyy-MM-dd');
-        ListInput.cr_request_type = "order_cancellation"
+        ListInput.from_date = localStorage.getItem("FromDate");
+        ListInput.to_date = localStorage.getItem("ToDate");
+        // ListInput.cr_request_type = "order_cancellation"
         this.CancleList(ListInput)
         return
       }
       else if (this.AllFilters.value.from_date !== null && this.AllFilters.value.to_date == null || this.AllFilters.value.to_date == "") {
-      //  Swal.fire('Select To Date');
+        Swal.fire('Select To Date');
         const ListInput: ListInput1 = {} as ListInput1;
-         ListInput.from_date =this.datepipe.transform(this.fromDate, 'yyyy-MM-dd');
-        ListInput.to_date = this.datepipe.transform(this.toDate, 'yyyy-MM-dd');
-        ListInput.cr_request_type = "order_cancellation"
+        ListInput.from_date = localStorage.getItem("FromDate");
+        ListInput.to_date = localStorage.getItem("ToDate");
+        //ListInput.cr_request_type = "order_cancellation"
         this.CancleList(ListInput)
         return
       }
-      var d1 = moment(this.AllFilters.value.from_date).format('yyyy-MM-DD')
-      var d2 = moment(this.AllFilters.value.to_date).format('yyyy-MM-DD')
-      var days = this.calculateDate1(d1,d2);
+
+    
+      var d1 = moment(this.from_date).format('yyyy-mm-dd')
+      var d2 = moment(this.to_date).format('yyyy-mm-dd')
+      var days = this.calculateDate1(d1, d2);
       if (d1 > d2) {
         Swal.fire('From-Date Should be Less Than To-Date.');
         const ListInput: ListInput1 = {} as ListInput1;
         ListInput.from_date = localStorage.getItem("FromDate");
         ListInput.to_date = localStorage.getItem("ToDate");
-        ListInput.cr_request_type = "order_cancellation"
+       
         this.CancleList(ListInput)
         return
-        
+
       }
-      else if(days >= 95){
-        Swal.fire(' Please select the date range up to 95 days ');
+      else if (days >= 95) {
+         Swal.fire(' Please select the date range up to 95 days ');
         const ListInput: ListInput1 = {} as ListInput1;
         ListInput.from_date = localStorage.getItem("FromDate");
         ListInput.to_date = localStorage.getItem("ToDate");
-        ListInput.cr_request_type = "order_cancellation"
+      
         this.CancleList(ListInput)
         return
       }
-      this.from_date = this.AllFilters.value.from_date;
-      this.to_date = this.AllFilters.value.to_date
-      this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-      this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+      // this.from_date = this.AllFilters.value.from_date;
+      // this.to_date = this.AllFilters.value.to_date
+      // this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+      // this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+
+      let customfromdate = this.AllFilters.value.from_date;
+      let customtodate = this.AllFilters.value.to_date
+      this.from_date = this.onDateSelect(customfromdate)
+      this.to_date = this.onDateSelect(customtodate)
     }
     else if (this.isLastsevenDay == true) {
-      this.from_date = moment(toDate).subtract(7, 'days').format('yyyy-MM-DD')
-      this.to_date = this.datepipe.transform(toDate, 'yyyy-MM-dd')
+      this.from_date = moment(todate).subtract(7, 'days').format('yyyy-MM-DD')
+      this.to_date = this.datepipe.transform(todate, 'yyyy-MM-dd')
     }
     else if (this.isToday == true) {
-      this.from_date = moment(toDate).format('yyyy-MM-DD')
-      this.to_date = this.datepipe.transform(toDate, 'yyyy-MM-dd')
+      this.from_date = moment(todate).format('yyyy-MM-DD')
+      this.to_date = this.datepipe.transform(todate, 'yyyy-MM-dd')
     }
-    else if (this.isThirtyDays == true) {
-      this.from_date = this.datepipe.transform(this.from_date, 'yyyy-MM-dd')
-      this.to_date = this.datepipe.transform(this.to_date, 'yyyy-MM-dd')
+    else {
+      this.from_date = this.datepipe.transform(fromDate, 'yyyy-MM-dd')
+      this.to_date = this.datepipe.transform(todate, 'yyyy-MM-dd')
     }
 
     this.otc_number = this.AllFilters.value.otc_number;
@@ -641,7 +751,11 @@ export class CancleListComponent implements OnInit {
     }
     if (this.to_date) {
       this.AllFilters.get('to_date').setValue(this.to_date);
-    }
+
+    } 
+     this.AllFilters.value.to_date = this.to_date;
+    this.AllFilters.value.from_date = this.from_date;
+
 
     const ListInput: inputAll = {} as inputAll;
 
@@ -695,7 +809,7 @@ export class CancleListComponent implements OnInit {
   }
 
   dateformate(date) {
-    return this.datepipe.transform(date, 'dd/MM/yyyy');
+    return this.datepipe.transform(date, 'dd-MM-yyyy');
   }
   
   CancleList(ListInput: any) {

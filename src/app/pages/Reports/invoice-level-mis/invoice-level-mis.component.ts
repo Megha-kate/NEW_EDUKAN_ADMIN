@@ -595,7 +595,7 @@ export class InvoiceLevelMisComponent implements OnInit {
     if (this.isOrderdate == true) {
       if (this.iscustomDate == true) {
         if (this.itemForm.value.from_date == null || this.itemForm.value.from_date == "" && this.itemForm.value.to_date !== null) {
-          Swal.fire('Select From Date');
+         // Swal.fire('Select From Date');
           const ListInput: Input = {} as Input;
           ListInput.from_date = localStorage.getItem("FromDate");
           ListInput.to_date = localStorage.getItem("ToDate");
@@ -604,18 +604,18 @@ export class InvoiceLevelMisComponent implements OnInit {
           return
         }
         else if (this.itemForm.value.from_date !== null && this.itemForm.value.to_date == null || this.itemForm.value.to_date == "") {
-          Swal.fire('Select To Date');
+          //Swal.fire('Select To Date');
           const ListInput: Input = {} as Input;
           ListInput.from_date = localStorage.getItem("FromDate");
           ListInput.to_date = localStorage.getItem("ToDate");
           this.InvoiceLevelMisData(ListInput)
           return
         }
-        var d1 = moment(this.itemForm.value.from_date).format('yyyy-MM-DD')
-        var d2 = moment(this.itemForm.value.to_date).format('yyyy-MM-DD')
+        var d1 = moment(this.from_date).format('yyyy-MM-DD')
+        var d2 = moment(this.to_date).format('yyyy-MM-DD')
         var days = this.calculateDate1(d1, d2);
         if (d1 > d2) {
-          Swal.fire('From-Date Should be Less Than To-Date.');
+         // Swal.fire('From-Date Should be Less Than To-Date.');
           const ListInput: Input = {} as Input;
           ListInput.from_date = localStorage.getItem("FromDate");
           ListInput.to_date = localStorage.getItem("ToDate");

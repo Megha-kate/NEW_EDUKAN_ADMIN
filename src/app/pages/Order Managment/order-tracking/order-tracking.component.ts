@@ -570,6 +570,14 @@ export class OrderTrackingComponent implements OnInit {
   //   this.myDrop.close();
 
   // }
+  onDateSelect(event) {
+    debugger
+    let year = event.year;
+    let month = event.month <= 9 ? '0' + event.month : event.month;
+    let day = event.day <= 9 ? '0' + event.day : event.day;
+    let finalDate = year + "-" + month + "-" + day;
+    return finalDate
+   }
 
   SearchAllDate() {
     this.currentPage = 1
@@ -647,8 +655,8 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.order_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.order_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.order_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.order_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -659,10 +667,15 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-          this.from_date = this.AllFilters.value.order_from_date;
-          this.to_date = this.AllFilters.value.order_to_date;
-          this.order_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.from_date = this.AllFilters.value.order_from_date;
+          // this.to_date = this.AllFilters.value.order_to_date;
+          // this.order_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          let customfromdate = this.AllFilters.value.order_from_date;
+         
+          let customtodate = this.AllFilters.value.order_to_date
+          this.order_from_date = this.onDateSelect(customfromdate)
+          this.order_to_date = this.onDateSelect(customtodate)
         }
         else if (this.isLastsevenDay == true) {
           this.order_from_date = moment(this.date).subtract(7, 'days').format('yyyy-MM-DD')
@@ -696,8 +709,8 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.invoice_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.invoice_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.invoice_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.invoice_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -709,10 +722,16 @@ export class OrderTrackingComponent implements OnInit {
             return
           }
 
-          this.from_date = this.AllFilters.value.invoice_from_date;
-          this.to_date = this.AllFilters.value.invoice_to_date;
-          this.invoice_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.invoice_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+            // this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+            let customfromdate = this.AllFilters.value.invoice_from_date;
+         
+            let customtodate = this.AllFilters.value.order_to_date
+            this.invoice_from_date = this.onDateSelect(customfromdate)
+            this.invoice_to_date = this.onDateSelect(customtodate)
+          // this.from_date = this.AllFilters.value.invoice_from_date;
+          // this.to_date = this.AllFilters.value.invoice_to_date;
+          // this.invoice_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.invoice_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
         }
         else if (this.isToday == true) {
           this.invoice_from_date = moment(this.to_date).format('yyyy-MM-DD')
@@ -746,8 +765,8 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.tracking_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.tracking_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.tracking_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.tracking_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -758,10 +777,15 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-          this.from_date = this.AllFilters.value.tracking_from_date;
-          this.to_date = this.AllFilters.value.tracking_to_date;
-          this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          let customfromdate = this.AllFilters.value.tracking_from_date;
+         
+          let customtodate = this.AllFilters.value.tracking_to_date
+          this.tracking_from_date = this.onDateSelect(customfromdate)
+          this.tracking_to_date = this.onDateSelect(customtodate)
+          // this.from_date = this.AllFilters.value.tracking_from_date;
+          // this.to_date = this.AllFilters.value.tracking_to_date;
+          // this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
         }
         else if (this.isToday == true) {
           this.tracking_from_date = moment(this.to_date).format('yyyy-MM-DD')
@@ -927,8 +951,8 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.order_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.order_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.order_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.order_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -939,10 +963,15 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-          this.from_date = this.AllFilters.value.order_from_date;
-          this.to_date = this.AllFilters.value.order_to_date;
-          this.order_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.from_date = this.AllFilters.value.order_from_date;
+          // this.to_date = this.AllFilters.value.order_to_date;
+          // this.order_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          let customfromdate = this.AllFilters.value.order_from_date;
+         
+          let customtodate = this.AllFilters.value.order_to_date
+          this.order_from_date = this.onDateSelect(customfromdate)
+          this.order_to_date = this.onDateSelect(customtodate)
         }
         else if (this.isLastsevenDay == true) {
           this.order_from_date = moment(this.date).subtract(7, 'days').format('yyyy-MM-DD')
@@ -958,6 +987,8 @@ export class OrderTrackingComponent implements OnInit {
         }
       }
       else if (this.trackingDate == true) {
+        this.invoiceDate = false;
+        this.orderDate = false;
         if (this.iscustomDate == true) {
           if (this.AllFilters.value.tracking_from_date == null || this.AllFilters.value.tracking_from_date == "" && this.AllFilters.value.tracking_to_date !== null) {
             Swal.fire('Select From Date');
@@ -974,8 +1005,8 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.tracking_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.tracking_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.tracking_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.tracking_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -986,12 +1017,17 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-          //          this.to_date = this.AllFilters.value.tracking_to_date;
-          this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          let customfromdate = this.AllFilters.value.tracking_from_date;
+         
+          let customtodate = this.AllFilters.value.tracking_to_date
+          this.tracking_from_date = this.onDateSelect(customfromdate)
+          this.tracking_to_date = this.onDateSelect(customtodate)
+          // this.from_date = this.AllFilters.value.tracking_from_date;
+          // this.to_date = this.AllFilters.value.tracking_to_date;
+          // this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
         }
         else if (this.isToday == true) {
-
           this.tracking_from_date = moment(this.to_date).format('yyyy-MM-DD')
           this.tracking_to_date = this.datepipe.transform(this.to_date, 'yyyy-MM-dd')
         }
@@ -1097,8 +1133,8 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.order_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.order_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.order_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.order_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -1109,10 +1145,15 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-          this.from_date = this.AllFilters.value.order_from_date;
-          this.to_date = this.AllFilters.value.order_to_date;
-          this.order_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.from_date = this.AllFilters.value.order_from_date;
+          // this.to_date = this.AllFilters.value.order_to_date;
+          // this.order_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          let customfromdate = this.AllFilters.value.order_from_date;
+         
+          let customtodate = this.AllFilters.value.order_to_date
+          this.order_from_date = this.onDateSelect(customfromdate)
+          this.order_to_date = this.onDateSelect(customtodate)
         }
         else if (this.isLastsevenDay == true) {
           this.order_from_date = moment(this.date).subtract(7, 'days').format('yyyy-MM-DD')
@@ -1128,6 +1169,8 @@ export class OrderTrackingComponent implements OnInit {
         }
       }
       else if (this.trackingDate == true) {
+        this.invoiceDate = false;
+        this.orderDate = false;
         if (this.iscustomDate == true) {
           if (this.AllFilters.value.tracking_from_date == null || this.AllFilters.value.tracking_from_date == "" && this.AllFilters.value.tracking_to_date !== null) {
             Swal.fire('Select From Date');
@@ -1144,8 +1187,8 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.tracking_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.tracking_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.tracking_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.tracking_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -1156,10 +1199,15 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-          this.from_date = this.AllFilters.value.tracking_from_date;
-          this.to_date = this.AllFilters.value.tracking_to_date;
-          this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          let customfromdate = this.AllFilters.value.tracking_from_date;
+         
+          let customtodate = this.AllFilters.value.tracking_to_date
+          this.tracking_from_date = this.onDateSelect(customfromdate)
+          this.tracking_to_date = this.onDateSelect(customtodate)
+          // this.from_date = this.AllFilters.value.tracking_from_date;
+          // this.to_date = this.AllFilters.value.tracking_to_date;
+          // this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
         }
         else if (this.isToday == true) {
           this.tracking_from_date = moment(this.to_date).format('yyyy-MM-DD')
@@ -1266,8 +1314,8 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.order_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.order_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.order_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.order_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -1278,10 +1326,15 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-          this.from_date = this.AllFilters.value.order_from_date;
-          this.to_date = this.AllFilters.value.order_to_date;
-          this.order_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.from_date = this.AllFilters.value.order_from_date;
+          // this.to_date = this.AllFilters.value.order_to_date;
+          // this.order_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          let customfromdate = this.AllFilters.value.order_from_date;
+         
+          let customtodate = this.AllFilters.value.order_to_date
+          this.order_from_date = this.onDateSelect(customfromdate)
+          this.order_to_date = this.onDateSelect(customtodate)
         }
         else if (this.isLastsevenDay == true) {
           this.order_from_date = moment(this.date).subtract(7, 'days').format('yyyy-MM-DD')
@@ -1297,6 +1350,8 @@ export class OrderTrackingComponent implements OnInit {
         }
       }
       else if (this.trackingDate == true) {
+        this.invoiceDate = false;
+        this.orderDate = false;
         if (this.iscustomDate == true) {
           if (this.AllFilters.value.tracking_from_date == null || this.AllFilters.value.tracking_from_date == "" && this.AllFilters.value.tracking_to_date !== null) {
             Swal.fire('Select From Date');
@@ -1313,8 +1368,8 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.tracking_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.tracking_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.tracking_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.tracking_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -1325,10 +1380,15 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-          this.from_date = this.AllFilters.value.tracking_from_date;
-          this.to_date = this.AllFilters.value.tracking_to_date;
-          this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          let customfromdate = this.AllFilters.value.tracking_from_date;
+         
+          let customtodate = this.AllFilters.value.tracking_to_date
+          this.tracking_from_date = this.onDateSelect(customfromdate)
+          this.tracking_to_date = this.onDateSelect(customtodate)
+          // this.from_date = this.AllFilters.value.tracking_from_date;
+          // this.to_date = this.AllFilters.value.tracking_to_date;
+          // this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
         }
         else if (this.isToday == true) {
           this.tracking_from_date = moment(this.to_date).format('yyyy-MM-DD')
@@ -1430,16 +1490,16 @@ export class OrderTrackingComponent implements OnInit {
             ListInput1.order_from_date = localStorage.getItem("FromDate");
             ListInput1.order_to_date = localStorage.getItem("ToDate");
             ListInput1.offset = 0;
-            ListInput1.limit = 10;
-            this.List(ListInput1);
+            ListInput1.size = 10;
+            this.AllorderList(ListInput1);
             return
           }
           else if (this.AllFilters.value.order_from_date !== null && this.AllFilters.value.order_to_date == null || this.AllFilters.value.order_to_date == "") {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.order_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.order_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.order_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.order_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -1450,10 +1510,15 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-          this.from_date = this.AllFilters.value.order_from_date;
-          this.to_date = this.AllFilters.value.order_to_date;
-          this.order_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.from_date = this.AllFilters.value.order_from_date;
+          // this.to_date = this.AllFilters.value.order_to_date;
+          // this.order_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          let customfromdate = this.AllFilters.value.order_from_date;
+         
+          let customtodate = this.AllFilters.value.order_to_date
+          this.order_from_date = this.onDateSelect(customfromdate)
+          this.order_to_date = this.onDateSelect(customtodate)
         }
         else if (this.isLastsevenDay == true) {
           this.order_from_date = moment(this.date).subtract(7, 'days').format('yyyy-MM-DD')
@@ -1469,6 +1534,8 @@ export class OrderTrackingComponent implements OnInit {
         }
       }
       else if (this.trackingDate == true) {
+        this.invoiceDate = false;
+        this.orderDate = false;
         if (this.iscustomDate == true) {
           if (this.AllFilters.value.tracking_from_date == null || this.AllFilters.value.tracking_from_date == "" && this.AllFilters.value.tracking_to_date !== null) {
             Swal.fire('Select From Date');
@@ -1477,16 +1544,16 @@ export class OrderTrackingComponent implements OnInit {
             ListInput1.tracking_from_date = localStorage.getItem("FromDate");
             ListInput1.tracking_to_date = localStorage.getItem("ToDate");
             ListInput1.offset = 0;
-            ListInput1.limit = 10;
-            this.List(ListInput1);
+            ListInput1.size = 10;
+            this.AllorderList(ListInput1);
             return
           }
           else if (this.AllFilters.value.tracking_from_date !== null && this.AllFilters.value.tracking_to_date == null || this.AllFilters.value.tracking_to_date == "") {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.tracking_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.tracking_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.tracking_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.tracking_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -1497,10 +1564,15 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-          this.from_date = this.AllFilters.value.tracking_from_date;
-          this.to_date = this.AllFilters.value.tracking_to_date;
-          this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          let customfromdate = this.AllFilters.value.tracking_from_date;
+         
+          let customtodate = this.AllFilters.value.tracking_to_date
+          this.tracking_from_date = this.onDateSelect(customfromdate)
+          this.tracking_to_date = this.onDateSelect(customtodate)
+          // this.from_date = this.AllFilters.value.tracking_from_date;
+          // this.to_date = this.AllFilters.value.tracking_to_date;
+          // this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
         }
         else if (this.isToday == true) {
           this.tracking_from_date = moment(this.to_date).format('yyyy-MM-DD')
@@ -1606,8 +1678,8 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.order_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.order_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.order_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.order_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -1618,10 +1690,15 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-          this.from_date = this.AllFilters.value.order_from_date;
-          this.to_date = this.AllFilters.value.order_to_date;
-          this.order_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.from_date = this.AllFilters.value.order_from_date;
+          // this.to_date = this.AllFilters.value.order_to_date;
+          // this.order_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.order_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          let customfromdate = this.AllFilters.value.order_from_date;
+         
+          let customtodate = this.AllFilters.value.order_to_date
+          this.order_from_date = this.onDateSelect(customfromdate)
+          this.order_to_date = this.onDateSelect(customtodate)
         }
         else if (this.isLastsevenDay == true) {
           this.order_from_date = moment(this.date).subtract(7, 'days').format('yyyy-MM-DD')
@@ -1637,6 +1714,8 @@ export class OrderTrackingComponent implements OnInit {
         }
       }
       else if (this.trackingDate == true) {
+        this.invoiceDate = false;
+        this.orderDate = false;
         if (this.iscustomDate == true) {
           if (this.AllFilters.value.tracking_from_date == null || this.AllFilters.value.tracking_from_date == "" && this.AllFilters.value.tracking_to_date !== null) {
             Swal.fire('Select From Date');
@@ -1653,8 +1732,8 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire('Select To Date');
             return
           }
-          var d1 = moment(this.AllFilters.value.tracking_from_date).format('yyyy-MM-DD')
-          var d2 = moment(this.AllFilters.value.tracking_to_date).format('yyyy-MM-DD')
+          var d1 = moment(this.tracking_from_date).format('yyyy-MM-DD')
+          var d2 = moment(this.tracking_to_date).format('yyyy-MM-DD')
           var days = this.calculateDate1(d1, d2);
           if (d1 > d2) {
             Swal.fire('From-Date Should be Less Than To-Date.');
@@ -1665,10 +1744,15 @@ export class OrderTrackingComponent implements OnInit {
             Swal.fire(' Please select the date range up to 95 days ');
             return
           }
-          this.from_date = this.AllFilters.value.tracking_from_date;
-          this.to_date = this.AllFilters.value.tracking_to_date;
-          this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-          this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+          let customfromdate = this.AllFilters.value.tracking_from_date;
+         
+          let customtodate = this.AllFilters.value.tracking_to_date
+          this.tracking_from_date = this.onDateSelect(customfromdate)
+          this.tracking_to_date = this.onDateSelect(customtodate)
+          // this.from_date = this.AllFilters.value.tracking_from_date;
+          // this.to_date = this.AllFilters.value.tracking_to_date;
+          // this.tracking_from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+          // this.tracking_to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
         }
         else if (this.isToday == true) {
           this.tracking_from_date = moment(this.to_date).format('yyyy-MM-DD')

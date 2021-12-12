@@ -97,7 +97,7 @@ export class DivisionMasterComponent implements OnInit {
     
     const ListInput: ListInput1 = {} as ListInput1;
     
-    ListInput.offset = 1;
+    ListInput.offset = 0;
     ListInput.limit = 10;
     
 
@@ -170,24 +170,35 @@ export class DivisionMasterComponent implements OnInit {
 
   }
   showAccount(event) {
-
-    const ListInput: ListInput2 = {} as ListInput2;
-    
+    debugger
+    console.log(event)
+    console.log(this.AllFilters)
+    const ListInput: Listinputs = {} as Listinputs;
+    // if (this.from_date) {
+    //   this.AllFilters.get('from_date').setValue(this.from_date);
+    // }
+    // if (this.to_date) {
+    //   this.AllFilters.get('to_date').setValue(this.to_date);
+    // }
     ListInput.division_id = event.target.value
      ListInput.offset=0
+     ListInput.limit = this.noofrecordsperpage;
+
     this.DivisionMaster(ListInput);
   }
   SearchAccount(event) {
-
+  debugger
     if (event.key === "Enter") {
       const ListInput: Listinputs = {} as Listinputs;
-     
+      ListInput.offset=0
+      ListInput.limit = this.noofrecordsperpage;
       ListInput.division_id = event.target.value
       this.DivisionMaster(ListInput);
 
     }
 
   }
+
 
   closeResult = '';
   open(content: any) {
@@ -213,14 +224,14 @@ export class DivisionMasterComponent implements OnInit {
     debugger;
     document.body.scrollTop = 0;
     this.currentPage = page;
-
+    console.log(page,"pagechange")
     page = page - 1;
     const ListInput: Listinputs = {} as Listinputs;
   
 
-    // if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
+    if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
 
-    // if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
+    if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
 
     if (this.district_name) { ListInput.district_name = this.district_name; } else { ListInput.district_name = ""; }
     if (this.division_category) { ListInput.division_category = this.division_category; } else { ListInput.division_category = ""; }
@@ -230,7 +241,7 @@ export class DivisionMasterComponent implements OnInit {
     if (this.state_code) { ListInput.state_code = this.state_code; } else { ListInput.state_code = ""; }
 
 
-    // this.List(this.AllFilters)
+   // this.DivisionMaster(this.AllFilters)
 
     ListInput.offset = (page * 10)
 
@@ -318,19 +329,28 @@ export class DivisionMasterComponent implements OnInit {
     this.myDrop.close();
 
   }
+  onDateSelect(event) {
+    let year = event.year;
+    let month = event.month <= 9 ? '0' + event.month : event.month;
+    let day = event.day <= 9 ? '0' + event.day : event.day;
+    let finalDate = year + "-" + month + "-" + day;
+    return finalDate
+   }
   SearchAllDate() {
-    debugger;
+   // debugger;
     this.currentPage = 1
     let fromDate = localStorage.getItem("FromDate");
     let todate = localStorage.getItem("ToDate");
      
     if (this.iscustomDate == true) {
 
-      this.from_date = this.AllFilters.value.from_date;
-      this.to_date = this.AllFilters.value.to_date
+      let customfromdate = this.AllFilters.value.from_date;
+      let customtodate = this.AllFilters.value.to_date
+      this.from_date = this.onDateSelect(customfromdate)
+      this.to_date = this.onDateSelect(customtodate)
      
-      this.from_date = moment(this.from_date).subtract(1, 'months').format('"yyyy-mm-dd')
-      this.to_date = moment(this.to_date).subtract(1, 'months').format('"yyyy-mm-dd')
+      // this.from_date = moment(this.from_date).subtract(1, 'months').format('"yyyy-mm-dd')
+      // this.to_date = moment(this.to_date).subtract(1, 'months').format('"yyyy-mm-dd')
     
     }
     else if (this.isLastsevenDay == true) {
@@ -400,7 +420,7 @@ export class DivisionMasterComponent implements OnInit {
   pageName: any;
 
   ExportDownload() {
-    debugger;
+    //debugger;
 
     // if (event.target.value == " ") {
     //   Swal.fire('Please select download type')
@@ -668,7 +688,7 @@ export class DivisionMasterComponent implements OnInit {
   }
 
   Update(Formvalue) {
-    debugger
+    //debugger
    // console.log(Formvalue, "fromvalues")
     var data = Formvalue
     data.action_type = "update"
@@ -731,7 +751,7 @@ export class DivisionMasterComponent implements OnInit {
 
   // }
   AddUpdate(Action) {
-    debugger
+   // debugger
 
 
 
@@ -774,7 +794,7 @@ export class DivisionMasterComponent implements OnInit {
     this.CommonService.AddUpdateDivision(Json).subscribe(
 
       data => {
-        debugger
+        //debugger
         if (data.success == true) {
 
 
@@ -1045,7 +1065,7 @@ export class DivisionMasterComponent implements OnInit {
       this.AllFilters.get("state_name").setValue("")
     }
     else if (filterString.Key == "division_id") {
-      this.division_allocation_id = ""
+      this.division_id = ""
       this.AllFilters.get("division_id").setValue("")
     }
     else if (filterString.Key == "division_allocation_id") {
@@ -1259,7 +1279,7 @@ export class DivisionMasterComponent implements OnInit {
 
   filterMyOptionsStatename(row, event) {
 
-    debugger;
+    //debugger;
     console.log(row, event)
     console.log(this.StateLists.controls)
     this.state_name = row.state_name;

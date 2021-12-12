@@ -497,18 +497,17 @@ export class FeedbackListComponent implements OnInit {
         return
       }
 
-      var new_fromdate= this.onDateSelect(this.AllFilters.value.from_date)
-      var new_todate= this.onDateSelect(this.AllFilters.value.to_date)
+    
 
-      var d1 = moment(this.AllFilters.value.from_date).format('yyyy-MM-DD')
-      var d2 = moment(this.AllFilters.value.to_date).format('yyyy-MM-DD')
+      var d1 = moment(this.from_date).format('yyyy-mm-dd')
+      var d2 = moment(this.to_date).format('yyyy-mm-dd')
       var days = this.calculateDate1(d1, d2);
       if (d1 > d2) {
         Swal.fire('From-Date Should be Less Than To-Date.');
         const ListInput: ListInput1 = {} as ListInput1;
         ListInput.from_date = localStorage.getItem("FromDate");
         ListInput.to_date = localStorage.getItem("ToDate");
-        // ListInput.cr_request_type = "order_cancellation"
+       
         this.FeedbackList(ListInput)
         return
 
@@ -518,14 +517,19 @@ export class FeedbackListComponent implements OnInit {
         const ListInput: ListInput1 = {} as ListInput1;
         ListInput.from_date = localStorage.getItem("FromDate");
         ListInput.to_date = localStorage.getItem("ToDate");
-        //ListInput.cr_request_type = "order_cancellation"
+      
         this.FeedbackList(ListInput)
         return
       }
-      this.from_date = this.AllFilters.value.from_date;
-      this.to_date = this.AllFilters.value.to_date
-      this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-      this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+      // this.from_date = this.AllFilters.value.from_date;
+      // this.to_date = this.AllFilters.value.to_date
+      // this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+      // this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+
+      let customfromdate = this.AllFilters.value.from_date;
+      let customtodate = this.AllFilters.value.to_date
+      this.from_date = this.onDateSelect(customfromdate)
+      this.to_date = this.onDateSelect(customtodate)
     }
     else if (this.isLastsevenDay == true) {
       this.from_date = moment(todate).subtract(7, 'days').format('yyyy-MM-DD')
@@ -578,6 +582,7 @@ export class FeedbackListComponent implements OnInit {
 
     this.AllFilters.value.size = 10;
     this.AllFilters.value.to_date = this.to_date;
+    this.AllFilters.value.from_date = this.from_date;
 
     const ListInput: feedbackinput = {} as feedbackinput;
 
@@ -624,6 +629,7 @@ export class FeedbackListComponent implements OnInit {
     let month = event.month <= 9 ? '0' + event.month : event.month;;
     let day = event.day <= 9 ? '0' + event.day : event.day;;
     let finalDate = year + "-" + month + "-" + day;
+    return finalDate
    }
 
   FilterStrings(ListInput) {
@@ -650,7 +656,7 @@ export class FeedbackListComponent implements OnInit {
   }
 
   dateformate(date) {
-    return this.datepipe.transform(date, 'dd/MM/yyyy');
+    return this.datepipe.transform(date, 'dd-MM-yyyy');
   }
 
   BuildForm() {

@@ -1368,7 +1368,13 @@ export class DiscountMasterComponent implements OnInit {
   minPercentage: any;
   maxPercentage: any;
   status: any
-
+  onDateSelect(event) {
+    let year = event.year;
+    let month = event.month <= 9 ? '0' + event.month : event.month;
+    let day = event.day <= 9 ? '0' + event.day : event.day;
+    let finalDate = year + "-" + month + "-" + day;
+    return finalDate
+   }
   Search() {
     debugger
     this.Filterarray = [];
@@ -1376,6 +1382,7 @@ export class DiscountMasterComponent implements OnInit {
 
 
     if (this.tabchange == 1) {
+      debugger
     //   if(this.min_percentage==true)
     // if (this.AllFilters.value.min_percentage == null || this.AllFilters.value.min_percentage == "" && this.AllFilters.value.min_percentage !== null) {
     //    Swal.fire('Select Min percentage');
@@ -1424,32 +1431,37 @@ export class DiscountMasterComponent implements OnInit {
           this.loader.close()
           return
         }
-        var d1 = moment(this.AllFilters.value.from_date).format('yyyy-MM-DD')
-        var d2 = moment(this.AllFilters.value.to_date).format('yyyy-MM-DD')
-        var days = this.calculateDate1(d1, d2);
-        if (d1 > d2) {
-          Swal.fire('From-Date Should be Less Than To-Date.');
-          const ListInput: ListInput = {} as ListInput;
-          ListInput.offset = 0;
-          ListInput.owner = 'TML';
-          this.GetList(ListInput)
-          this.loader.close()
-          return
+        // var d1 = moment(this.AllFilters.value.from_date).format('yyyy-MM-DD')
+        // var d2 = moment(this.AllFilters.value.to_date).format('yyyy-MM-DD')
+        // var days = this.calculateDate1(d1, d2);
+        // if (d1 > d2) {
+        //   Swal.fire('From-Date Should be Less Than To-Date.');
+        //   const ListInput: ListInput = {} as ListInput;
+        //   ListInput.offset = 0;
+        //   ListInput.owner = 'TML';
+        //   this.GetList(ListInput)
+        //   this.loader.close()
+        //   return
 
-        }
-        else if (days >= 95) {
-          Swal.fire(' Allow to get Only 95 Days Data');
-          const ListInput: ListInput = {} as ListInput;
-          ListInput.offset = 0;
-          ListInput.owner = 'TML';
-          this.GetList(ListInput)
-          this.loader.close()
-          return
-        }
-        this.from_date = this.AllFilters.value.from_date;
-        this.to_date = this.AllFilters.value.to_date
-        this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-        this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+        // }
+        // else if (days >= 95) {
+        //   Swal.fire(' Allow to get Only 95 Days Data');
+        //   const ListInput: ListInput = {} as ListInput;
+        //   ListInput.offset = 0;
+        //   ListInput.owner = 'TML';
+        //   this.GetList(ListInput)
+        //   this.loader.close()
+        //   return
+        // }
+        
+      let customfromdate = this.AllFilters.value.from_date;
+      let customtodate = this.AllFilters.value.to_date
+      this.from_date = this.onDateSelect(customfromdate)
+      this.to_date = this.onDateSelect(customtodate)
+        // this.from_date = this.AllFilters.value.from_date;
+        // this.to_date = this.AllFilters.value.to_date
+        // this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+        // this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
       }
       else if (this.isLastsevenDay == true) {
         this.from_date = moment(this.To_date).subtract(7, 'days').format('yyyy-MM-DD')
@@ -1566,32 +1578,37 @@ export class DiscountMasterComponent implements OnInit {
           this.loader.close()
           return
         }
-        var d1 = moment(this.AllFilters.value.from_date).format('yyyy-MM-DD')
-        var d2 = moment(this.AllFilters.value.to_date).format('yyyy-MM-DD')
-        var days = this.calculateDate1(d1, d2);
-        if (d1 > d2) {
-          Swal.fire('From-Date Should be Less Than To-Date.');
-          const ListInput: ListInput = {} as ListInput;
-          ListInput.offset = 0;
-          ListInput.owner = 'DLR';
-          this.GetList(ListInput)
-          this.loader.close()
-          return
+        // var d1 = moment(this.AllFilters.value.from_date).format('yyyy-MM-DD')
+        // var d2 = moment(this.AllFilters.value.to_date).format('yyyy-MM-DD')
+        // var days = this.calculateDate1(d1, d2);
+        // if (d1 > d2) {
+        //   Swal.fire('From-Date Should be Less Than To-Date.');
+        //   const ListInput: ListInput = {} as ListInput;
+        //   ListInput.offset = 0;
+        //   ListInput.owner = 'DLR';
+        //   this.GetList(ListInput)
+        //   this.loader.close()
+        //   return
 
-        }
-        else if (days >= 95) {
-          Swal.fire(' Allow to get Only 95 Days Data');
-          const ListInput: ListInput = {} as ListInput;
-          ListInput.offset = 0;
-          ListInput.owner = 'DLR';
-          this.GetList(ListInput)
-          this.loader.close()
-          return
-        }
-        this.from_date = this.AllFilters.value.from_date;
-        this.to_date = this.AllFilters.value.to_date
-        this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-        this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+        // }
+        // else if (days >= 95) {
+        //   Swal.fire(' Allow to get Only 95 Days Data');
+        //   const ListInput: ListInput = {} as ListInput;
+        //   ListInput.offset = 0;
+        //   ListInput.owner = 'DLR';
+        //   this.GetList(ListInput)
+        //   this.loader.close()
+        //   return
+        // }
+
+        let customfromdate = this.AllFilters.value.from_date;
+        let customtodate = this.AllFilters.value.to_date
+        this.from_date = this.onDateSelect(customfromdate)
+        this.to_date = this.onDateSelect(customtodate)
+        // this.from_date = this.AllFilters.value.from_date;
+        // this.to_date = this.AllFilters.value.to_date
+        // this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+        // this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
       }
       else if (this.isLastsevenDay == true) {
         this.from_date = moment(this.To_date).subtract(7, 'days').format('yyyy-MM-DD')

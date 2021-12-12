@@ -392,9 +392,9 @@ export class PartMasterComponent implements OnInit {
    
   
 
-  //  if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
+   if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
 
-  //   if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
+    if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
 
 
 
