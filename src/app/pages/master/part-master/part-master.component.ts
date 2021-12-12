@@ -123,7 +123,6 @@ export class PartMasterComponent implements OnInit {
     this.noofrecordsperpage = 10;
     this.searchList = [];
     this.showRecords = 10;
-
     this.From_date = localStorage.getItem("FromDate");
     this.To_date = localStorage.getItem("ToDate");
 
