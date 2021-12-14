@@ -518,60 +518,60 @@ export class EtaListComponent implements OnInit {
       }
     }
 
-    // if (this.iscustomDate == true) {
-    //   if (this.itemForm.value.from_date == null || this.itemForm.value.from_date == "" && this.itemForm.value.to_date !== null) {
-    //     Swal.fire('Select From Date');
-    //     const ListInput: Input = {} as Input;
-    //     ListInput.from_date = localStorage.getItem("FromDate");
-    //     ListInput.to_date = localStorage.getItem("ToDate");
+    if (this.iscustomDate == true) {
+      if (this.itemForm.value.from_date == null || this.itemForm.value.from_date == "" && this.itemForm.value.to_date !== null) {
+        Swal.fire('Select From Date');
+        const ListInput: Input = {} as Input;
+        ListInput.from_date = localStorage.getItem("FromDate");
+        ListInput.to_date = localStorage.getItem("ToDate");
 
-    //     this.AllorderList(ListInput)
-    //     return
-    //   }
-    //   else if (this.itemForm.value.from_date !== null && this.itemForm.value.to_date == null || this.itemForm.value.to_date == "") {
-    //     Swal.fire('Select To Date');
-    //     const ListInput: Input = {} as Input;
-    //     ListInput.from_date = localStorage.getItem("FromDate");
-    //     ListInput.to_date = localStorage.getItem("ToDate");
-    //     this.AllorderList(ListInput)
-    //     return
-    //   }
-    //   var d1 = moment(this.itemForm.value.from_date).format('yyyy-MM-DD')
-    //   var d2 = moment(this.itemForm.value.to_date).format('yyyy-MM-DD')
-    //   if (d1 > d2) {
-    //     Swal.fire('From-Date Should be Less Than To-Date.');
-    //     const ListInput: Input = {} as Input;
-    //     ListInput.from_date = localStorage.getItem("FromDate");
-    //     ListInput.to_date = localStorage.getItem("ToDate");
+        this.AllorderList(ListInput)
+        return
+      }
+      else if (this.itemForm.value.from_date !== null && this.itemForm.value.to_date == null || this.itemForm.value.to_date == "") {
+        Swal.fire('Select To Date');
+        const ListInput: Input = {} as Input;
+        ListInput.from_date = localStorage.getItem("FromDate");
+        ListInput.to_date = localStorage.getItem("ToDate");
+        this.AllorderList(ListInput)
+        return
+      }
+      var d1 = moment(this.from_date).format('yyyy-MM-DD')
+      var d2 = moment(this.to_date).format('yyyy-MM-DD')
+      if (d1 > d2) {
+        Swal.fire('From-Date Should be Less Than To-Date.');
+        const ListInput: Input = {} as Input;
+        ListInput.from_date = localStorage.getItem("FromDate");
+        ListInput.to_date = localStorage.getItem("ToDate");
 
-    //     this.AllorderList(ListInput)
-    //     return
+        this.AllorderList(ListInput)
+        return
         
-    //   }
+      }
       
-    //   this.from_date = this.itemForm.value.from_date;
-    //   this.to_date = this.itemForm.value.to_date
-    //   this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-    //   this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
-    // }
-    // else if (this.isLastsevenDay == true) {
-    //   this.from_date = this.itemForm.value.from_date;
-    //   this.to_date = this.itemForm.value.to_date
-    //   this.from_date = moment(this.to_date).subtract(7, 'days').format('yyyy-MM-DD')
-    //   this.to_date = this.datepipe.transform(this.to_date, 'yyyy-MM-dd')
-    // }
-    // else if (this.isToday == true) {
-    //   this.from_date = this.itemForm.value.from_date;
-    //   this.to_date = this.itemForm.value.to_date
-    //   this.from_date = moment(this.to_date).format('yyyy-MM-DD')
-    //   this.to_date = moment(this.to_date).format('yyyy-MM-DD')
-    // }
-    // else if (this.isThirtyDays == true) {
-    //   this.from_date = this.itemForm.value.from_date;
-    //   this.to_date = this.itemForm.value.to_date
-    //   this.from_date = this.datepipe.transform(this.from_date, 'yyyy-MM-dd')
-    //   this.to_date = this.datepipe.transform(this.to_date, 'yyyy-MM-dd')
-    // }
+      let customfromdate = this.itemForm.value.from_date;
+      let customtodate = this.itemForm.value.to_date
+      this.from_date = this.onDateSelect(customfromdate)
+      this.to_date = this.onDateSelect(customtodate)
+    }
+    else if (this.isLastsevenDay == true) {
+      this.from_date = this.itemForm.value.from_date;
+      this.to_date = this.itemForm.value.to_date
+      this.from_date = moment(this.to_date).subtract(7, 'days').format('yyyy-MM-DD')
+      this.to_date = this.datepipe.transform(this.to_date, 'yyyy-MM-dd')
+    }
+    else if (this.isToday == true) {
+      this.from_date = this.itemForm.value.from_date;
+      this.to_date = this.itemForm.value.to_date
+      this.from_date = moment(this.to_date).format('yyyy-MM-DD')
+      this.to_date = moment(this.to_date).format('yyyy-MM-DD')
+    }
+    else if (this.isThirtyDays == true) {
+      this.from_date = this.itemForm.value.from_date;
+      this.to_date = this.itemForm.value.to_date
+      this.from_date = this.datepipe.transform(this.from_date, 'yyyy-MM-dd')
+      this.to_date = this.datepipe.transform(this.to_date, 'yyyy-MM-dd')
+    }
 
     
     

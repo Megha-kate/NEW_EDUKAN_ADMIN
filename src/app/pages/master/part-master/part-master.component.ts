@@ -29,9 +29,9 @@ export class PartMasterComponent implements OnInit {
   @ViewChild('UploadFileInput', { static: false }) uploadFileInput: ElementRef;
   @ViewChild('ExcelDownload', { read: TemplateRef, static: false }) ExcelDownload: TemplateRef<any>;
   @ViewChild('reportDownloadTemplate', { read: TemplateRef, static: false }) reportDownloadTemplate: TemplateRef<any>;
-
   @Output() closemodal = new EventEmitter<any>();
 
+  
 
 
   public AllFilters = new FormGroup({});
@@ -94,8 +94,6 @@ export class PartMasterComponent implements OnInit {
   other_instruction: any;
   tmgo_qty: any;
   is_home_page: any;
-  From_date: string;
-  To_date: string;
 
 
   constructor(
@@ -110,7 +108,6 @@ export class PartMasterComponent implements OnInit {
     private FileUpService: FileUploadService,
     private excelService: ExcelServiceService,
     private confirmService: AppConfirmService,
-   // private modalService: NgbModal,
   ) { }
 
 
@@ -123,8 +120,10 @@ export class PartMasterComponent implements OnInit {
     this.noofrecordsperpage = 10;
     this.searchList = [];
     this.showRecords = 10;
-    this.From_date = localStorage.getItem("FromDate");
-    this.To_date = localStorage.getItem("ToDate");
+
+    this.from_date = localStorage.getItem("FromDate");
+    this.to_date = localStorage.getItem("ToDate")
+
 
     
 
@@ -135,23 +134,18 @@ export class PartMasterComponent implements OnInit {
     this.ProductCategory();
 
 
+    this.BuildForm();
     this.buildItemForm('');
     const ListInput: ListInput1 = {} as ListInput1;
-  // ListInput.from_date = localStorage.getItem("FromDate");
-    //ListInput.to_date = localStorage.getItem("ToDate");
-   // ListInput.from_date = this.from_date
-    //ListInput.to_date = this.to_date
-   ListInput.from_date = this.from_date
-   ListInput.to_date = this.to_date
+  
     ListInput.offset = 0;
     ListInput.size = 10;
    
     this.partmaster(ListInput)
-    this.BuildForm();
-
   }
 
   closeModal() {
+
     this.modalService.dismissAll();
   }
   BuildForm() {
@@ -164,14 +158,15 @@ export class PartMasterComponent implements OnInit {
       minquantity: [''],
       distributor_category: [''],
       pg: [''],
-      desc_text: [''],
+      large_description: [''],
       isassamrifile: [''],
       isactiveforecom: [''],
       nls_status:[''],
       order_flag_status:[''],
       Line:[''],
       pg_line:[],
-      group_category:['']
+      group_category:[''],
+      desc_text:['']
 
     });
 
@@ -208,7 +203,6 @@ export class PartMasterComponent implements OnInit {
         }
       }, (err) => {
         // this.loader.close();
-
       }
     );
   }
@@ -381,6 +375,14 @@ export class PartMasterComponent implements OnInit {
       })
     }
   }
+  onDateSelect(event) {
+    debugger
+    let year = event.year;
+    let month = event.month <= 9 ? '0' + event.month : event.month;
+    let day = event.day <= 9 ? '0' + event.day : event.day;
+    let finalDate = year + "-" + month + "-" + day;
+    return finalDate
+   }
   page: any
   pageChange(page: any) {
     debugger;
@@ -405,7 +407,7 @@ export class PartMasterComponent implements OnInit {
     if (this.desc_text) { ListInput.desc_text = this.desc_text; } else { ListInput.desc_text = ""; }
     if (this.isactiveforecom) { ListInput.isactiveforecom = this.isactiveforecom; } else { ListInput.isactiveforecom = ""; }
     if (this.minquantity) { ListInput.minquantity = this.minquantity; } else { ListInput.minquantity = ""; }
-    if (this.large_description) { ListInput.large_description = this.large_description; } else { ListInput.large_description = ""; }
+    //if (this.large_description) { ListInput.large_description = this.large_description; } else { ListInput.large_description = ""; }
     if (this.isassamrifile) { ListInput.isassamrifile = this.isassamrifile; } else { ListInput.isassamrifile = ""; }
     if (this.isecom) { ListInput.isecom = this.isecom; } else { ListInput.isecom = ""; }
     if (this.group_category) { ListInput.group_category = this.group_category; } else { ListInput.group_category = ""; }
@@ -417,14 +419,15 @@ export class PartMasterComponent implements OnInit {
 
 
   
-    ListInput.offset = (page * 10);
-    ListInput.size = (page * 10) + 10;
+    ListInput.offset = (page *10); 
+    ListInput.size = (page*10)+10
   
    this.partmaster(ListInput);
 
 
 
   }
+  TotalAllRecords: any
  // items: any
   isdiableeporrt: any
   partmaster(ListInput) {
@@ -445,12 +448,15 @@ export class PartMasterComponent implements OnInit {
         this.loader.close();
         if (data.success == true) {
           debugger
+         // this.page.totalElements = data.rangeInfo.total_row;
           this.totalrecord = data.rangeInfo.total_row;
           this.items = []
           this.items = data.data;
           this.showRecords = data.data.length
 
-         
+          
+
+
 
 
 
@@ -461,7 +467,11 @@ export class PartMasterComponent implements OnInit {
 
 
         else {
-          this.items = []
+
+          //this.page.totalElements = 0;
+
+          this.items = [];
+
           this.loader.close();
         }
       }, (err) => {
@@ -472,11 +482,54 @@ export class PartMasterComponent implements OnInit {
     );
 
 
-
+   this.myDrop.close()
 
   }
 
+  // partmaster(ListInput: any) {
+  //   this.FilterStrings(ListInput)
 
+  //   this.items = [];
+  //   this.totalrecord = 0
+
+  //   this.OrderListService.partmaster(ListInput).subscribe(
+
+  //     data => {
+
+
+
+  //       if (data.success == true) {
+
+
+  //         this.loader.close();
+
+  //         this.items = data.data;
+
+  //         this.totalrecord = data.rangeInfo.total_row;
+  //         this.showRecords = data.data.length
+
+          
+
+
+
+  //       }
+
+
+  //       else {
+  //         this.loader.close()
+
+           
+  //       }
+  //     }, (err) => {
+
+
+  //     }
+
+  //   );
+  //  this.myDrop.close();
+
+
+  // }
   SearchAccount($event) {
     if ($event.key === "Enter") {
       const ListInput: ListInput1 = {} as ListInput1;
@@ -591,13 +644,7 @@ export class PartMasterComponent implements OnInit {
 
   }
 
-  onDateSelect(event) {
-    let year = event.year;
-    let month = event.month <= 9 ? '0' + event.month : event.month;
-    let day = event.day <= 9 ? '0' + event.day : event.day;
-    let finalDate = year + "-" + month + "-" + day;
-    return finalDate
-   }
+
   calculateDate1(Date1, date2) {
     Date1 = new Date(Date1);
     date2 = new Date(date2);
@@ -612,12 +659,14 @@ export class PartMasterComponent implements OnInit {
     var days = this.calculateDate1(this.from_date, this.to_date);
   }
   resetALl() {
-    this.Filterarray = [];
     this.AllFilters.reset();
-   
+
+    this.BuildForm();
+    // this.Filterarray = [];
+
     this.from_date = "";
     this.to_date = "";
-   
+   // this.part_number = "";
     this.part_number = "";
     this.discount_code_cvbu = "";
     this.large_description = "";
@@ -636,16 +685,29 @@ export class PartMasterComponent implements OnInit {
 
     this.group_category = ""
 
-   this.partmaster('')
 
-    
-    this.myDrop.close();
 
+    // from_date: [''],
+    // to_date: [''],
+    // part_number: [''],
+    // discount_code_cvbu: [''],
+    // isecom: [''],
+    // minquantity: [''],
+    // distributor_category: [''],
+    // pg: [''],
+    // large_description: [''],
+    // isassamrifile: [''],
+    // isactiveforecom: [''],
+    // nls_status:[''],
+    // order_flag_status:[''],
+    // Line:[],
+    // pg_line:[],
+    // group_category:[]
   }
- 
+
   FilterStrings(ListInput) {
     this.Filterarray = [];
-   // console.log(ListInput, "filterarrayvalue")
+    console.log(ListInput, "filterarrayvalue")
     for (let item in ListInput) {
 
       if (ListInput[item]) {
@@ -654,27 +716,37 @@ export class PartMasterComponent implements OnInit {
       }
       
     }
+    
+
+    
+  
+
+
     this.Filterarray = this.Filterarray.filter(book => book.Key !== 'size');
     this.Filterarray = this.Filterarray.filter(book => book.Key !== 'offset');
     var from_date1 = ListInput.from_date;
     var to_date1 = ListInput.to_date;
-    if(from_date1!=null ){
+    if(from_date1!=null){
     var finaldate = this.dateformate(from_date1) + ' ' + 'to' + ' ' + this.dateformate(to_date1);
     this.Filterarray = this.Filterarray.filter(book => book.Key !== 'from_date');
     this.Filterarray = this.Filterarray.filter(book => book.Key !== 'to_date');
-   // this.Filterarray = this.Filterarray.filter(book => book.Key !== 'action_type');
+
+    //this.Filterarray = this.Filterarray.filter(book => book.Key !== 'action_type');
     
 
     var Json1 = { "Key": 'from_date', "Value": finaldate }
     
     this.Filterarray.push(Json1)
+
   }
 }
-
 dateformate(date) {
   return this.datepipe.transform(date, 'dd/MM/yyyy');
 }
 
+  // dateformate(date) {
+  //   return this.datepipe.transform(date, 'dd/MM/yyyy');
+  // }
 
   onRemoveFilter(filterString) {
     let Filterarrays = this.Filterarray;
@@ -695,7 +767,10 @@ dateformate(date) {
       this.large_description = ""
       this.AllFilters.get("large_description").setValue("")
     }
-   
+    // else if (filterString.Key == "state") {
+    //   this.state = ""
+    //   this.AllFilters.get("state").setValue("")
+    // }
     else if (filterString.Key == "minquantity") {
       this.minquantity = ""
       this.AllFilters.get("minquantity").setValue("")
@@ -766,7 +841,16 @@ dateformate(date) {
     this.itemForm = this.fb.group({
       myfile: ['']
 
-      
+      //Part_Number:[''],
+      //distributor_category: [''],
+      // group_category: [row.group_category],
+      // division_category: [row.division_category],
+      // large_description: [row.large_description],
+      // advantages: [row.advantages],
+      //other_instruction:[row.other_instruction],
+
+
+      //is_active: []
 
 
 
@@ -801,6 +885,7 @@ dateformate(date) {
 
   validateHomeInput(home, category) {
 
+
     // for (var i = 0; i < this.ishome.length; i++) {
     // for (let entry of this.ishome) {
     // var homevalue = this.ishome[i];
@@ -809,15 +894,15 @@ dateformate(date) {
       // break;
     }
     else {
-      this.errorMessage.push({ errorKey: "Home", errorMessage: "home value should be Yes or No" })
+      this.errorMessage.push({ errorKey: "Home", errorMessage: "Is home page value should be Yes or No" })
     }
 
-    if (category == 'D' || category == 'MHV' || category == 'COM' || category == 'MHVA' || category == 'NULL' || category == 'RCO' || category == 'RSL' || category == 'SCV' || category == 'SLV' || category == 'SLVA') {
+    // if (category == 'D' || category == 'MHV' || category == 'COM' || category == 'MHVA' || category == 'NULL' || category == 'RCO' || category == 'RSL' || category == 'SCV' || category == 'SLV' || category == 'SLVA') {
 
-    }
-    else {
-      this.errorMessage.push({ errorKey: "category", errorMessage: "category value should be Proper" })
-    }
+    // }
+    // else {
+    //   this.errorMessage.push({ errorKey: "category", errorMessage: "category value should be Proper" })
+    // }
     // // }
     if (this.errorMessage.length > 0) {
       return false
@@ -839,185 +924,215 @@ dateformate(date) {
     return status
   }
 
-  // SelectDocumentFiles(event) {
-  //  debugger
-  //   var msg = 'Are You Sure to upload ' + event.target.files[0].name + '?'
+  async SelectDocumentFiles(event) {
 
-  //   this.confirmService.confirm({ message: msg })
-  //     .subscribe(res => {
-  //       if (res) {
-  //         if (event.target.files && event.target.files[0]) {
-  //           var Extension = event.target.files[0].name.substring(
-  //             event.target.files[0].name.lastIndexOf('.') + 1).toLowerCase();
-  //           if (Extension == "Xlsx" || Extension == "xlsx") {
-  //             const fileReader = new FileReader();
-  //             this.file = event.target.files[0];
-  //             this.DocumentFile = this.file;
+    debugger
 
-  //             if (this.file.size < 5000000) {
-  //               fileReader.readAsArrayBuffer(this.file);
+    var msg = 'Are You Sure to upload ' + event.target.files[0].name + '?'
 
-  //               fileReader.onload = (e) => {
+    this.confirmService.confirm({ message: msg })
+      .subscribe(res => {
+        if (res) {
 
-  //                 this.arrayBuffer = fileReader.result;
-  //                 var data = new Uint8Array(this.arrayBuffer);
-  //                 var arr = new Array();
-  //                 for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-  //                 var bstr = arr.join("");
-  //                 var workbook = XLSX.read(bstr, { type: "binary" });
-  //                 var first_sheet_name = workbook.SheetNames[0];
-  //                 var worksheet = workbook.Sheets[first_sheet_name];
-  //                 var arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+          if (event.target.files && event.target.files[0]) {
+            var Extension = event.target.files[0].name.substring(
+              event.target.files[0].name.lastIndexOf('.') + 1).toLowerCase();
+            if (Extension == "Xlsx" || Extension == "xlsx") {
+              const fileReader = new FileReader();
+              this.file = event.target.files[0];
+              this.DocumentFile = this.file;
 
-  //                 for (var j = 0; j < arraylist.length; j++) {
+              if (this.file.size < 5000000) {
+                fileReader.readAsArrayBuffer(this.file);
 
+                fileReader.onload = (e) => {
 
-  //                   var partNo = "";
-  //                   var distributorcategory = "";
-  //                   var groupcategoryFromSAP = "";
-  //                   var large_description = "";
-  //                   var advantages = "";
-  //                   var other_instruction = "";
-  //                   var defaultQuantity = "";
-  //                   var ishomepage = "";
-  //                   var homePage = "";
+                  this.arrayBuffer = fileReader.result;
+                  var data = new Uint8Array(this.arrayBuffer);
+                  var arr = new Array();
+                  for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+                  var bstr = arr.join("");
+                  var workbook = XLSX.read(bstr, { type: "binary" });
+                  var first_sheet_name = workbook.SheetNames[0];
+                  var worksheet = workbook.Sheets[first_sheet_name];
+                  // console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }))
+                  var arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+                  for (var j = 0; j < arraylist.length; j++) {
+                    var partNo = "";
+                    var distributorcategory = "";
+                    var groupcategoryFromSAP = "";
+                    var large_description = "";
+                    var advantages = "";
+                    var other_instruction = "";
+                    var defaultQuantity = "";
+                    var ishomepage = "";
+                    var homePage = "";
 
-  //                   partNo = arraylist[j]["Part Number"]
-  //                   ishomepage = arraylist[j]["Is Home Page"]
-  //                   distributorcategory = arraylist[j]["distributor_category"]
-  //                   groupcategoryFromSAP = arraylist[j]["group_category -From SAP"]
-  //                   large_description = arraylist[j]["large_description"]
-  //                   advantages = arraylist[j]["advantages"]
-  //                   other_instruction = arraylist[j]["other_instruction"]
-  //                   defaultQuantity = arraylist[j]["column_4 (Defualt Qty for TMGO)"]
+                    partNo = arraylist[j]["part_number"]
+                    ishomepage = arraylist[j]["is_home_page"]
+                    distributorcategory = arraylist[j]["distributor_category"]
+                    groupcategoryFromSAP = arraylist[j]["group_category"]
+                    large_description = arraylist[j]["large_description"]
+                    advantages = arraylist[j]["advantages"]
+                    other_instruction = arraylist[j]["other_instruction"]
+                    defaultQuantity = arraylist[j]["tmgo_qty"]
 
-  //                   var validateHome = this.validateHomeInput(ishomepage, distributorcategory)
-  //                   var validateCategory = this.validateCategoryInput(distributorcategory)
+                    var validateHome = this.validateHomeInput(ishomepage, distributorcategory)
 
-  //                   if (validateHome == false) {
-  //                     for (let entry of this.errorMessage) {
-  //                       Swal.fire(entry.errorMessage)
-  //                     }
-  //                   }
-  //                   else if (validateHome == true) {
-  //                     homePage = ((ishomepage == 'Yes') ? 'active' : (ishomepage == 'No') ? 'deactive' : ' ')
-  //                     this.details.push(
-  //                       {
-  //                         Part_Number: partNo,
-  //                         Is_Home_Page: homePage,
-  //                         distributor_category: distributorcategory,
-  //                         group_category: groupcategoryFromSAP,
-  //                         large_description: large_description,
-  //                         advantages: advantages,
-  //                         other_instruction: other_instruction,
-  //                         tmgo_qty: defaultQuantity,
-  //                       }
-  //                     );
-  //                   }
-
-                    
-  //                 }
-
-  //                 var len = this.details.length
-
-  //                 var size = 10
-
-  //                 this.fileSize = (Math.ceil(this.details.length / size))
-
-  //                 // WORKING LOGIC
-  //                 if (this.errorMessage.length == 0) {
-  //                   for (var k = 0; k < this.fileSize; k++) {
-  //                     this.RoundOf = 0;
-  //                     this.RoundOf = k + 1;
-  //                     this.arrayslice = this.details.slice(k * 10, size)
-
-  //                     for (var l = 0; l < this.arrayslice.length; l++) {
-  //                       var row = []
-  //                       row = this.arrayslice[l]
-  //                       this.temp.push(
-  //                         row
-  //                       )
-
-  //                     }
-
-  //                     var json1 = { "data": this.temp }
-
-  //                     this.UploadFile(json1, k, this.fileSize)
-  //                     this.CommonService.bulkPartUpdate(json1).subscribe(
-  //                       data => {
-
-  //                         if (data.success == true) {
-
-  //                           debugger
-  //                           if (data.records_not_inserted != null) {
-  //                             var FailedArrayteml = data.records_not_inserted
-  //                             for (let entry1 of FailedArrayteml) {
-
-  //                               var Json2 =
-  //                               {
-  //                                 "PartNumber": entry1.part_number,
-  //                                 "Reason": entry1.reason
-  //                               }
-
-  //                               // this.datapass(Json2);
-
-  //                               this.FailedArray.push(Json2);
-  //                             }
-  //                             console.log(this.FailedArray)
-  //                           }
-
-  //                           if (k == this.fileSize ) {
-  //                             this.excelService.exportCancellationAsExcelFile(this.FailedArray, 'FailedParts');
-  //                           }
-  //                         }
-  //                         else {
-  //                           Swal.fire('Please try Again')
-  //                         }
-  //                       }, (err) => {
-  //                         Swal.fire('Please try Again')
-  //                       }
-  //                     );
-  //                     this.temp = [];
-  //                     // arrayslice=[];
-  //                     size = size + 10;
-                    
+                    if (validateHome == false) {
+                      for (let entry of this.errorMessage) {
+                        Swal.fire(entry.errorMessage)
+                      }
+                      
+                    }
+                    else if (validateHome == true) {
+                      homePage = ((ishomepage == 'Yes') ? 'true' : (ishomepage == 'No') ? 'false' : ' ')
+                      this.details.push(
+                        {
+                          part_number: partNo.toString(),
+                          is_home_page: homePage,
+                          distributor_category: distributorcategory,
+                          group_category: groupcategoryFromSAP,
+                          large_description: large_description,
+                          advantages: advantages,
+                          other_instruction: other_instruction,
+                          tmgo_qty: defaultQuantity,
+                        }
+                      );
+                    }
 
 
-  //                   }
-
-                   
-  //                 }
+                  }
 
 
 
-  //               }
-  //             }
+                  this.ReportExport(this.details)
 
-  //             else {
-  //               Swal.fire('Oops...', 'Upload only 5 MB size files!')
-  //             }
-  //           }
-  //           else {
-  //             // this.myInputVariable.nativeElement.value = '';
-  //             Swal.fire('Upload only Xlsx Files');
 
-  //           }
+                
+                  
 
-  //         }
 
-  //       }
-  //     })
-  // }
+                }
+              }
+
+              else {
+                Swal.fire('Oops...', 'Upload only 5 MB size files!')
+              }
+            }
+            else {
+              // this.myInputVariable.nativeElement.value = '';
+              Swal.fire('Upload only Xlsx Files');
+
+            }
+
+          }
+
+        }
+      })
+  }
+
+
+  async ReportExport(Data) {
+    
+  
+    debugger
+       
+        var size = 250
+        var offset = 250
+       //var size= Data.length
+    
+    
+        var rou = (Math.ceil(Data.length / 250))
+    
+    this.loader.open()
+    
+    
+    
+    
+        for (let i = 0; i < rou; i++) {
+    
+    
+          this.RoundOf = 0;
+          this.RoundOf = i + 1;
+          this.arrayslice = this.details.slice(i * 250, offset)
+    
+       
+    
+          for (var l = 0; l < this.arrayslice.length; l++) {
+            var row = []
+            row = this.arrayslice[l]
+            this.temp.push(row)
+    
+          }
+    
+          console.log(this.temp)
+    
+          var json1 = { "data": this.temp }
+    
+          let data = await this.CommonService.bulkPartUpdate1(json1);
+          
+          if (data.success == true) {
+    
+            if (data.records_not_inserted != null) {
+              var FailedArrayteml = data.records_not_inserted
+              for (let entry1 of FailedArrayteml) {
+    
+                var Json2 =
+                {
+                  "PartNumber": entry1.part_number,
+                  "Reason": entry1.reason
+                }
+    
+               
+                this.FailedArray.push(Json2);
+                
+              }
+    
+            }
+    
+    
+    
+    
+          //  this.dialogRef.close();
+    
+          }
+          this.temp = []
+          offset = offset + 250
+        }
+    
+        console.log('this.FailedArray')
+        console.log(this.FailedArray)
+    
+        if (this.FailedArray.length > 0) {
+          this.excelService.exportCancellationAsExcelFile(this.FailedArray, 'FailedParts');
+         
+          this.temp = [];
+          this.details = [];
+        }
+    
+    
+        if (this.FailedArray.length > 0) {
+          let self = this;
+          this.FailedArray = [];
+         // self.MatSnackBar.open('Success.! Please check Downloaded Excel Sheet.', 'close', { duration: 3000, panelClass: "my-snack-bar" },);
+        }
+        else {
+          let self = this;
+        //  self.MatSnackBar.open('Success.!', 'close', { duration: 3000, panelClass: "my-snack-barGreen" });
+        }
+        this.loader.close()
+        //this.dialogRef.close();
+      }
 
   request = []
   temp = []
 
   UploadFile(json, k, size) {
-    debugger
 
     this.CommonService.bulkPartUpdate(json).subscribe(
       data => {
-      debugger
+
         if (data.success == true) {
 
           if (data.records_not_inserted != null) {
@@ -1056,113 +1171,6 @@ dateformate(date) {
     );
 
   }
-
-
-
-  fileUploads(event) {
-    debugger
-    console.log("file upload called")
-    
- 
-    var msg = 'Are You Sure to upload ' + event.target.files[0].name + '?'
-
-    this.confirmService.confirm({ message: msg })
-      .subscribe(res => {
-        if (res) {
-          if (event.target.files && event.target.files[0]) {
-            var Extension = event.target.files[0].name.substring(
-              event.target.files[0].name.lastIndexOf('.') + 1).toLowerCase();
-            if (Extension == "Xlsx" || Extension == "xlsx") {
-              const fileReader = new FileReader();
-              this.file = event.target.files[0];
-              this.DocumentFile = this.file;
-
-              if (this.file.size < 5000000) {
-                fileReader.readAsArrayBuffer(this.file);
-
-                fileReader.onload = (e) => {
-
-                  this.arrayBuffer = fileReader.result;
-                  var data = new Uint8Array(this.arrayBuffer);
-                  var arr = new Array();
-                  for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-                  var bstr = arr.join("");
-                  var workbook = XLSX.read(bstr, { type: "binary" });
-                  var first_sheet_name = workbook.SheetNames[0];
-                  var worksheet = workbook.Sheets[first_sheet_name];
-                  var arraylist = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-                  for (var j = 0; j < arraylist.length; j++) {
-                    var partNo = "";
-                    var distributorcategory = "";
-                    var groupcategoryFromSAP = "";
-                    var large_description = "";
-                    var advantages = "";
-                    var other_instruction = "";
-                    var defaultQuantity = "";
-                    var ishomepage = "";
-                    var homePage = "";
-
-                    partNo = arraylist[j]["part_number"]
-                    ishomepage = arraylist[j]["is_home_page"]
-                    distributorcategory = arraylist[j]["distributor_category"]
-                    groupcategoryFromSAP = arraylist[j]["group_category"]
-                    large_description = arraylist[j]["large_description"]
-                    advantages = arraylist[j]["advantages"]
-                    other_instruction = arraylist[j]["other_instruction"]
-                    defaultQuantity = arraylist[j]["tmgo_qty"]
-
-                    var validateHome = this.validateHomeInput(ishomepage, distributorcategory)
-
-                    if (validateHome == false) {
-                      for (let entry of this.errorMessage) {
-                        Swal.fire(entry.errorMessage)
-                      }
-                 
-                    }
-                    else if (validateHome == true) {
-                      homePage = ((ishomepage == 'Yes') ? 'true' : (ishomepage == 'No') ? 'false' : ' ')
-                      this.details.push(
-                        {
-                          part_number: partNo.toString(),
-                          is_home_page: homePage,
-                          distributor_category: distributorcategory,
-                          group_category: groupcategoryFromSAP,
-                          large_description: large_description,
-                          advantages: advantages,
-                          other_instruction: other_instruction,
-                          tmgo_qty: defaultQuantity,
-                        }
-                      );
-                    }
-
-
-                  }
-
-
-                  
-
-
-
-                }
-              }
-
-              else {
-                Swal.fire('Oops...', 'Upload only 5 MB size files!')
-              }
-            }
-            else {
-            
-              Swal.fire('Upload only Xlsx Files');
-
-            }
-
-          }
-
-        }
-      })
-
-  }
-
   EDownload: any;
   //count: any;
   pageName: any;
@@ -1215,12 +1223,21 @@ dateformate(date) {
     reportDownloadTemplate1() {
       debugger;
       this.isdiableeporrt = false;
-      
+      // if (event.target.value == " ") {
+      //   Swal.fire('Please select download type')
+      // }
+      // else if (event.target.value == "Excel") {
+        //const exportList: ListInput = {} as ListInput;
         const ListInput: ListInput = {} as ListInput;
+  
+        // if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
+  
+        // if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
   
   
   
         if (this.Part_Number) { ListInput.Part_Number = this.Part_Number; } else { ListInput.Part_Number = ""; }
+        //if (this.pg) { ListInput.pg = this.pg; } else { ListInput.pg = ""; }
         if (this.distributor_category) { ListInput.distributor_category = this.distributor_category; } else { ListInput.distributor_category = ""; }
         if (this.group_category) { ListInput.group_category = this.group_category; } else { ListInput.group_category = ""; }
         if (this.large_description) { ListInput.large_description = this.large_description; } else { ListInput.large_description = ""; }
@@ -1229,10 +1246,18 @@ dateformate(date) {
         if (this.large_description) { ListInput.large_description = this.large_description; } else { ListInput.large_description = ""; }
         if (this.tmgo_qty) { ListInput.tmgo_qty = this.tmgo_qty; } else { ListInput.tmgo_qty = ""; }
         if (this.is_home_page) { ListInput.is_home_page = this.is_home_page; } else { ListInput.is_home_page = ""; }
-       
+        // ListInput.Part_Number = entry.part_number
+        // ListInput.Distributor_Category = entry.distributor_category 
+        // ListInput.Group_Category = entry.group_category 
+        // ListInput.Description = entry.large_description
+        // ListInput.Advantages = entry.advantages
+        // ListInput.Other_Instruction = entry.other_instruction
+        // ListInput.Tmgo_Qty = entry.tmgo_qty
+        // ListInput.Is_home_page = entry.is_home_page
         this.EDownload = ListInput;
         console.log(ListInput)
-       
+        //console.log(this.to_date,this.from_date,this.state_code,this.district,this.division_category,this.division_id,this.division_name)
+        //console.log(this.EDownload, "EDownloadllll")
         this.count = this.totalrecord;
         this.pageName = "PartMaster";
         let ngbModalOptions: NgbModalOptions = {
@@ -1246,7 +1271,217 @@ dateformate(date) {
         });
       }
  
-    
+    // disablebutton1 :boolean = true
+    // disablebutton2 :boolean = true
+    // async reportDownloadTemplate() {
+    //   this.disablebutton1 = false
+    //   debugger
+  
+    //   
+  
+    //   this.DataPrepareArray = []
+    //   const ListInput: Input = {} as Input;
+  
+  
+      
+    //   if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
+  
+    //   if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
+  
+  
+  
+    //   if (this.part_num) { ListInput.part_number = this.part_num; } else { ListInput.part_number = ""; }
+    //   if (this.pg) { ListInput.pg = this.pg; } else { ListInput.pg = ""; }
+    //   if (this.distributor_category) { ListInput.distributor_category = this.distributor_category; } else { ListInput.distributor_category = ""; }
+    //   if (this.discount_code_cvbu) { ListInput.discount_code_cvbu = this.discount_code_cvbu; } else { ListInput.discount_code_cvbu = ""; }
+    //   if (this.desc_text) { ListInput.desc_text = this.desc_text; } else { ListInput.desc_text = ""; }
+    //   if (this.isactiveforecom) { ListInput.isactiveforecom = this.isactiveforecom; } else { ListInput.isactiveforecom = ""; }
+    //   if (this.minquantity) { ListInput.minquantity = this.minquantity; } else { ListInput.minquantity = ""; }
+    //   if (this.large_description) { ListInput.large_description = this.large_description; } else { ListInput.large_description = ""; }
+    //   if (this.isassamrifile) { ListInput.isassamrifile = this.isassamrifile; } else { ListInput.isassamrifile = ""; }
+    //   if (this.isecom) { ListInput.isecom = this.isecom; } else { ListInput.isecom = ""; }
+    //   if (this.group_category) { ListInput.group_category = this.group_category; } else { ListInput.group_category = ""; }
+  
+  
+    //   if (this.nls_status) { ListInput.nls_status = this.nls_status; } else { ListInput.nls_status = ""; }
+    //   if (this.order_flag_status) { ListInput.order_flag_status = this.order_flag_status; } else { ListInput.order_flag_status = ""; }
+    //   if (this.pg_line) { ListInput.pg_line = this.pg_line; } else { ListInput.pg_line = ""; }
+  
+  
+  
+  
+  
+    //   if (this.TotalAllRecords <= 250) {
+  
+    //     ListInput.size = this.TotalAllRecords
+    //     ListInput.offset = 0
+  
+    //     await this.CommonService.PartMaster(ListInput).subscribe(
+  
+    //       data => {
+    //         debugger
+    //         //console.log(data);
+  
+    //         if (data.success == true) {
+  
+  
+  
+    //           for (let entry of data.data) {
+  
+  
+  
+    //             const ListInput: FinalDataTemplate = {} as FinalDataTemplate;
+  
+  
+  
+  
+    //             ListInput.part_number = entry.part_number
+    //             ListInput.distributor_category = entry.distributor_category
+    //             ListInput.group_category = entry.group_category
+    //             ListInput.large_description = entry.large_description
+    //             ListInput.advantages = entry.advantages
+  
+    //             ListInput.other_instruction = entry.other_instruction
+    //             ListInput.tmgo_qty = entry.tmgo_qty
+    //           ListInput.is_home_page = entry.is_home_page == true ? 'Yes' : 'No' 
+  
+  
+    //             this.DataPrepareArray.push(ListInput)
+  
+    //           }
+  
+    //           //this.loader.close();
+    //           this.excelService.exportCancellationAsExcelFile(this.DataPrepareArray, 'Part Data');
+    //           // this.loader.close();
+    //           this.isdiableeporrt = true
+    //           this.disablebutton1 = true
+    //         }
+  
+  
+  
+    //         else {
+    //           Swal.fire('Please try Again')
+    //           this.isdiableeporrt = true
+    //           this.disablebutton1 = true
+  
+    //         }
+    //       }, (err) => {
+    //         Swal.fire('Please try Again')
+    //         this.isdiableeporrt = true
+    //         this.disablebutton1 = true
+    //       }
+  
+    //     );
+    //   }
+    //   else {
+  
+    //     var Size = 250
+    //     var offset = 0
+  
+  
+    //     var rou = (Math.ceil(this.TotalAllRecords / 250))
+  
+  
+  
+  
+  
+    //     for (let i = 0; i < rou; i++) {
+  
+    //       ListInput.offset = offset
+    //       ListInput.size = Size
+  
+    //       this.CommonService.PartMaster(ListInput).subscribe(
+  
+    //         data => {
+    //           debugger
+  
+    //           if (data.success == true) {
+  
+    //             for (let entry of data.data) {
+  
+  
+  
+    //               const ListInput: FinalDataTemplate = {} as FinalDataTemplate;
+  
+  
+  
+  
+    //               ListInput.part_number = entry.part_number
+    //               ListInput.distributor_category = entry.distributor_category
+    //               ListInput.group_category = entry.group_category
+    //               ListInput.large_description = entry.large_description
+    //               ListInput.advantages = entry.advantages
+  
+    //               ListInput.other_instruction = entry.other_instruction
+    //               ListInput.tmgo_qty = entry.tmgo_qty
+    //               ListInput.is_home_page = entry.is_home_page
+    //               ListInput.is_home_page = entry.is_home_page == true ? 'Yes' : 'No' 
+  
+  
+    //               this.datafoexpot(ListInput)
+  
+    //             }
+  
+  
+  
+  
+  
+    //           }
+  
+  
+  
+    //           else {
+    //             Swal.fire('Please try Again')
+    //             this.isdiableeporrt = true
+    //             this.disablebutton1 = true
+    //             //   this.loader.close();
+  
+    //           }
+    //         }, (err) => {
+    //           Swal.fire('Please try Again')
+    //           this.isdiableeporrt = true
+    //           this.disablebutton1 = true
+    //           //  this.loader.close();
+    //         }
+  
+    //       );
+  
+  
+    //       Size = Size + 250;
+    //       offset = offset + 250;
+    //     }
+  
+    //   }
+  
+    //   // this.loader.open();
+  
+    // }
+  
+  
+  
+    // pendingcount: any
+    // datafoexpot(ListInput) {
+  
+  
+  
+    //   this.DataPrepareArray.push(ListInput)
+    //   this.pendingcount = this.DataPrepareArray.length;
+    //   if (this.DataPrepareArray.length == this.TotalAllRecords) {
+  
+    //     this.DataPrepareArray.sort((a: any, b: any) => { return Date.parse(b.SortDate) - Date.parse(a.SortDate) });
+    //     this.DataPrepareArray.forEach(function (x) { delete x.SortDate });
+  
+  
+    //     this.excelService.exportCancellationAsExcelFile(this.DataPrepareArray, 'Part Data');
+    //     this.isdiableeporrt = true
+    //     this.disablebutton2 = true
+    //     this.disablebutton1 = true
+    //   }
+  
+  
+  
+  
+    // }
   }
 
 

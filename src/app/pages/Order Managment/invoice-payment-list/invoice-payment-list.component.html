@@ -1,7 +1,7 @@
 <app-submenu-list [ActiveMenu]='6'></app-submenu-list>
 <section class="main-wrapper prod-list-page">
     <div class="l-container">
-        <div class="search-order-id float-right">
+        <div class="search-order-id float-left">
             <span class="material-icons"> search </span>
             <input type="text" class="textfield" placeholder="Search by Invoice_Number"
                 (keydown)="SearchAccount($event)" (focusout)="showAccount($event)"
@@ -9,16 +9,15 @@
             <div class="btn-filter" ngbDropdown #myDrop="ngbDropdown">
                 <button class="btn-filter" id="filterPopup" ngbDropdownToggle><img src="./assets/images/filter.svg"
                         alt="" /></button>
+                      
                 <div ngbDropdownMenu aria-labelledby="filterPopup" class="filter-popup">
+                   
                     <div class="arrow"></div>
                     <form [formGroup]="AllFilters">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-4 border-right">
-
-
-
-                                    <h4>Invoice Date</h4>
+                                     <h4>Invoice Date</h4>
                                     <li class="sidebar-cards__item">
                                         <ul class="sidebar-cards__chk-list">
                                             <li class="sidebar-cards__chk-list-item chkbox">
@@ -86,6 +85,13 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <li>
+                                        <div class="srch-box">
+                                            <label>OTC Number</label><br />
+                                            <input [formControl]="AllFilters.controls['otc_number']" type="text"
+                                                placeholder="OTC Number" class="textfield " id="inputPassword">
+                                        </div>
+                                    </li>
                                 </div>
                                 <div class="col-4 border-right">
 
@@ -105,17 +111,7 @@
                                     </li>
                                     <li>
                                         <div class="srch-box">
-                                            <label>OTC Number</label><br />
-                                            <input [formControl]="AllFilters.controls['otc_number']" type="text"
-                                                placeholder="OTC Number" class="textfield " id="inputPassword">
-                                        </div>
-                                    </li>
-                                </div>
-
-                                <div class="col-4 border-right">
-                                    <li>
-                                        <div class="srch-box">
-
+                                            <label> status</label><br />
                                             <select [formControl]="AllFilters.controls['invoice_status']" disableRipple
                                                 class="textfield">
                                                 <option value="order_without_invoice">New order</option>
@@ -125,6 +121,11 @@
                                             </select>
                                         </div>
                                     </li>
+                                 
+                                </div>
+
+                                <div class="col-4 border-right">
+                                  
 
                                     <li>
                                         <div class="srch-box">
@@ -137,10 +138,13 @@
                                             </select>
                                         </div>
                                     </li>
+                                    <li>
+                                        <div>
                                     <button (click)="SearchAllDate()"
                                         class="btn btn-outline-primary ">Search</button>&nbsp;
                                     <button (click)="resetALl();" class="btn btn-outline-primary">Reset</button>
-
+                                    </div>
+                                    </li>
                                 </div>
 
 
@@ -155,7 +159,76 @@
             </div>
 
         </div>
+      
+        <ng-template #content let-modal>
 
+            <div class="popup-add-roll">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title1">Invoice Payment List</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form [formGroup]="exampleForm">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label>Payment Type</label>
+                                    <select  class="form-control" formControlName="payment_method" class="textfield">
+                                        <option value="none"  selected disabled hidden>
+                                            Select Type
+                                        </option>
+                                        <option value="DD">
+                                            DD  
+                                        </option>
+                                        <option value="Cheque">
+                                            Cheque 
+                                        </option>
+                                        <option value="cash Payment">
+                                            Cash Payment  
+                                        </option>
+                                        <option value="Online trasnsfer">
+                                            Online Trasnsfer
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <label>Remark </label>
+                                    <textarea rows="4" placeholder="Enter Description" maxlength="100"
+                                        class="form-control" formControlName="remark" required></textarea>
+                                </div>
+                            </div>
+                          
+
+                        </div>
+
+                    </form>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="button button--btn-brdr clr-light-blue"
+                        (click)="modal.close('Save click')">Cancel</button>
+                    <button type="button"  class="button btn-outline-dark"
+                        (click)="saveuserdata()">Save</button>
+                   
+                </div>
+
+            </div>
+        </ng-template>
+        <div class=" justify-content-end float-right">
+
+            <ul fxFlex="30" style="color: darkolivegreen; width: 100px;" matTooltip="Export to Excel"
+            (click)="ExportDownload();" >
+                <span class='fa-stack fa-lg'>
+                    <i class='fas fa-file-excel fa-pull-left fa-2x'></i>
+    
+                </span>
+    
+            </ul>
+        </div>
+        </div>
         <div class="l-content w-100 pl-0">
 
             <div class="tbl-reports card-shadow bg-white h-100">
@@ -237,6 +310,7 @@
                                                 alt=""></i> -->
                                         </div>
                                     </td>
+                                
 
                                     <td>
                                         <div class="td-wrapp d-flex align-items-center">
@@ -245,6 +319,7 @@
                                             <!-- alt=""></i> -->
                                         </div>
                                     </td>
+                                 
                                     <td>
                                         <div class="td-wrapp d-flex align-items-center ">
                                             <span>Payment Method</span>
@@ -255,6 +330,12 @@
                                         <div class="td-wrapp d-flex align-items-center ">
                                             <span>Payment Date</span>
 
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="td-wrapp d-flex align-items-center">
+                                            <span>Action</span>
                                         </div>
                                     </td>
 
@@ -271,7 +352,8 @@
                                                 {{ row?.invoice_date | date :'dd-MM-yyyy hh:mm:ss a' }}</div>
                                         </td>
                                         <td class="text-nowrap">
-                                            <div class="td-wrapp">
+                                            <div class="td-wrapp" style="color: blue;cursor: pointer;" class="td-wrapp"
+                                            (click)="details(row);">
                                                 {{ row?.otc_order_number }}</div>
                                         </td>
                                         <td class="text-nowrap">
@@ -281,14 +363,69 @@
                                         <td class="text-nowrap" style="text-transform: capitalize;">
                                             <div class="td-wrapp"> {{row?.invoice_status}}</div>
                                         </td>
+                                        
+                                     
                                         <td class="text-nowrap">
                                             <div class="td-wrapp"> {{row?.order_date | date :'dd-MM-yyyy hh:mm:ss a'}}
                                             </div>
                                         </td>
                                         <td class="text-nowrap">
-                                            <div class="td-wrapp">{{row?.invoice_pdf_url}}
+                                            <div class="td-wrapp d-flex align-items-center"
+                                                *ngIf="row.invoice_count > 0">
+                                                <!-- [hidden]="!item.invoice_count !=0" -->
+                                                {{ row?.invoice_pdf_url }} View <a href="javascript:void(0)"
+                                                    id="dropdownBasic1" placement="bottom" [ngbPopover]="popContent"
+                                                    class="invoices-btn" style="margin-left: 10px;"
+                                                    (click)="InvoiceDetails(item)">
+                                                    <img src="../../assets/images/invoice.svg" alt="">
+                                                </a>
+                                                <ng-template class="invoices-popover" #popContent
+                                                    style="width:400px">
+                                                    <ul style="width: 150% !important;" class="invoices__list">
+                                                        <li *ngFor="let Detailrow of invoiceDetails">
+                                                            <!-- <div class="row">
+                                                                <div class="col-4">
+                                                                    <a (click)="openInvoicePopup(Detailrow)"
+                                                                        style="color: blue;">#{{Detailrow?.invoice_no}}</a><small>{{Detailrow?.total_part_count}}
+                                                                        part, {{Detailrow?.total_quantity}}
+                                                                        Qty</small>
+                                                                </div> -->
+                                                                <div class="col-8 d-flex align-items-center">(₹)
+                                                                    {{Detailrow?.invoice_amount| number:'1.2-2' }}
+                                                                    <a href="javascript:void(0)"
+                                                                        *ngIf="Detailrow.invoice_pdf_url != '' "
+                                                                        (click)="Invoiceclick(Detailrow)"
+                                                                        class="material-icons ml-2">
+                                                                        file_download </a>
+                                                                    <!--  -->
+                                                                    <a href="javascript:void(0)"
+                                                                        *ngIf="Detailrow.invoice_pdf_url == ''"
+                                                                        (click)="ERROR('Invoice Copy Not generated')"
+                                                                        style="color: red;"
+                                                                        title="Invoice Copy Not generated"
+                                                                        class="material-icons ml-2">
+                                                                        info_outline </a>
+                                                                </div>
+                                                            <!-- </div> -->
+                                                        </li>
+
+                                                    </ul>
+                                                </ng-template>
                                             </div>
+                                            <!-- <div class="td-wrapp d-flex align-items-center"
+                                                *ngIf="item.invoice_count == 0">
+                                                {{ item?.invoice_count }} Invoice
+                                            </div> -->
                                         </td>
+                                        <!-- <td class="text-nowrap">
+                                            <div class="td-wrapp">
+                                                <a style="color: blue;cursor: pointer;" (click)="ViewInvoice">View</a>
+                                                &nbsp;
+                                                <a _ngcontent-obv-c221="" title="Download" target="_blank" style="color: #1a66ff;">
+                                                    <i _ngcontent-obv-c221="" class="fas fa-download"></i></a>
+                                                {{row?.invoice_pdf_url}}
+                                            </div>
+                                        </td> -->
                                         <td class="text-nowrap">
                                             <div class="td-wrapp"> {{row?.order_amount}}
                                             </div>
@@ -305,12 +442,15 @@
                                                 {{row?.tracking_date | date :'dd-MM-yyyy hh:mm:ss a' }}
                                             </div>
                                         </td>
-
+                                      
+                                      
                                         <td class="text-wrap">
                                             <div class="td-wrapp d-flex align-items-center">
                                                 {{row?.payment_status }}</div>
 
                                         </td>
+
+                                      
                                         <td class="text-wrap">
                                             <div class="td-wrapp d-flex align-items-center">
                                                 {{row?.payment_method}}</div>
@@ -322,7 +462,28 @@
 
                                         </td>
 
-
+                                        <td *ngIf="row?.payment_status=='Paid'">
+                                            <div class="td-wrapp d-flex align-items-center">
+    
+    
+                                                <button class="button float-right btn-add-new"
+                                                     hidden  disabled>
+                                                Action
+                                            </button>
+    
+                                             </div>
+                                            </td>
+                                            <td *ngIf="row?.payment_status!='Paid'">
+                                                <div class="td-wrapp d-flex align-items-center">
+        
+        
+                                                    <button class="button float-right btn-add-new"
+                                                    (click)="Editpopup(content,row.invoice_no)">
+                                                    Action
+                                                </button>
+        
+                                                 </div>
+                                                </td>
                                     </tr>
                                 </ng-container>
                                 <!-- <ng-container *ngIf="items.length == 0">
@@ -349,6 +510,11 @@
             </div>
         </div>
 
-
+        <ng-template #ExcelDownload let-d="dismiss">
+            <app-report-download-popup [data]="EDownload" [count]="count" [pageName]="pageName"></app-report-download-popup>
+        </ng-template>
+        <ng-template #orderDetails let-d="dismiss">
+            <order-details [order]="orderInformations"></order-details>
+        </ng-template>
 
         <!-- </section> -->

@@ -17,7 +17,7 @@
             <span class="material-icons">search </span>
             <input type="text" class="textfield" placeholder="Search by role" (keydown)="SearchByRole($event)" (focusout)="showByRole($event)" [formControl]="itemForm.controls['role_name']" type="text">
         </div> -->
-        <div class="search-order-id">
+        <div class="search-order-id" [hidden]="isdistributor">
         <button class="button float-left btn-add-new" (click)="open(content)">
             <span class="material-icons mr-2">
                 control_point

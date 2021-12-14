@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OrderserviceService } from 'src/app/shared/Services/orderservice.service';
 
@@ -10,26 +11,33 @@ import { OrderserviceService } from 'src/app/shared/Services/orderservice.servic
 export class PaymentDetailPopupComponent implements OnInit {
   @Input() payment: any;
   @Output() closemodal = new EventEmitter<any>();
-
+  Displaylable : boolean = false
   currency: string = '₹';
 
-  constructor(
-    private OrderListService: OrderserviceService,
-    private  modalService: NgbModal,
-  ) { }
+  constructor(   private OrderListService: OrderserviceService,private modalService: NgbModal,public dialogRef: MatDialogRef<PaymentDetailPopupComponent>,@Inject(MAT_DIALOG_DATA
+    ) public data: any
+    ) { }
+
 
   ngOnInit(): void {
-
-    const ListInputq: PaymentInfo = {} as PaymentInfo;
-    ListInputq.order_number = this.payment.order_number;
-    setTimeout(() => {
-        this.GetPaymentInfo(ListInputq);
-    }, 250);
+    var TempData = this.data.payload;
+    this.payment=this.data.payload
+   
+    if (TempData.length !== 0) {
+      this.Displaylable = true;
+    }
   }
+    // const ListInputq: PaymentInfo = {} as PaymentInfo;
+    // ListInputq.order_number = this.payment.order_number;
+    // setTimeout(() => {
+    //     this.GetPaymentInfo(ListInputq);
+    // }, 250);
+  
 
   closeModal() {
-    this.modalService.dismissAll();
-  }
+    //  this.modalService.dismissAll();
+      this.dialogRef.close();
+    }
 
   DisplayInfo: boolean
   CreditBalance: any = 0

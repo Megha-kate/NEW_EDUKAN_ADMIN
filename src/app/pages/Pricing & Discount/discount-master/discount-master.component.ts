@@ -1011,7 +1011,7 @@ export class DiscountMasterComponent implements OnInit {
       ListInput.owner = 'TML';
       ListInput.offset = 0;
       this.resetFeild();
-      //this.itemForm.reset();
+      this.itemForm.reset();
       this.GetList(ListInput);
     }
 
@@ -1021,7 +1021,7 @@ export class DiscountMasterComponent implements OnInit {
       ListInput.owner = 'DLR';
       ListInput.offset = 0;
       this.resetFeild();
-      //this.itemForm.reset();
+      this.itemForm.reset();
 
       this.GetList(ListInput);
     }
@@ -2967,11 +2967,13 @@ export class DiscountMasterComponent implements OnInit {
 
     this.ProductLineList.reset();
     for (let i = 0; i < this.selectedPGLineArray.length; i++) {
+      
       var data2 = this.productTypeDisplay.filter(book => book.LINE_2_s === this.selectedPGLineArray[i].LINE_2_s)
       console.log('data', data2)
       if (data2.length == 0) {
         this.productTypeDisplay.push(this.selectedPGLineArray[i])
       }
+      this.selectedPGLineArray=[]
     }
 
     if (this.isPart == true) {
@@ -2979,9 +2981,11 @@ export class DiscountMasterComponent implements OnInit {
         var data2 = this.selectedSKUDisplay.filter(book => book.part_number === this.selectedPartArray[i].part_number)
         console.log('data', data2)
         if (data2.length == 0) {
-          this.selectedSKUDisplay.push(this.selectedPartArray[i])
+          this.selectedSKUDisplay.push(this.selectedPartArray[i].part_number)
         }
+        this.selectedPartArray=[]
       }
+   
     }
     this.selectedPartArray = []
   }
@@ -3504,6 +3508,7 @@ export class DiscountMasterComponent implements OnInit {
         ProductLine1 = ["ALL"]
         SKU1 = this.selectedSKUDisplay
       }
+      this.SKUPartQty=[]
     }
 
     if (this.selectedDisplayDivision.length != 0) {
@@ -3941,7 +3946,7 @@ export class DiscountMasterComponent implements OnInit {
           }).then((result) => {
             if (result.value) {
               this.loader.close();
-              this.resetForm();
+              this.itemForm.reset();
               const ListInput: ListInput = {} as ListInput;
               ListInput.offset = 0;
               if (this.tabchange == 1) {
@@ -3955,7 +3960,7 @@ export class DiscountMasterComponent implements OnInit {
             }
             else {
               this.loader.close();
-              this.resetForm();
+              this.itemForm.reset();
               const ListInput: ListInput = {} as ListInput;
               ListInput.offset = 0;
               if (this.tabchange == 1) {
@@ -3982,6 +3987,7 @@ export class DiscountMasterComponent implements OnInit {
   }
 
   resetForm() {
+    this.itemForm.reset()
   }
 
   Distributortype() {
@@ -4574,6 +4580,7 @@ export class DiscountMasterComponent implements OnInit {
 
   removePartWise(part: any) {
     this.SKUPartQty.splice(this.SKUPartQty.findIndex(item => item.display === part), 1)
+  this.SKUPartQty=[]
   }
 
 

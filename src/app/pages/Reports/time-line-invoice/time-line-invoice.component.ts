@@ -541,6 +541,15 @@ export class TimeLineInvoiceComponent implements OnInit {
       
       return days;
     }
+    
+  onDateSelect(event) {
+    
+    let year = event.year;
+    let month = event.month <= 9 ? '0' + event.month : event.month;;
+    let day = event.day <= 9 ? '0' + event.day : event.day;;
+    let finalDate = year + "-" + month + "-" + day;
+    return finalDate
+   }
   days: any
   otc_number: any
   Filterarray: any = []
@@ -552,6 +561,8 @@ export class TimeLineInvoiceComponent implements OnInit {
     this.currentPage = 1
     this.Filterarray = [];
     var a = this.DistributorList.valid;
+    let from_date = localStorage.getItem("FromDate");
+    let to_date = localStorage.getItem("ToDate");
 
     if (this.itemForm.value.to_percentage !== null) {
       if (this.itemForm.value.to_percentage !== "") {
@@ -604,8 +615,8 @@ export class TimeLineInvoiceComponent implements OnInit {
         this.InvoicetimelineData(ListInput)
         return
       }
-      var d1 = moment(this.itemForm.value.from_date).format('yyyy-MM-DD')
-      var d2 = moment(this.itemForm.value.to_date).format('yyyy-MM-DD')
+      var d1 = moment(this.from_date).format('yyyy-MM-DD')
+      var d2 = moment(this.to_date).format('yyyy-MM-DD')
       var days = this.calculateDate1(d1,d2);
       if (d1 > d2) {
         Swal.fire('From-Date Should be Less Than To-Date.');
@@ -625,11 +636,17 @@ export class TimeLineInvoiceComponent implements OnInit {
 
         this.InvoicetimelineData(ListInput)
         return
+
+
       }
-      this.from_date = this.itemForm.value.from_date;
-      this.to_date = this.itemForm.value.to_date
-      this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
-      this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
+      let customfromdate = this.itemForm.value.from_date;
+      let customtodate = this.itemForm.value.to_date
+      this.from_date = this.onDateSelect(customfromdate)
+      this.to_date = this.onDateSelect(customtodate)
+      // this.from_date = this.itemForm.value.from_date;
+      // this.to_date = this.itemForm.value.to_date
+      // this.from_date = moment(this.from_date).subtract(1, 'months').format('yyyy-MM-DD')
+      // this.to_date = moment(this.to_date).subtract(1, 'months').format('yyyy-MM-DD')
     }
     else if (this.isLastsevenDay == true) {
       this.from_date = this.itemForm.value.from_date;

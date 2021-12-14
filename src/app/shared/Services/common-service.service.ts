@@ -246,6 +246,12 @@ export class CommonService {
   {
     return this.http.post(this. BulkPartUpdateURL,Data, {headers:{"Content-Type":"application/json"}}).pipe(catchError(err => of(err)));
   }
+ // private bulkPartUpdateURL = ${environment.EdukanVss}/api/v2/ecom/admin/bulk_part_update/;
+  async bulkPartUpdate1(Data :any): Promise<any> {
+    return await this.http.post(this.BulkPartUpdateURL,Data, {headers:{"Content-Type":"application/json"}}).toPromise();
+  }
+
+
   ApproveRejectRuleByCode(Data: any):Observable<any>
   {
     return this.http.post(this.ApproveRejectRule,Data, {headers:{"Content-Type":"application/json"}}).pipe(catchError(err => of(err)));

@@ -76,7 +76,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.showRecords = 10;
 
     const ListInput: ListInput1 = {} as ListInput1;
-    ListInput.offset = 10
+    ListInput.offset = 0
     ListInput.size = 10
     ListInput.account_name = ""
     ListInput.contact_no = ""
@@ -462,9 +462,9 @@ export class CustomerDetailsComponent implements OnInit {
   }
   SearchAllDate() {
     const ListInput: Customerinput = {} as Customerinput;
-   // this.currentPage = this.page;
+    this.currentPage = this.page;
 
-    ListInput.offset = 0;
+   
     ListInput.user_type = "FO"
     
     this.contact_no = this.AllFilters.value.contact_no
@@ -485,7 +485,8 @@ export class CustomerDetailsComponent implements OnInit {
     if (this.account_name) { ListInput.account_name = this.account_name; } else { ListInput.account_name = ""; }
 
 
-   // ListInput.offset = this.page - 1;
+   //ListInput.offset = this.page - 1;
+//ListInput.offset = 0;
     ListInput.size = this.noofrecordsperpage;
 
     // ListInput.offset = 0
@@ -774,6 +775,7 @@ export class CustomerDetailsComponent implements OnInit {
   pageChange(page) {
     document.body.scrollTop = 0;
     this.currentPage = page;
+    page = page - 1
 
     
     //this.tableOffset = page.offset;
@@ -786,7 +788,7 @@ export class CustomerDetailsComponent implements OnInit {
     if (this.district) { ListInput.district = this.district; } else { ListInput.district = ""; }
 
     
-    ListInput.offset = page - 1;
+    ListInput.offset = (page*10)
 
     ListInput.size = this.noofrecordsperpage;
     this.GetList(ListInput);

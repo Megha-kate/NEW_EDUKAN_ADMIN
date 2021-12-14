@@ -815,6 +815,10 @@ export class OrderTrackingComponent implements OnInit {
         this.AllFilters.get('org_name').setValue(this.distributor_name);
       }
 
+      // if (this.orderDate == true) {
+      //   this.AllFilters.get('order_from_date').setValue(this.order_from_date);
+      //   this.AllFilters.get('order_to_date').setValue(this.order_to_date);
+      // }
       if (this.orderDate == true) {
         this.AllFilters.get('order_from_date').setValue(this.order_from_date);
         this.AllFilters.get('order_to_date').setValue(this.order_to_date);
@@ -822,10 +826,6 @@ export class OrderTrackingComponent implements OnInit {
       if (this.trackingDate == true) {
         this.AllFilters.get('tracking_from_date').setValue(this.tracking_from_date);
         this.AllFilters.get('tracking_to_date').setValue(this.tracking_to_date);
-      }
-      if (this.invoiceDate == true) {
-        this.AllFilters.get('invoice_from_date').setValue(this.invoice_from_date);
-        this.AllFilters.get('invoice_to_date').setValue(this.invoice_to_date);
       }
 
       // this.AllFilters.get('size').setValue(10);
@@ -896,7 +896,7 @@ export class OrderTrackingComponent implements OnInit {
 
       AllFilters.offset = 0
       AllFilters.size = this.noofrecordsperpage
-      AllFilters.size = 10
+     // AllFilters.size = 10
 
       AllFilters.divison_id = ""
       // AllFilters.invoice_status = ""
@@ -2269,18 +2269,6 @@ export class OrderTrackingComponent implements OnInit {
       })
     }
 
-    // if (this.selectedDateOption == 'Today') {
-    //   this.changedatefilter('Today');
-    // }
-    // else if (this.selectedDateOption == 'Sevenday') {
-    //   this.changedatefilter('Sevenday');
-    // }
-    // else if (this.selectedDateOption == 'thirtyDays') {
-    //   this.changedatefilter('thirtyDays');
-    // }
-    // else {
-    //   this.changedatefilter('Custom');
-    // }
 
 
 
@@ -2650,15 +2638,14 @@ export class OrderTrackingComponent implements OnInit {
         ListInput1.otc_number = "";
         ListInput1.order_from_date = localStorage.getItem("FromDate");
         ListInput1.order_to_date = localStorage.getItem("ToDate");
-        ListInput1.tracking_from_date = localStorage.getItem("FromDate");
-        ListInput1.tracking_to_date = localStorage.getItem("ToDate");
-        // ListInput1.tracking_from_date = ""; //this.FromDate;
-        // ListInput1.tracking_to_date = "";// this.ToDate;
+     
+        ListInput1.tracking_from_date = ""; //this.FromDate;
+        ListInput1.tracking_to_date = "";// this.ToDate;
         ListInput1.divison_id = "";
         ListInput1.offset = (page * 10);
         ListInput1.org_name = "";
         ListInput1.account_name = "";
-        ListInput1.size = 10;
+        ListInput1.size = this.noofrecordsperpage
         this.AllorderList(ListInput1);
       }
       else {
@@ -2701,10 +2688,11 @@ export class OrderTrackingComponent implements OnInit {
         if (this.distributor_name) { AllFilters.org_name = this.distributor_name; } else { AllFilters.org_name = ""; }
         if (this.account_name) { AllFilters.account_name = this.account_name; } else { AllFilters.account_name = ""; }
         AllFilters.offset = (page * 10);
+        AllFilters.divison_id = ""
         AllFilters.size = this.noofrecordsperpage
         // AllFilters.size = 10;
 
-        AllFilters.divison_id = ""
+    
         AllFilters.invoice_status = this.invoice_status
         AllFilters.order_status_array = ["Confirmed", "Cancelled", "Partially Confirmed"]
 
@@ -3426,7 +3414,7 @@ export class OrderTrackingComponent implements OnInit {
       ListInput1.tracking_from_date = ""; 
       ListInput1.tracking_to_date = "";
       ListInput1.divison_id = "";
-      ListInput1.offset = 0;
+      ListInput1.offset = 10;
       ListInput1.org_name = "";
 
       ListInput1.size = this.noofrecordsperpage
@@ -3825,8 +3813,7 @@ export class OrderTrackingComponent implements OnInit {
 
           if (this.tab == 1) {
             this.allCount = data.rangeInfo.total_row;
-            // console.log(this.allCount)
-            //console.log(data.rangeInfo.total_row)
+           
           }
           if (this.tab == 2) {
             this.delayCount = data.rangeInfo.total_row;
@@ -3849,7 +3836,7 @@ export class OrderTrackingComponent implements OnInit {
           this.loader.close()
 
 
-          this.toastrService.error(data.data.msg)
+          //this.toastrService.error(data.data.msg)
         }
       }, (err) => {
         this.loader.close();

@@ -3,8 +3,8 @@
     <div class="l-container">
         <div class="search-order-id float-right">
             <span class="material-icons"> search </span>
-            <input type="text" class="textfield" placeholder="Search by Division Id" (keydown)="SearchAccount($event)"
-                (focusout)="showAccount($event)" [formControl]="AllFilters.controls['division_id']">
+            <input type="text" class="textfield" placeholder="Search by Row ID" (keydown)="SearchAccount($event)"
+                (focusout)="showAccount($event)" [formControl]="AllFilters.controls['division_allocation_id']">
             <div class="btn-filter" ngbDropdown #myDrop="ngbDropdown">
 
                 <button class="btn-filter" id="filterPopup" ngbDropdownToggle><img src="./assets/images/filter.svg"

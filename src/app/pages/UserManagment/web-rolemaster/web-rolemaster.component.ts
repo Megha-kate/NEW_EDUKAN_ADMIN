@@ -16,6 +16,8 @@ export class WebRolemasterComponent implements OnInit {
   totalrecord: any;
   loader: any;
   role_name: any;
+  distributor: boolean;
+  isdistributor: boolean;
   constructor(private UserService: UserManagmentServiceService
     , private modalService: NgbModal,
     private fb: FormBuilder,
@@ -34,7 +36,7 @@ export class WebRolemasterComponent implements OnInit {
     this.showRecords=10;
     
     this.btnSave = true;
-
+    this.isdistributor = false;
     this.btnupdate = false;
     this.currentPage = 1
     this.noofrecordsperpage = 10

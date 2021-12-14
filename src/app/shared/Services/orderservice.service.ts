@@ -44,6 +44,7 @@ export class OrderserviceService{
   private PODetailsURL = `${environment.Edukanadmin}/api/v2/ecom/admin/get_so_details/`;
   private helplineQueryURL = `${environment.Edukanadmin}/api/v2/ecom/admin/get_helpline_query_list/`;
   private InvoicePaymentURL = `${environment.Edukanadmin}/api/v2/ecom/admin/get_invoice_list/`;
+  private InvoicePaymentupdateURL = `${environment.Edukanadmin}/api/v2/ecom/admin/invoice_payment_status_update/`;
 
 
 
@@ -159,5 +160,8 @@ export class OrderserviceService{
   }
   InvoicePayment(Data: any): Observable<any> {
     return this.http.post(this.InvoicePaymentURL, Data, { headers: { "Content-Type": "application/json" } }).pipe(catchError(err => of(err)));
+  }
+  InvoicePaymentUpdate(Data: any): Observable<any> {
+    return this.http.post(this.InvoicePaymentupdateURL, Data, { headers: { "Content-Type": "application/json" } }).pipe(catchError(err => of(err)));
   }
 }

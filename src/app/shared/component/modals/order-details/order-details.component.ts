@@ -12,6 +12,8 @@ import { AppLoaderService } from '../../app-loader/app-loader.service';
 import { CommonService } from '../../../../shared/Services/common-service.service';
 import { DigiVorStockPopupComponent } from '../../modals/digi-vor-stock-popup/digi-vor-stock-popup.component'
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { EtaPopupComponent } from '../eta-popup/eta-popup.component';
+import { PaymentDetailPopupComponent } from '../payment-detail-popup/payment-detail-popup.component';
 
 
 // import { ProductService } from '../../services/REST/product.service';
@@ -417,16 +419,26 @@ export class OrderDetailsComponent implements OnInit {
             data => {
                 if (data.success == true) {
 
-                    let ngbModalOptions: NgbModalOptions = {
-                        backdrop: true,
-                        keyboard: true
-                    };
-                    this.etadata = data.data;
-                    this.modalService.open(this.etapopup, ngbModalOptions).result.then((result) => {
-                        this.closeResult = `Closed with: ${result}`;
-                    }, (reason: any) => {
-                        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-                    });
+                    // let ngbModalOptions: NgbModalOptions = {
+                    //     backdrop: true,
+                    //     keyboard: true
+                    // };
+                    // this.etadata = data.data;
+                    // this.modalService.open(this.etapopup, ngbModalOptions).result.then((result) => {
+                    //     this.closeResult = `Closed with: ${result}`;
+                    // }, (reason: any) => {
+                    //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+                    // });
+
+
+
+                    var title = ''
+                    let dialogRef: MatDialogRef<any> = this.dialog.open(EtaPopupComponent, {
+                        width: '800px',
+                        disableClose: false,
+                        data: { title: title, payload: data.data }
+                      })
+
                 }
                 else {
 
@@ -648,18 +660,24 @@ export class OrderDetailsComponent implements OnInit {
 
                 if (data.success == true) {
 
-                    let ngbModalOptions: NgbModalOptions = {
-                        backdrop: true,
-                        keyboard: true
-                    };
-                    this.rowsPaymentHistory = data.data;
-                    // this.MenberID = this.rowsPaymentHistory[0].member_id;
-                    // this.OrderAmount = this.rowsPaymentHistory[0].order_amount;
-                    this.modalService.open(this.paymentdetailspopup, ngbModalOptions).result.then((result) => {
-                        this.closeResult = `Closed with: ${result}`;
-                    }, (reason: any) => {
-                        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-                    });
+                    // let ngbModalOptions: NgbModalOptions = {
+                    //     backdrop: true,
+                    //     keyboard: true
+                    // };
+                    // this.rowsPaymentHistory = data.data;
+                   
+                    // this.modalService.open(this.paymentdetailspopup, ngbModalOptions).result.then((result) => {
+                    //     this.closeResult = `Closed with: ${result}`;
+                    // }, (reason: any) => {
+                    //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+                    // });
+                    var title = ''
+                    let dialogRef: MatDialogRef<any> = this.dialog.open(PaymentDetailPopupComponent, {
+                        width: '800px',
+                        disableClose: false,
+                        data: { title: title, payload: data.data }
+                      })
+
                 }
                 else {
                 }

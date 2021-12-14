@@ -15,6 +15,7 @@ import { CommentPopupComponent } from '../../../component/modals/comment-popup/c
 import { ModalDismissReasons, NgbModal, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
 import { DatePipe } from "@angular/common";
 import { InfoPopupComponent } from "../info-popup/info-popup.component";
+import { OrderPopupComponent } from "../order-popup/order-popup.component";
 //import { CommentPopupComponent } from '../../orders-list/feedback-list/comment-popup/comment-popup.component'
 @Component({
   selector: 'app-invoice-copy',
@@ -264,17 +265,23 @@ export class InvoiceCopyComponent implements OnInit {
                 if (data.success == true) {
 
                     this.invoiceData = data.data
-                    console.log(this.invoiceData)
+                    //console.log(this.invoiceData)
 
-                    let ngbModalOptions: NgbModalOptions = {
-                        backdrop: true,
-                        keyboard: true
-                    };
-                    this.modalService.open(this.invoicePopup, ngbModalOptions).result.then((result) => {
-                        this.closeResult = `Closed with: ${result}`;
-                    }, (reason: any) => {
-                        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-                    });
+                    // let ngbModalOptions: NgbModalOptions = {
+                    //     backdrop: true,
+                    //     keyboard: true
+                    // };
+                    // this.modalService.open(this.invoicePopup, ngbModalOptions).result.then((result) => {
+                    //     this.closeResult = `Closed with: ${result}`;
+                    // }, (reason: any) => {
+                    //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+                    // });
+                    var title = ''
+                    let dialogRef: MatDialogRef<any> = this.dialog.open(OrderPopupComponent, {
+                        width: '800px',
+                        disableClose: false,
+                        data: { title: title, payload: data.data }
+                      });
                     this.loader.close();
                 }
                 else {

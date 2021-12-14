@@ -581,6 +581,14 @@ export class InvoiceLevelMisComponent implements OnInit {
     return days;
   }
   //Filterarray=[];
+  onDateSelect(event) {
+    
+    let year = event.year;
+    let month = event.month <= 9 ? '0' + event.month : event.month;;
+    let day = event.day <= 9 ? '0' + event.day : event.day;;
+    let finalDate = year + "-" + month + "-" + day;
+    return finalDate
+   }
   fromDate: any;
   toDate: any;
   orderFromDate: any;
@@ -633,10 +641,10 @@ export class InvoiceLevelMisComponent implements OnInit {
           this.InvoiceLevelMisData(ListInput)
           return
         }
-        this.fromDate = this.itemForm.value.from_date;
-        this.toDate = this.itemForm.value.to_date;
-        this.orderFromDate = moment(this.fromDate).subtract(1, 'months').format('yyyy-MM-DD')
-        this.orderToDate = moment(this.toDate).subtract(1, 'months').format('yyyy-MM-DD')
+         let customfromdate = this.itemForm.value.from_date;
+        let customtodate = this.itemForm.value.to_date
+        this.from_date = this.onDateSelect(customfromdate)
+        this.to_date = this.onDateSelect(customtodate)
       }
       else if (this.isLastsevenDay == true) {
         this.fromDate = this.from_date

@@ -79,6 +79,7 @@ export class OrderHistoryComponent implements OnInit {
   state_code: string;
   dealer_state: any;
   shipping_state: any;
+  distributor: boolean;
 
   constructor(
     private OrderListService: OrderserviceService,
@@ -102,7 +103,7 @@ export class OrderHistoryComponent implements OnInit {
     this.RoleName = this.CommonService.getRole();
     this.DistCode = this.CommonService.GetDistributorCode()
 
-    this.isdistributor = true;
+    this.distributor = true;
 
     this.isThirtyDays = true;
 

@@ -180,7 +180,7 @@ export class DivisionMasterComponent implements OnInit {
     // if (this.to_date) {
     //   this.AllFilters.get('to_date').setValue(this.to_date);
     // }
-    ListInput.division_id = event.target.value
+    ListInput.division_allocation_id = event.target.value
      ListInput.offset=0
      ListInput.limit = this.noofrecordsperpage;
 
@@ -192,7 +192,7 @@ export class DivisionMasterComponent implements OnInit {
       const ListInput: Listinputs = {} as Listinputs;
       ListInput.offset=0
       ListInput.limit = this.noofrecordsperpage;
-      ListInput.division_id = event.target.value
+      ListInput.division_allocation_id = event.target.value
       this.DivisionMaster(ListInput);
 
     }
@@ -229,9 +229,9 @@ export class DivisionMasterComponent implements OnInit {
     const ListInput: Listinputs = {} as Listinputs;
   
 
-    if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
+    // if (this.to_date) { ListInput.to_date = this.to_date; } else { ListInput.to_date = ""; }
 
-    if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
+    // if (this.from_date) { ListInput.from_date = this.from_date; } else { ListInput.from_date = ""; }
 
     if (this.district_name) { ListInput.district_name = this.district_name; } else { ListInput.district_name = ""; }
     if (this.division_category) { ListInput.division_category = this.division_category; } else { ListInput.division_category = ""; }

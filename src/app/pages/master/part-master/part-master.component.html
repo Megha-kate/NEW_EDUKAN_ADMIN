@@ -3,7 +3,7 @@
     <div class="l-container">
         <div class="search-order-id float-right">
             <span class="material-icons">search </span>
-            <input type="text" class="textfield" placeholder="Search by Part Number" (keydown)="SearchAccount($event)"
+            <input type="text" class="textfield" placeholder="Search by part_number" (keydown)="SearchAccount($event)"
                 (focusout)="showAccount($event)" [formControl]="AllFilters.controls['part_number']">
             <div class="btn-filter" ngbDropdown #myDrop="ngbDropdown">
 
@@ -139,8 +139,6 @@
                                             <label for="inputPassword">Select Category Group</label><br />
                                             <div class="srch-box">
                                                 <select class="textfield" [formControl]="AllFilters.controls['distributor_category']">
-                                                    <option hidden></option>
-
                                                     <option *ngFor="let Data of CategoryMaster;">
                                                         {{Data}}</option>
                                                 </select>
@@ -190,8 +188,6 @@
                                             <label for="inputPassword">Select Product Group</label><br />
                                             <div class="srch-box">
                                                 <select class="textfield" [formControl]="AllFilters.controls['pg']">
-                                                    <option hidden></option>
-
                                                     <option *ngFor="let PgData of ProductGroup;">
                                                         {{PgData}}</option>
                                                 </select>
@@ -218,8 +214,6 @@
                                             <div class="srch-box">
                                                 <select class="textfield"
                                                     [formControl]="AllFilters.controls['group_category']">
-                                                    <option hidden></option>
-
                                                     <option *ngFor="let type of ProductGroupCategory" [value]="type">
                                                         {{type}}</option>
                                                 </select>
@@ -331,7 +325,7 @@
             </ul> -->
         </div>
         <div class="l-content w-100 pl-0" (click)="closeModal()">
-
+            <!-- <div (click)="closeModal()" type="button"><i class="fa fa-times"></i></div> -->
 
             <ng-template #content let-modal>
                 &nbsp;
@@ -359,7 +353,7 @@
                           
                                     <b style="color: red;">Instruction:</b>
                                     
-                                      <br />1.Please Refer below guidline before upload file .
+                                      <br />1.Download Template
                                       <br />2.Change Data
                                       <br />3.Upload the xlsx File (Accept only xlsx File)
                           
@@ -421,7 +415,7 @@
 
             <div>
                 <div class="l-content w-100 pl-0">
-                    <div class="tbl-reports card-shadow bg-white h-100" >
+                    <div class="tbl-reports card-shadow bg-white h-100">
                         <div class="l-tbl-accordion overflow-auto">
                             <div class="w-100 border-0 p-3">
                                 <div class="table-responsive">
@@ -657,7 +651,7 @@
 
                                                     </div>
                                                 </td>
-                                                <td class="text-nowrap" style="text-transform: capitalize;">
+                                                <td class="text-nowrap">
                                                     <div class="td-wrapp">{{ row?.column_5 }}
 
 
